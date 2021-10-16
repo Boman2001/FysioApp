@@ -1,4 +1,7 @@
 @startuml
+skinparam linetype polyline
+skinparam linetype ortho
+
 package Core.Domain{
 
 interface IEntity {
@@ -7,7 +10,7 @@ interface IEntity {
 #DateTime: UpdatedAt;
 #DateTime: DeletedAt;
 }
-class Entity {
+abstract class Entity {
 -int: Id;
 #DateTime: CreatedAt;
 #DateTime: UpdatedAt;
@@ -21,39 +24,332 @@ class Entity {
 }
 
 class Doctor{
-string: RegistrationNumber;
-boolean: IsStudent;
+- string: BigNumber {get; set;}
+- string: EmployeeNumber {get; set;}
+- string: PhoneNumber {get; set;}
 }
+
+class Student{
+-string: StudentNumber {get; set;}
+}
+
 
 class Patient{
-string:PatientNumber;
-string: PictureUrl;
+- string:PatientNumber {get; set;}
+- string: PictureUrl {get; set;}
+- DateTime: BirthDay {get; set;}
+- Gender : Gender {get; set;}
+- string: PhoneNumber {get; set;}
 }
 
-class Person{
-- string: FirstName;
-- string: LastName;
-- string: Preposition;
-- string: Email;
-- string: PhoneNumber;
+enum Gender{
+MALE,
+FEMALE,
+OTHER
+}
+
+abstract class User{
+- string: FirstName {get; set;}
+- string: LastName {get; set;}
+- string: Preposition {get; set;}
+- string: Email {get; set;}
 }
 
 class Dossier {
-Patient: Patient;
-string: description;
+- Patient: Patient {get; set;}
+- int: Age {get; set;}
+- string: Description {get; set;}
+- string: DiagnosticCode {get; set;}
+- boolean: IsStudent {get; set;}
+- User: IntakeBy {get; set;}
+- User: SupervisedBy {get; set;}
+- DateTime: RegistrationDate {get; set;}
+- string: Comments {get; set;}
+- TreatmentPlan: TreatmentPlan {get; set;}
+- Treatment[]: Treatments {get; set;}
+}
 
+class TreatmentPlan{
+- int: TreatmentsPerWeek {get; set;}
+- float: TimePerSession {get; set;}
+- TreatmentCode: TreatmentType {get; set;}
+}
 
+class Treatment{
+- DateTime: TreatmentDate {get; set;}
+- TreatmentCode: TreatmentType {get; set;}
+- string: Description {get; set;}
+- string: Particularities {get; set;}
+- Room: Room {get; set;}
+- User: ExcecutedBy {get; set;}
+- DateTime: ExecutedOn {get; set;}
+}
+enum RoomType{
+PRACTICEHALL,
+TREATMENTROOM;
+}
+
+class Room{
+- string: roomNumber {get; set;}
+- RoomType: RoomType {get; set;}
+}
+
+class DiagnoseCode{
+- int: Code {get; set;}
+- string: LocationBody {get; set;}
+- string: pathology {get; set;}
+}
+
+class TreatmentCode{
+int: Code {get; set;}
+string: Description {get; set;}
+boolean: ExplanationRequired {get; set;}
+}
+
+class Comment{
+string: CommentBody {get; set;}
+User: CreatedBy {get; set;}
+boolean: VisibleForPatient {get; set;}
 }
 
 IEntity <.. Entity
-Entity --|> Person
-Person --|> Doctor
-Person --|> Patient
+Entity --|> Treatment
+Entity --|> TreatmentCode
+Entity --|> DiagnoseCode
+Entity --|> Dossier
+Entity --|> Room 
+Entity --|> TreatmentPlan
+Entity --|> Comment
+User --|> Doctor
+User --|> Student
+User --|> Patient
+Dossier --> Treatment
+Dossier --> TreatmentPlan
+Dossier --> User
+Patient --> Gender
+Treatment --> TreatmentCode
+Treatment --> User
+Treatment --> Room
+Room --> RoomType
+Comment --> User
+
+}
+package Core.DomainServices{
+interface IRepository{
++ Get() : IEnumerable<T>
++ Get(int id) : Task<T>
++ Get(Expression<Func<T,boolean> filter) : Task<T>
++ Get(Expression<Func<T,boolean> filter, string includeProperties) : Task<T>
++ Get(Expression<Func<T,boolean> filter, string includeProperties, Func<IQueryable<T>,IOrderedQueryable<T>>) : IEnumerable<T>
++ Add(T model): Task;
++ Update(T model): Task;
++ Delete(int id): Task;
++ Save(): Task;
++ Detatch(IEnumerable<T> entities) : void;
++ Detatch(T entity) : void;
+}
+interface IService{
++ Get() : IEnumerable<T>
++ Get(int id) : Task<T>
++ Get(Expression<Func<T,boolean> filter) : Task<T>
++ Get(Expression<Func<T,boolean> filter, string includeProperties) : Task<T>
++ Get(Expression<Func<T,boolean> filter, string includeProperties, Func<IQueryable<T>,IOrderedQueryable<T>>) : IEnumerable<T>
++ Add(T model): Task;
++ Update(T model): Task;
++ Delete(int id): Task;
+}
+}
+package Core.Infrastructure{
+class Repository{
+- _context: DbContext;
+- _dbSet: DbSet<T>;
++Repository(DbContext context);
+}
+abstract class Service{
+- _repository : IRepository<T>;
 
 }
 
+class DossierService{
+}
+class PatientService{
+}
+class TreatmentService{
+}
+class CommentService{
+}
+class DiagnoseCodeService{}
+class TreatmentCodeService{}
+
+Service --|> DossierService
+Service --|> PatientService
+Service --|> TreatmentService
+Service --|> CommentService
+Service --|> DiagnoseCodeService
+Service --|> TreatmentCodeService
+}
 package Microsoft.AspNetCore.Identity.EntityFrameworkCore {
 class IdentityUser{
 }
-IdentityUser --|> Doctor
+}
+
+package WebApi{
+abstract class Controller{
+- IService<T> : _service;
++ Get(): Task<ActionResult<List<DTO>>>
++ Get(int id): Task<ActionResult<DTO>>
+}
+abstract class DTO{
+- int: Id {get; set;}
+- int: Code {get; set;}
+}
+
+class DiagnoseCodeDto{
+- string: LocationBody {get; set;}
+- string: pathology {get; set;}
+}
+
+class TreatmentCodeDto {
+string: Description {get; set;}
+boolean: ExplanationRequired {get; set;}
+}
+
+class DiagnoseCodeController{
+}
+
+class TreatmentCodeController{
+}
+
+Controller <|--- DiagnoseCodeController
+Controller <|--- TreatmentCodeController
+DTO <|--- DiagnoseCodeDto
+DTO <|--- TreatmentCodeDto
+DTO --- Controller
+}
+
+package WebApp{
+abstract class WebController{
+- IService<T> : _service;
++ Index(): Task<ActionResult<>>
+}
+class DossierController{}
+class PatientController{}
+class TreatmentController{}
+class CommentController{}
+class CommentController{}
+
+abstract class WebDto{
+-int: Id {get; get:}
+-DateTime CreatedAt {get; get:}
+-DateTime UpdatedAtAt {get; get:}
+}
+class DoctorDto{
+- string: BigNumber {get; set;}
+- string: EmployeeNumber {get; set;}
+- string: PhoneNumber {get; set;}
+}
+
+class StudentDto{
+-string: StudentNumber {get; set;}
+}
+
+
+class PatientDto{
+- string:PatientNumber {get; set;}
+- string: PictureUrl {get; set;}
+- DateTime: BirthDay {get; set;}
+- Gender : Gender {get; set;}
+- string: PhoneNumber {get; set;}
+}
+
+abstract class UserDto{
+- string: FirstName {get; set;}
+- string: LastName {get; set;}
+- string: Preposition {get; set;}
+- string: Email {get; set;}
+}
+
+class DossierDto {
+- PatientDto: Patient {get; set;}
+- int: Age {get; set;}
+- string: Description {get; set;}
+- string: DiagnosticCode {get; set;}
+- boolean: IsStudent {get; set;}
+- UserDto: IntakeBy {get; set;}
+- UserDto: SupervisedBy {get; set;}
+- DateTime: RegistrationDate {get; set;}
+- string: Comments {get; set;}
+- TreatmentPlan: TreatmentPlan {get; set;}
+- Treatment[]: Treatments {get; set;}
+}
+
+class TreatmentPlanDto{
+- int: TreatmentsPerWeek {get; set;}
+- float: TimePerSession {get; set;}
+- TreatmentCode: TreatmentType {get; set;}
+}
+
+class TreatmentDto{
+- DateTime: TreatmentDate {get; set;}
+- TreatmentCode: TreatmentType {get; set;}
+- string: Description {get; set;}
+- string: Particularities {get; set;}
+- Room: Room {get; set;}
+- User: ExcecutedBy {get; set;}
+- DateTime: ExecutedOn {get; set;}
+}
+class RoomDto{
+- string: roomNumber {get; set;}
+- RoomType: RoomType {get; set;}
+}
+
+class DiagnoseCodeDto{
+- int: Code {get; set;}
+- string: LocationBody {get; set;}
+- string: pathology {get; set;}
+}
+
+class TreatmentCodeDto{
+int: Code {get; set;}
+string: Description {get; set;}
+boolean: ExplanationRequired {get; set;}
+}
+
+class CommentDto{
+string: CommentBody {get; set;}
+UserDto: CreatedBy {get; set;}
+boolean: VisibleForPatient {get; set;}
+}
+
+    WebDto --|> TreatmentDto
+    WebDto --|> DossierDto
+    WebDto --|> RoomDto
+    WebDto --|> TreatmentPlanDto
+    WebDto --|> CommentDto
+    UserDto --|> DoctorDto
+    UserDto --|> StudentDto
+    UserDto --|> PatientDto
+    DossierDto --> TreatmentDto
+    DossierDto --> TreatmentPlanDto
+    DossierDTo --> UserDto
+    PatientDto --> Gender
+    TreatmentDto --> TreatmentCode
+    TreatmentDto --> UserDto
+    TreatmentDto --> RoomDto
+    RoomDto --> RoomType
+    CommentDto --> UserDto
+    
+    WebController --|> DossierController
+    WebController --|> TreatmentController
+    WebController --|> PatientController
+    WebController --|> CommentController
+
+}
+IdentityUser --|> User
+IRepository <|... Repository
+IService --- Controller
+IService <|.. Service
+IRepository --- Service
+
+
 @enduml
