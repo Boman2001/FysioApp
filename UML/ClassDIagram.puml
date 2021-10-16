@@ -35,7 +35,8 @@ class Student{
 
 
 class Patient{
-- string:PatientNumber {get; set;}
+- string: PatientNumber {get; set;}
+- string: IdNumber {get; set;}
 - string: PictureUrl {get; set;}
 - DateTime: BirthDay {get; set;}
 - Gender : Gender {get; set;}
@@ -60,11 +61,11 @@ class Dossier {
 - int: Age {get; set;}
 - string: Description {get; set;}
 - string: DiagnosticCode {get; set;}
-- boolean: IsStudent {get; set;}
+- boolean: IsByStudent {get; set;}
 - User: IntakeBy {get; set;}
 - User: SupervisedBy {get; set;}
 - DateTime: RegistrationDate {get; set;}
-- string: Comments {get; set;}
+- IEnumerable<Comment>: Comments {get; set;}
 - TreatmentPlan: TreatmentPlan {get; set;}
 - Treatment[]: Treatments {get; set;}
 }

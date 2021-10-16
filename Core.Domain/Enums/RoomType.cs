@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain.Enums
 {
-    public enum Room
+    public enum RoomType
     {
         PracticeHall,
         TreatmentRoom

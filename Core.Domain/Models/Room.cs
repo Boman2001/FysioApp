@@ -1,7 +1,11 @@
-﻿namespace Core.Domain.Models
+﻿using Core.Domain.Enums;
+
+namespace Core.Domain.Models
 {
-    public class Room
+    public class Room : Entity
     {
-        
+        public string RoomNumber { get; set; }
+        public RoomType RoomType { get; set; }
+
     }
 }
