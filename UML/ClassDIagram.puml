@@ -1,0 +1,59 @@
+@startuml
+package Core.Domain{
+
+interface IEntity {
+-int: Id;
+#DateTime: CreatedAt;
+#DateTime: UpdatedAt;
+#DateTime: DeletedAt;
+}
+class Entity {
+-int: Id;
+#DateTime: CreatedAt;
+#DateTime: UpdatedAt;
+#DateTime: DeletedAt;
++getCreatedAt();
++setCreatedAt();
++getUpdatedAt();
++getUpdatedAt();
++getDeletedAt();
++setDeletedAt();
+}
+
+class Doctor{
+string: RegistrationNumber;
+boolean: IsStudent;
+}
+
+class Patient{
+string:PatientNumber;
+string: PictureUrl;
+}
+
+class Person{
+- string: FirstName;
+- string: LastName;
+- string: Preposition;
+- string: Email;
+- string: PhoneNumber;
+}
+
+class Dossier {
+Patient: Patient;
+string: description;
+
+
+}
+
+IEntity <.. Entity
+Entity --|> Person
+Person --|> Doctor
+Person --|> Patient
+
+}
+
+package Microsoft.AspNetCore.Identity.EntityFrameworkCore {
+class IdentityUser{
+}
+IdentityUser --|> Doctor
+@enduml
