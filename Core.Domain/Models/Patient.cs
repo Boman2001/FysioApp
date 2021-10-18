@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Domain.Enums;
 
 namespace Core.Domain.Models
@@ -11,5 +12,6 @@ namespace Core.Domain.Models
         public string PhoneNumber { get; set; }
         public DateTime BirthDay { get; set; }
         public Gender Gender { get; set; }
+        public virtual  IEnumerable<Dossier> Dossiers { get; set; }
     }
 }

@@ -12,8 +12,10 @@ namespace Core.Domain.Models
     {
         [NotMapped] public List<Activity> Activities { get; set; }
 
-        [Key] public int Id { get; set; }
-
+        [Key] 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public DateTime? UpdatedAt { get; set; }

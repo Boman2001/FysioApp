@@ -66,7 +66,6 @@ class Dossier {
 - User: SupervisedBy {get; set;}
 - DateTime: RegistrationDate {get; set;}
 - IEnumerable<Comment>: Comments {get; set;}
-- TreatmentPlan: TreatmentPlan {get; set;}
 - Treatment[]: Treatments {get; set;}
 }
 
@@ -74,6 +73,7 @@ class TreatmentPlan{
 - int: TreatmentsPerWeek {get; set;}
 - float: TimePerSession {get; set;}
 - TreatmentCode: TreatmentType {get; set;}
+- int: TreatmentTypeId {get; set;}
 }
 
 class Treatment{
@@ -84,6 +84,7 @@ class Treatment{
 - Room: Room {get; set;}
 - User: ExcecutedBy {get; set;}
 - DateTime: ExecutedOn {get; set;}
+- TreatmentPlan: TreatmentPlan {get; set;}
 }
 enum RoomType{
 PRACTICEHALL,
@@ -96,13 +97,13 @@ class Room{
 }
 
 class DiagnoseCode{
-- int: Code {get; set;}
+- string: Code {get; set;}
 - string: LocationBody {get; set;}
 - string: pathology {get; set;}
 }
 
 class TreatmentCode{
-int: Code {get; set;}
+string: Code {get; set;}
 string: Description {get; set;}
 boolean: ExplanationRequired {get; set;}
 }
@@ -114,23 +115,25 @@ boolean: VisibleForPatient {get; set;}
 }
 
 IEntity <.. Entity
-Entity --|> Treatment
-Entity --|> TreatmentCode
-Entity --|> DiagnoseCode
-Entity --|> Dossier
-Entity --|> Room 
-Entity --|> TreatmentPlan
-Entity --|> Comment
-User --|> Doctor
-User --|> Student
-User --|> Patient
-Dossier --> Treatment
-Dossier --> TreatmentPlan
-Dossier --> User
+Entity -[#000]-|> Treatment
+Entity -[#000]-|> TreatmentCode
+Entity -[#000]-|> DiagnoseCode
+Entity -[#000]-|> Dossier
+Entity -[#000]-|> Room 
+Entity -[#000]-|> TreatmentPlan
+Entity -[#000]-|> Comment
+User -[#F00]-|> Doctor
+User -[#F00]-|> Student
+User -[#F00]-|> Patient
+Dossier -[#0F0]-> Treatment : Dossier
+Dossier -[#0F0]- User
+Dossier -[#0F0]- Comment : IsPostedOn
+Dossier -[#0F0]- Patient : dossiers
 Patient --> Gender
-Treatment --> TreatmentCode
-Treatment --> User
-Treatment --> Room
+Treatment -[#00F]-> TreatmentPlan : Treatment
+Treatment -[#00F]-> TreatmentCode
+Treatment -[#00F]-> User
+Treatment -[#00F]-> Room
 Room --> RoomType
 Comment --> User
 
@@ -160,34 +163,19 @@ interface IService{
 + Delete(int id): Task;
 }
 }
-package Core.Infrastructure{
-class Repository{
+package Infrastructure.API{
+class WebRepository{
++Repository();
+}
+}
+package Infrastructure.DB{
+class DatabaseRepository{
 - _context: DbContext;
 - _dbSet: DbSet<T>;
 +Repository(DbContext context);
-}
-abstract class Service{
-- _repository : IRepository<T>;
 
 }
 
-class DossierService{
-}
-class PatientService{
-}
-class TreatmentService{
-}
-class CommentService{
-}
-class DiagnoseCodeService{}
-class TreatmentCodeService{}
-
-Service --|> DossierService
-Service --|> PatientService
-Service --|> TreatmentService
-Service --|> CommentService
-Service --|> DiagnoseCodeService
-Service --|> TreatmentCodeService
 }
 package Microsoft.AspNetCore.Identity.EntityFrameworkCore {
 class IdentityUser{
@@ -346,8 +334,35 @@ boolean: VisibleForPatient {get; set;}
     WebController --|> CommentController
 
 }
+
+package ApplicationServices{
+abstract class Service{
+- _repository : IRepository<T>;
+
+}
+
+class DossierService{
+}
+class PatientService{
+}
+class TreatmentService{
+}
+class CommentService{
+}
+class DiagnoseCodeService{}
+class TreatmentCodeService{}
+
+Service --|> DossierService
+Service --|> PatientService
+Service --|> TreatmentService
+Service --|> CommentService
+Service --|> DiagnoseCodeService
+Service --|> TreatmentCodeService
+}
+
 IdentityUser --|> User
-IRepository <|... Repository
+IRepository <|... DatabaseRepository
+IRepository <|... WebRepository
 IService --- Controller
 IService <|.. Service
 IRepository --- Service
