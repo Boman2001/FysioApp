@@ -11,7 +11,8 @@ namespace ApplicationServices.Services
         {
         }
 
-        public Task<Dossier> Add(Dossier model)
+        
+        public  Task<Dossier> Add(Dossier model)
         {
             if (model.IntakeBy.GetType() == typeof(Student))
             {
