@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StamApi", "StamApi\StamApi.csproj", "{F28E03D7-44A7-4E18-83A7-D42963B07AAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationServicesTests", "ApplicationServicesTests\ApplicationServicesTests.csproj", "{A2AE978D-5066-4EE4-894B-AB5405ECE48F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{F28E03D7-44A7-4E18-83A7-D42963B07AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F28E03D7-44A7-4E18-83A7-D42963B07AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F28E03D7-44A7-4E18-83A7-D42963B07AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2AE978D-5066-4EE4-894B-AB5405ECE48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AE978D-5066-4EE4-894B-AB5405ECE48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AE978D-5066-4EE4-894B-AB5405ECE48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AE978D-5066-4EE4-894B-AB5405ECE48F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -15,6 +15,6 @@ namespace Core.Domain.Models
         public Room Room { get; set; }
         public User ExcecutedBy { get; set; }
         public DateTime ExcecutedOn { get; set; }
-        public TreatmentPlan TreatmentPlan { get; set; }
+       
     }
 }

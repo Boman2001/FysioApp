@@ -16,6 +16,7 @@ namespace Core.Domain.Models
         public User IntakeBy  { get; set; }
         public User? SupervisedBy  { get; set; }
         public DateTime RegistrationDate  { get; set; }
+        public TreatmentPlan TreatmentPlan { get; set; }
         public IEnumerable<Comment> Comments  { get; set; }
         public IEnumerable<Treatment> Treatments { get; set; }
         

@@ -66,9 +66,9 @@ namespace Core.Infrastructure.Contexts
                 .WithMany(U => U.TreatmentsDone)
                 .OnDelete(DeleteBehavior.Cascade);
             
-            builder.Entity<Treatment>()
+            builder.Entity<Dossier>()
                 .HasOne( C => C.TreatmentPlan)
-                .WithOne(D => D.Treatment).HasForeignKey<Treatment>()
+                .WithOne(D => D.Treatment.Dossier).HasForeignKey<Treatment>()
                 .OnDelete(DeleteBehavior.ClientCascade);
             
             builder.Entity<Dossier>()

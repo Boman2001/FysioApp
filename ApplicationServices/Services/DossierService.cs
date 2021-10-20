@@ -1,4 +1,6 @@
-﻿using Core.Domain.Models;
+﻿using System;
+using System.Threading.Tasks;
+using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 
 namespace ApplicationServices.Services
@@ -7,6 +9,15 @@ namespace ApplicationServices.Services
     {
         public DossierService(IRepository<Dossier> repository) : base(repository)
         {
+        }
+
+        public Task<Dossier> Add(Dossier model)
+        {
+            if (model.IntakeBy.GetType() == typeof(Student))
+            {
+                
+            }
+            return _repository.Add(model);
         }
     }
 }
