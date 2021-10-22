@@ -12,9 +12,10 @@ namespace Core.Domain.Models
         [NotMapped]
         public DiagnoseCode DiagnoseCode { get; set; }
         public int DiagnoseCodeId { get; set; }
-        public bool IsByStudent { get; set; }
+        public bool IsStudent { get; set; }
         public User IntakeBy  { get; set; }
         public User? SupervisedBy  { get; set; }
+        public User  HeadPractitioner { get; set; }
         public DateTime RegistrationDate  { get; set; }
         public TreatmentPlan TreatmentPlan { get; set; }
         public IEnumerable<Comment> Comments  { get; set; }

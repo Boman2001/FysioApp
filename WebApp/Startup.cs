@@ -1,7 +1,12 @@
 using System;
+using System.Text;
+using ApplicationServices.Services;
+using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Core.Infrastructure.Contexts;
 using Core.Infrastructure.Repositories;
+using Infrastructure.API.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApp
 {
@@ -52,15 +58,17 @@ namespace WebApp
                 }).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SecurityDbContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddOptions();
             services.Configure<SecurityStampValidatorOptions>(options =>
                 options.ValidationInterval = TimeSpan.FromMinutes(5));
-
             services.AddScoped<IIdentityRepository, IdentityRepository>();
 
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(DatabaseRepository<>));
+            services.AddScoped(typeof(IRepository<TreatmentCode>), typeof(WebRepository<TreatmentCode>));
+            services.AddScoped(typeof(IRepository<DiagnoseCode>), typeof(WebRepository<DiagnoseCode>));
+            services.AddScoped(typeof(IService<Patient>), typeof(PatientService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +90,7 @@ namespace WebApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

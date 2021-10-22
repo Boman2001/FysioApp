@@ -12,12 +12,13 @@
     <label for="registerType">Registreer als Type:</label>
     <select name="registerType" id="registerType">
         <option value="">None</option>
+        <option value="Patient">Patient</option>
         <option value="student">Student</option>
         <option value="doctor">Doctor</option>
     </select>
+       @Html.ValidationSummary(false, "", new {@class = "text-danger"})
     <form class="row" asp-action="" method="Post" enctype="multipart/form-data" id="registerForm">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @Html.ValidationSummary(false, "", new {@class = "text-danger"})
         <div class="col">
             <span id="PlaceHolder" style="display:none;"> </span>
 
@@ -31,7 +32,7 @@
     </form>
 
     <div class="text-center">
-        @Html.ActionLink("Already have an account? Login!", "Login", "Auth")
+        @Html.ActionLink("Already have an account? Login!", "Login", "Account")
     </div>
 </div>
 </body>
@@ -40,15 +41,18 @@ $('#registerType').change( function() {
 
      /* Get the selected value of dropdownlist */
      var selectedID = $(this).val();
-       $('#registerForm').attr('action', '/Auth/PostRegister'+selectedID)
+     if (selectedID !== ""){
+         
+       $('#registerForm').attr('action', '/Account/PostRegister'+selectedID)
      /* Request the partial view with .get request. */
-     $.get('/Auth/' + selectedID , function(data) {
+     $.get('/Account/' + selectedID , function(data) {
 
          /* data is the pure html returned from action method, load it to your page */
          $('#PlaceHolder').html(data);
          /* little fade in effect */
          $('#PlaceHolder').fadeIn('fast');
      });
+     }
 
 });
 

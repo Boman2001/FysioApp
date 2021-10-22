@@ -6,8 +6,7 @@
 }
 
 <h2>login</h2>
-
- <form class="row" asp-action="PostLogin" method="Post" enctype="multipart/form-data" id="registerForm">
+<form class="row" asp-action="PostLogin" method="Post" enctype="multipart/form-data" id="registerForm">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         @Html.ValidationSummary(false, "", new {@class = "text-danger"})
         <div class="col">

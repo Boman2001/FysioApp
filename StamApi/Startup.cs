@@ -68,7 +68,7 @@ namespace StamApi
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT:Secret"])),
@@ -83,13 +83,13 @@ namespace StamApi
 
             services.AddScoped<IIdentityRepository, IdentityRepository>();
 
-            services.AddScoped<DbContext, ApplicationDbContext>();
+            services.AddScoped<DbContext, StamDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(DatabaseRepository<>));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             );
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

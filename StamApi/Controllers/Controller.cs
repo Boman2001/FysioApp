@@ -13,7 +13,7 @@ namespace StamApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     [ApiConventionType(typeof(DefaultApiConventions))]
     public abstract class Controller<T, D> : ControllerBase where T : Entity
     {
@@ -33,11 +33,11 @@ namespace StamApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public ActionResult<IEnumerable<T>> Get()
+        public ActionResult<IEnumerable<D>> Get()
         {
             var items = _repository.Get();
 
-            var itemDtos = items.Select(patient => _mapper.Map<T, D>(patient)).ToList();
+            var itemDtos = items.Select(t => _mapper.Map<T, D>(t)).ToList();
 
             return Ok(itemDtos);
         }

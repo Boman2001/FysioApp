@@ -1,6 +1,6 @@
 ﻿namespace StamApi.Models.Domain
 {
-    public class DiagnoseCodeDto
+    public class DiagnoseCodeDto: ApiDto
     {
         public string Code { get; set; }
         public string LocationBody { get; set; }

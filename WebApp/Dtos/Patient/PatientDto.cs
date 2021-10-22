@@ -1,19 +1,26 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Core.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 
-namespace WebApp.Dtos.Auth
+namespace WebApp.Dtos.Models
 {
-    public class PatientRegisterDto : RegisterDto
+    public class PatientDto
     {
-
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        public string? Preposition { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
         public string PatientNumber { get; set; }
         [Required]
         [Display(Name = "Student Or Employee Number")]
         [StringLength(7)]
         public string IdNumber { get; set; }
-        public string PictureUrl { get; set; }
+        public string Picture { get; set; }
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
@@ -21,7 +28,5 @@ namespace WebApp.Dtos.Auth
         public DateTime BirthDay { get; set; }
         [Required]
         public Gender Gender { get; set; }
-        [Required]
-        public IFormFile Picture { get; set; }
     }
 }

@@ -16,18 +16,20 @@ namespace Core.Infrastructure.Repositories
     {
         private readonly DbContext _context;
         private readonly DbSet<T> _dbSet;
-        private readonly DbSet<Activity> _activities;
-
         public DatabaseRepository(DbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
-            _activities = _context.Set<Activity>();
         }
 
         public IEnumerable<T> Get()
         {
             return _dbSet.ToList();
+        }
+
+        public Task<IEnumerable<T>> GetAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<T> Get(int id)
