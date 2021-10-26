@@ -7,12 +7,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Core.Domain.Interfaces;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 
 namespace Infrastructure.API.Repositories
 {
-    public class WebRepository<T> : IRepository<T> where T : Entity
+    public class WebRepository<T> : IWebRepository<T> where T : Entity
     {
         private readonly HttpClient client;
 
@@ -23,32 +24,59 @@ namespace Infrastructure.API.Repositories
 
         public IEnumerable<T> Get()
         {
-            throw new NotImplementedException();
+            IEnumerable<T> responseBody = null;
+            try	
+            {
+                HttpResponseMessage response = this.client.GetAsync(typeof(T).ToString().Split(".")[3]).Result;
+                response.EnsureSuccessStatusCode();
+                responseBody = response.Content.ReadFromJsonAsync<IEnumerable<T>>().Result;
+                return responseBody;
+            }
+            catch(HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");	
+                Console.WriteLine("Message :{0} ",e.Message);
+            }
+
+            return responseBody;
         }
-        
+
         public async Task<IEnumerable<T>> GetAsync()
         {
             IEnumerable<T> responseBody = null;
             try	
-           {
-               HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]);
-               response.EnsureSuccessStatusCode();
-               responseBody = await response.Content.ReadFromJsonAsync<IEnumerable<T>>();
-               return responseBody;
-           }
-           catch(HttpRequestException e)
-           {
-               Console.WriteLine("\nException Caught!");	
-               Console.WriteLine("Message :{0} ",e.Message);
-           }
+            {
+                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]);
+                response.EnsureSuccessStatusCode();
+                responseBody = await response.Content.ReadFromJsonAsync<IEnumerable<T>>();
+                return responseBody;
+            }
+            catch(HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");	
+                Console.WriteLine("Message :{0} ",e.Message);
+            }
 
             return responseBody;
-
         }
 
-        public Task<T> Get(int id)
+        public async Task<T> Get(int id)
         {
-            throw new NotImplementedException();
+            T responseBody = null;
+            try	
+            {
+                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"/"+id);
+                response.EnsureSuccessStatusCode();
+                responseBody = await response.Content.ReadFromJsonAsync<T>();
+                return responseBody;
+            }
+            catch(HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");	
+                Console.WriteLine("Message :{0} ",e.Message);
+            }
+
+            return responseBody;
         }
 
         public T Get(int id, IEnumerable<string> includeProperties)

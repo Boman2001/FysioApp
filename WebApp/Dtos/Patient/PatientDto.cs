@@ -7,6 +7,8 @@ namespace WebApp.Dtos.Models
 {
     public class PatientDto
     {
+        public int? id { get; set; }
+
         [Required]
         public string FirstName { get; set; }
         [Required]

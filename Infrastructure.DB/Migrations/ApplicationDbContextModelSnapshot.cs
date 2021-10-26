@@ -30,7 +30,6 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CreatedById")
@@ -57,37 +56,6 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.DiagnoseCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LocationBody")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Pathology")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DiagnoseCodes");
-                });
-
             modelBuilder.Entity("Core.Domain.Models.Dossier", b =>
                 {
                     b.Property<int>("Id")
@@ -99,7 +67,6 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
@@ -111,10 +78,13 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int>("DiagnoseCodeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("HeadPractitionerId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("IntakeById")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsByStudent")
+                    b.Property<bool>("IsStudent")
                         .HasColumnType("bit");
 
                     b.Property<int?>("PatientId")
@@ -126,10 +96,15 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int?>("SupervisedById")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TreatmentPlanId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HeadPractitionerId");
 
                     b.HasIndex("IntakeById");
 
@@ -137,10 +112,12 @@ namespace Core.Infrastructure.Migrations
 
                     b.HasIndex("SupervisedById");
 
+                    b.HasIndex("TreatmentPlanId");
+
                     b.ToTable("Dossiers");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Room", b =>
+            modelBuilder.Entity("Core.Domain.Models.Treatment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,34 +125,6 @@ namespace Core.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RoomNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoomType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("Core.Domain.Models.Treatment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
@@ -190,13 +139,13 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int?>("ExcecutedById")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ExcecutedOn")
+                    b.Property<DateTime?>("ExcecutedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Particulatities")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("Room")
                         .HasColumnType("int");
 
                     b.Property<int>("TreatmentCodeId")
@@ -214,40 +163,7 @@ namespace Core.Infrastructure.Migrations
 
                     b.HasIndex("ExcecutedById");
 
-                    b.HasIndex("RoomId");
-
                     b.ToTable("Treatment");
-                });
-
-            modelBuilder.Entity("Core.Domain.Models.TreatmentCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ExplanationRequired")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TreatmentCodes");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.TreatmentPlan", b =>
@@ -258,14 +174,13 @@ namespace Core.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("TimePerSession")
-                        .HasColumnType("real");
+                    b.Property<int>("TimePerSessionInMinutes")
+                        .HasColumnType("int");
 
                     b.Property<int>("TreatmentCodeId")
                         .HasColumnType("int");
@@ -289,7 +204,6 @@ namespace Core.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
@@ -385,6 +299,10 @@ namespace Core.Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.Models.Dossier", b =>
                 {
+                    b.HasOne("Core.Domain.Models.User", "HeadPractitioner")
+                        .WithMany()
+                        .HasForeignKey("HeadPractitionerId");
+
                     b.HasOne("Core.Domain.Models.User", "IntakeBy")
                         .WithMany("IntakesDone")
                         .HasForeignKey("IntakeById")
@@ -400,11 +318,19 @@ namespace Core.Infrastructure.Migrations
                         .HasForeignKey("SupervisedById")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Core.Domain.Models.TreatmentPlan", "TreatmentPlan")
+                        .WithMany()
+                        .HasForeignKey("TreatmentPlanId");
+
+                    b.Navigation("HeadPractitioner");
+
                     b.Navigation("IntakeBy");
 
                     b.Navigation("Patient");
 
                     b.Navigation("SupervisedBy");
+
+                    b.Navigation("TreatmentPlan");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Treatment", b =>
@@ -419,24 +345,9 @@ namespace Core.Infrastructure.Migrations
                         .HasForeignKey("ExcecutedById")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Core.Domain.Models.TreatmentPlan", "TreatmentPlan")
-                        .WithOne("Treatment")
-                        .HasForeignKey("Core.Domain.Models.Treatment", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Domain.Models.Room", "Room")
-                        .WithMany("Treatments")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.Navigation("Dossier");
 
                     b.Navigation("ExcecutedBy");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("TreatmentPlan");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
@@ -471,16 +382,6 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Treatments");
-                });
-
-            modelBuilder.Entity("Core.Domain.Models.Room", b =>
-                {
-                    b.Navigation("Treatments");
-                });
-
-            modelBuilder.Entity("Core.Domain.Models.TreatmentPlan", b =>
-                {
-                    b.Navigation("Treatment");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.User", b =>

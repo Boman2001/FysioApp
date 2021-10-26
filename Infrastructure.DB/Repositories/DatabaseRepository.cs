@@ -132,12 +132,12 @@ namespace Core.Infrastructure.Repositories
 
         public async Task<T> Update(T entity)
         {
-            Guid guid;
 
             entity.UpdatedAt = DateTime.Now;
 
             var oldEntity = await Get(entity.Id);
-
+            _context.Entry(entity).State = EntityState.Detached;
+            _context.ChangeTracker.Clear();
             _dbSet.Update(entity);
             await Save();
 

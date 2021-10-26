@@ -57,14 +57,15 @@ namespace ApplicationServices.Services
             return _repository.Get(filter, includeProperties, orderBy);
         }
 
-        public Task<T> Add(T model)
+        public async Task<T> Add(T model)
         {
-            return _repository.Add(model);
+            return await _repository.Add(model);
         }
 
-        public Task<T> Update(T model)
+        public async Task<T> Update(T model)
         {
-            return _repository.Update(model);
+            _repository.Detach(model);
+            return await  _repository.Update(model);
         }
 
         public Task Delete(int id)

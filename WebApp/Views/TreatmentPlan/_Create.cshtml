@@ -1,0 +1,7 @@
+﻿@model WebApp.Dtos.TreatmentPlan.CreateTreatmentPlanDto
+<form asp-action="Create" asp-controller="TreatmentPlan" method="Post" id="CreatePatientForm" ajax replace-id="partialViewWrapperTreatmentPlan" data-ajax-complete="completed">
+
+    <div id="partialViewWrapperTreatmentPlan">
+        @await Html.PartialAsync("_Form", Model)
+    </div>
+</form>

@@ -10,7 +10,6 @@ namespace Core.DomainServices.Interfaces
     public interface IRepository<T> where T : Entity
     {
         IEnumerable<T> Get();
-        Task<IEnumerable<T>> GetAsync();
         Task<T> Get(int id);
         T Get(int id, IEnumerable<string> includeProperties);
         IEnumerable<T> Get(Expression<Func<T, bool>> filter);

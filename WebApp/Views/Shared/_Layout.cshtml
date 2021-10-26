@@ -31,7 +31,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Dossier" asp-action="Create">Dossier</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Create">Patient</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="index">Patient</a>
                     </li>
                 </ul>
             </div>
@@ -40,6 +40,19 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissable">
+                        <strong>@TempData["SuccessMessage"]</strong>
+                    </div>
+                }
+        
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissable">
+                        <strong>@TempData["ErrorMessage"]</strong>
+                    </div>
+                }
         @RenderBody()
     </main>
 </div>

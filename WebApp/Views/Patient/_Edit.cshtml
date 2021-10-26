@@ -1,2 +1,9 @@
 ﻿@model WebApp.Dtos.Models.PatientDto
+@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<form asp-action="Edit" asp-controller="Patient" method="Post" enctype="multipart/form-data" id="editPatientForm" ajax replace-id="partialViewWrapper">
 
+    <img src="/Uploads/@Model.Picture" alt="picture" height="200px">
+    <div id="partialViewWrapper">
+        @await Html.PartialAsync("_Form", Model)
+    </div>
+</form>

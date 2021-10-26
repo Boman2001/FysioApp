@@ -1,0 +1,16 @@
+﻿@model WebApp.Dtos.Treatment.CreateTreatmentDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Treatments</h2>
+
+@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<form asp-action="Create" asp-controller="Treatment" method="Post"  id="CreateForm" ajax replace-id="partialViewWrapper">
+
+    <div id="partialViewWrapper">
+        @await Html.PartialAsync("_Form", Model)
+    </div>
+</form>

@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using StamApi.GraphQL.Queries;
+using StamApi.GraphQL.Root;
 
 namespace StamApi
 {
@@ -90,6 +92,12 @@ namespace StamApi
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             );
+
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddTypeExtension<DiagnoseCodeQuery>()
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,9 +114,14 @@ namespace StamApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapGraphQL();
+            });
         }
     }
 }

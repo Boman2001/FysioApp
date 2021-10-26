@@ -1,4 +1,5 @@
 using System;
+using System.Security;
 using System.Text;
 using ApplicationServices.Services;
 using Core.Domain.Models;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using SendGrid;
 
 namespace WebApp
 {
@@ -66,9 +68,10 @@ namespace WebApp
 
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(DatabaseRepository<>));
-            services.AddScoped(typeof(IRepository<TreatmentCode>), typeof(WebRepository<TreatmentCode>));
-            services.AddScoped(typeof(IRepository<DiagnoseCode>), typeof(WebRepository<DiagnoseCode>));
+            services.AddScoped(typeof(IWebRepository<TreatmentCode>), typeof(WebRepository<TreatmentCode>));
+            services.AddScoped(typeof(IWebRepository<DiagnoseCode>), typeof(WebRepository<DiagnoseCode>));
             services.AddScoped(typeof(IService<Patient>), typeof(PatientService));
+            services.AddScoped(typeof(IService<Dossier>), typeof(DossierService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,6 +101,17 @@ namespace WebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+            
+            app.Use(async (context, next) =>
+            {
+                if (!context.User.Identity.IsAuthenticated
+                    && context.Request.Path.StartsWithSegments("/Uploads"))
+                {
+                    context.Response.Redirect("Account/Login");
+                    throw new SecurityException("Not Authorized");
+                }
+                await next.Invoke();
             });
         }
     }

@@ -3,63 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Core.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "DiagnoseCodes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<int>(type: "int", nullable: false),
-                    LocationBody = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pathology = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DiagnoseCodes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rooms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoomType = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TreatmentCodes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExplanationRequired = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TreatmentCodes", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "TreatmentPlans",
                 columns: table => new
@@ -67,7 +14,7 @@ namespace Core.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TreatmentsPerWeek = table.Column<int>(type: "int", nullable: false),
-                    TimePerSession = table.Column<float>(type: "real", nullable: false),
+                    TimePerSessionInMinutes = table.Column<int>(type: "int", nullable: false),
                     TreatmentCodeId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -168,10 +115,12 @@ namespace Core.Infrastructure.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiagnoseCodeId = table.Column<int>(type: "int", nullable: false),
-                    IsByStudent = table.Column<bool>(type: "bit", nullable: false),
+                    IsStudent = table.Column<bool>(type: "bit", nullable: false),
                     IntakeById = table.Column<int>(type: "int", nullable: true),
                     SupervisedById = table.Column<int>(type: "int", nullable: true),
+                    HeadPractitionerId = table.Column<int>(type: "int", nullable: true),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TreatmentPlanId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -184,6 +133,18 @@ namespace Core.Infrastructure.Migrations
                         column: x => x.PatientId,
                         principalTable: "Patients",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Dossiers_TreatmentPlans_TreatmentPlanId",
+                        column: x => x.TreatmentPlanId,
+                        principalTable: "TreatmentPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Dossiers_Users_HeadPractitionerId",
+                        column: x => x.HeadPractitionerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Dossiers_Users_IntakeById",
                         column: x => x.IntakeById,
@@ -231,15 +192,16 @@ namespace Core.Infrastructure.Migrations
                 name: "Treatment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     DossierId = table.Column<int>(type: "int", nullable: true),
                     TreatmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TreatmentCodeId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Particulatities = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoomId = table.Column<int>(type: "int", nullable: true),
+                    Room = table.Column<int>(type: "int", nullable: false),
                     ExcecutedById = table.Column<int>(type: "int", nullable: true),
-                    ExcecutedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExcecutedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -253,18 +215,6 @@ namespace Core.Infrastructure.Migrations
                         principalTable: "Dossiers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Treatment_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Treatment_TreatmentPlans_Id",
-                        column: x => x.Id,
-                        principalTable: "TreatmentPlans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Treatment_Users_ExcecutedById",
                         column: x => x.ExcecutedById,
@@ -284,6 +234,11 @@ namespace Core.Infrastructure.Migrations
                 column: "isPostedOnId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dossiers_HeadPractitionerId",
+                table: "Dossiers",
+                column: "HeadPractitionerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Dossiers_IntakeById",
                 table: "Dossiers",
                 column: "IntakeById");
@@ -299,6 +254,11 @@ namespace Core.Infrastructure.Migrations
                 column: "SupervisedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dossiers_TreatmentPlanId",
+                table: "Dossiers",
+                column: "TreatmentPlanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Treatment_DossierId",
                 table: "Treatment",
                 column: "DossierId");
@@ -307,20 +267,12 @@ namespace Core.Infrastructure.Migrations
                 name: "IX_Treatment_ExcecutedById",
                 table: "Treatment",
                 column: "ExcecutedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Treatment_RoomId",
-                table: "Treatment",
-                column: "RoomId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Comments");
-
-            migrationBuilder.DropTable(
-                name: "DiagnoseCodes");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
@@ -332,19 +284,13 @@ namespace Core.Infrastructure.Migrations
                 name: "Treatment");
 
             migrationBuilder.DropTable(
-                name: "TreatmentCodes");
-
-            migrationBuilder.DropTable(
                 name: "Dossiers");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "TreatmentPlans");
-
-            migrationBuilder.DropTable(
-                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Users");

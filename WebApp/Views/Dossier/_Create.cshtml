@@ -1,41 +1,33 @@
 ﻿@model WebApp.Dtos.Dossier.CreateDossierDto
 @Html.ValidationSummary(false, "", new {@class = "text-danger"})
 <form asp-action="Create" asp-controller="Dossier" method="Post" enctype="multipart/form-data" id="CreateDossierForm">
-    <div class="form-group">
-        <label asp-for="PatientId" class="control-label"></label>
-        <select class="form-control" asp-for="PatientId" asp-items="Model.Patients">
-            <option onclick="OpenPatientDialog()">Add new patient</option>
-        </select>
-        <span asp-validation-for="PatientId" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="IntakeById" class="control-label"></label>
-        <select class="form-control" asp-for="IntakeById" asp-items="Model.Staff">
-        </select>
-        <span asp-validation-for="IntakeById" class="text-danger"></span>
-    </div>
-    
-        <div class="form-group">
-            <label asp-for="SupervisedBy" class="control-label"></label>
-            <select class="form-control" asp-for="SupervisedBy" asp-items="Model.Staff">
-                <option value="" selected></option>
-            </select>
-            <span asp-validation-for="SupervisedBy" class="text-danger"></span>
-        </div>
+    <div class="card">
+        <h5 class="card-header">Dossier</h5>
+        <div class="card-body">
 
-    <div class="form-group">
-        <label asp-for="DiagnoseCodeId" class="control-label"></label>
-        <select class="form-control" asp-for="DiagnoseCodeId" asp-items="Model.Diagnoses">
-        </select>
-        <span asp-validation-for="DiagnoseCodeId" class="text-danger"></span>
-    </div>
+            <div class="form-group">
+                <label asp-for="PatientId" class="control-label"></label>
+                <select class="form-control" asp-for="PatientId" asp-items="Model.Patients">
+                    <option onclick="OpenPatientDialog()">Add new patient</option>
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
+            </div>
 
-    <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <textarea asp-for="Description" class="form-control"/> </textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+            <div class="form-group">
+                <label asp-for="IntakeById" class="control-label"></label>
+                <select class="form-control" asp-for="IntakeById" asp-items="Model.Staff">
+                </select>
+                <span asp-validation-for="IntakeById" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SupervisedById" class="control-label"></label>
+                <select class="form-control" asp-for="SupervisedById" asp-items="Model.Staff">
+                    <option value="" selected></option>
+                </select>
+                <span asp-validation-for="SupervisedById" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <label asp-for="HeadPracticionerId" class="control-label"></label>
@@ -43,96 +35,91 @@
                 </select>
                 <span asp-validation-for="HeadPracticionerId" class="text-danger"></span>
             </div>
-    
-    <div class="form-group">
-        <label asp-for="IsStudent" class="control-label"></label>
-        <select class="form-control" asp-for="IsStudent">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-        </select>
-        <span asp-validation-for="IsStudent" class="text-danger"></span>
+
+            <div class="form-group">
+                <label asp-for="DiagnoseCodeId" class="control-label"></label>
+                <select class="form-control" asp-for="DiagnoseCodeId" asp-items="Model.Diagnoses">
+                </select>
+                <span asp-validation-for="DiagnoseCodeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"/> </textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsStudent" class="control-label"></label>
+                <select class="form-control" asp-for="IsStudent">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="IsStudent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdmissionDate" class="control-label"></label>
+                <input type="date" class="form-control" asp-for="AdmissionDate" id="dateInput">
+                <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+            </div>
+        </div>
     </div>
-    
-    <div class="form-group">
-            <label asp-for="AdmissionDate" class="control-label"></label>
-            <input type="date" class="form-control" asp-for="AdmissionDate">
-            <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+
+    <div class="card">
+        <h5 class="card-header">Treatment Plan</h5>
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="TreatmentCodeId" class="control-label"></label>
+                <select class="form-control" asp-for="TreatmentCodeId" asp-items="Model.Treatments">
+                </select>
+                <span asp-validation-for="TreatmentCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TreatmentsPerWeek" class="control-label"></label>
+                <input type="number" class="form-control" asp-for="TreatmentsPerWeek">
+                <span asp-validation-for="TreatmentsPerWeek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimePerSessionInMinutes" class="control-label"></label>
+                <input type="number" class="form-control" asp-for="TimePerSessionInMinutes">
+                <span asp-validation-for="TimePerSessionInMinutes" class="text-danger"></span>
+            </div>
+        </div>
     </div>
-    
-    @* <div class="form-group"> *@
-    @*     <label asp-for="LastName" class="control-label"></label> *@
-    @*     <input asp-for="LastName" class="form-control"/> *@
-    @*     <span asp-validation-for="LastName" class="text-danger"></span> *@
-    @* </div> *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="Email" class="control-label"></label> *@
-    @*     <input asp-for="Email" class="form-control"/> *@
-    @*     <span type="email" asp-validation-for="Email" class="text-danger"></span> *@
-    @* </div> *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="IdNumber" class="control-label"></label> *@
-    @*     <input class="form-control" asp-for="IdNumber"> *@
-    @*     <span asp-validation-for="IdNumber" class="text-danger"></span> *@
-    @* </div> *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="PhoneNumber" class="control-label"></label> *@
-    @*     <input class="form-control" asp-for="PhoneNumber"> *@
-    @*     <span asp-validation-for="PhoneNumber" class="text-danger"></span> *@
-    @* </div> *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="BirthDay" class="control-label"></label> *@
-    @*     <input type="date" class="form-control" asp-for="BirthDay"> *@
-    @*     <span asp-validation-for="BirthDay" class="text-danger"></span> *@
-    @* </div> *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="Picture" class="control-label"></label> *@
-    @*     <input type="file" asp-for="Picture" class="form-control"/> *@
-    @*     <span asp-validation-for="Picture" class="text-danger"></span> *@
-    @* </div> *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="Gender" class="control-label"></label> *@
-    @*     <select class="form-control" asp-for="Gender"> *@
-    @*         <option value="Male">Male</option> *@
-    @*         <option value="Female">Female</option> *@
-    @*         <option value="Other">Other</option> *@
-    @*     </select> *@
-    @*     <span asp-validation-for="Gender" class="text-danger"></span> *@
-    @* </div> *@
 
     <div class="col">
         <div class="form-group">
-            <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block"/>
+            <input type="submit" value="Next" class="btn btn-primary btn-user btn-block"/>
         </div>
     </div>
 </form>
 
 <!-- Modal -->
 <div class="modal fade" id="PatientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">AddPatient</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class="modal-body">
-            <span id="CreatePartial">
-                <div class="spinner-border" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-            </span>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">AddPatient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span id="CreatePartial">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
 </div>
 <script>
-
 function OpenPatientDialog(){
-    console.log("ligma")
     $('#PatientModal').modal({
     show: true
     });
@@ -144,6 +131,7 @@ function OpenPatientDialog(){
     });
 
     }
+    
 window.onload = function () {
     
 $.get('/Dossier/Doctors' , function(data) {
@@ -152,7 +140,9 @@ $('#placeholderDoctors').html(data);
 /* little fade in effect */
 $('#placeholderDoctors').fadeIn('fast');
 });
+document.getElementById('dateInput').value = null;
 
 }
+
 
 </script>
