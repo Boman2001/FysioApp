@@ -51,14 +51,14 @@ steps:
   inputs:
     command: custom
     custom: 'ef '
-    arguments: migrations script --output /SQL/stamdbscript.sql --idempotent --project **/Infrastructure.DB.csproj  --context StamDbContext
+    arguments: migrations script --output /SQL/stamdbscript.sql --idempotent --project ./Infrastructure.DB/Infrastructure.DB.csproj  --context StamDbContext
 
 - task: DotNetCoreCLI@2
   displayName: Create SQL Scripts Identity
   inputs:
     command: custom
     custom: 'ef '
-    arguments: migrations script --output /SQL/identitydbscript.sql --idempotent --project **/Infrastructure.DB.csproj  --context SecurityDbContext
+    arguments: migrations script --output /SQL/identitydbscript.sql --idempotent --project ./Infrastructure.DB/Infrastructure.DB.csproj  --context SecurityDbContext
 
 
 - task: DotNetCoreCLI@2
@@ -66,7 +66,7 @@ steps:
   inputs:
     command: custom
     custom: 'ef '
-    arguments: migrations script --output /SQL/applicationdbscript.sql --idempotent --project **/Infrastructure.DB.csproj --context ApplicationDbContext
+    arguments: migrations script --output /SQL/applicationdbscript.sql --idempotent --project ./Infrastructure.DB/Infrastructure.DB.csproj --context ApplicationDbContext
 
 - task: DotNetCoreCLI@2
   displayName: Publish
