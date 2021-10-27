@@ -28,23 +28,23 @@ steps:
       command: custom
       custom: 'tool '
       arguments: install dotnet-ef
-  #- task: DotNetCoreCLI@2
-  #  displayName: Restore
-  #  inputs:
-  #    command: restore
-  #    projects: '**/*.csproj'
-  #    
-  #- task: DotNetCoreCLI@2
-  #  displayName: Build
-  #  inputs:
-  #    projects: '**/*.csproj'
-  #    arguments: --configuration $(BuildConfiguration)
-  #
-  #- task: DotNetCoreCLI@2
-  #  inputs:
-  #    command: 'test'
-  #    projects: '**/*Tests.csproj'
-  #    testRunTitle: 'DomainTest'
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '**/*.csproj'
+      arguments: --configuration $(BuildConfiguration)
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: '**/*Tests.csproj'
+      testRunTitle: 'DomainTest'
 
   - task: DotNetCoreCLI@2
     displayName: Create SQL Scripts Stam
@@ -91,7 +91,7 @@ steps:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: SQLScriptsIdentity'
     inputs:
-      PathtoPublish: $(Build.ArtifactStagingDirectory)/SQL/dentitydbscript.sql
+      PathtoPublish: $(Build.ArtifactStagingDirectory)/SQL/identitydbscript.sql
       ArtifactName: SQLScriptsIdentiy
 
   - task: PublishBuildArtifacts@1
