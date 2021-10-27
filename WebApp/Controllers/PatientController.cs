@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 using WebApp.Dtos.Models;
 
@@ -53,13 +51,13 @@ namespace WebApp.Controllers
         // }
 
         // GET: Patient/Create
-        
+
         [Authorize(Roles = "Staff")]
         public ActionResult Create()
         {
             return View();
         }
-        
+
 
         // GET: Patient/Create
         public ActionResult CreatePartial()
@@ -72,7 +70,6 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(PatientDto registerDto, IFormFile picture)
         {
-
             if
             (
                 ModelState.IsValid
@@ -84,6 +81,7 @@ namespace WebApp.Controllers
                     TempData["ErrorMessage"] = "Email al in gebruik";
                     return RedirectToAction("Create", "Dossier");
                 }
+
                 string patientNumber = Guid.NewGuid().ToString();
                 string pictureUrl = ProcessUploadedFile(picture);
                 try
@@ -120,7 +118,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Patient/Edit/5
-        
+
         [Authorize(Roles = "Patient, Staff")]
         public async Task<ActionResult> Edit(int id)
         {
@@ -133,23 +131,23 @@ namespace WebApp.Controllers
         // POST: Patient/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
         [Authorize(Roles = "Patient, Staff")]
-        public async Task<ActionResult> Edit(int id, PatientDto patientDto,  IFormFile picture)
+        public async Task<ActionResult> Edit(int id, PatientDto patientDto, IFormFile picture)
         {
             try
             {
                 if
-                (!ModelState.IsValid)
+                    (!ModelState.IsValid)
                 {
                     return View(patientDto);
                 }
+
                 string pictureUrl = patientDto.Picture;
                 if (picture != null)
                 {
                     pictureUrl = ProcessUploadedFile(picture);
                 }
-                    
+
                 await _patientService.Update(new Patient()
                 {
                     Id = patientDto.id.Value,

@@ -4,6 +4,7 @@
 
     <img src="/Uploads/@Model.Picture" alt="picture" height="200px">
     <div id="partialViewWrapper">
+        <input type="hidden" asp-for="Picture" class="form-control" value="@Model.Picture"/>
         @await Html.PartialAsync("_Form", Model)
     </div>
 </form>

@@ -36,7 +36,7 @@ namespace WebApp.Controllers
         
           [HttpGet]
         [Authorize(Roles = "Staff, Patient")]
-        [Route("Treatment/Create/{dossierId}")]
+        [Route("Appointment/Create/{dossierId}")]
         public async Task<ActionResult> Create([FromRoute] int dossierId)
         {
             Dossier dossier = await _dossierService.Get(dossierId);
