@@ -52,13 +52,13 @@ namespace WebApp.Controllers
                     IsVisiblePatient = createCommentDto.IsVisiblePatient
                 });
                 
-                dossier.Comments.ToList().Add(comment);
-
+//                 dossier
+// .Comments.ToList().Add(comment);
                 await _dossierService.Update(dossier);
                 TempData["SuccessMessage"] = "Success";
                 return RedirectToAction("Detail", "Dossier",createCommentDto.DossierId);
             }
-
+                
             return View(createCommentDto);
         }
     }

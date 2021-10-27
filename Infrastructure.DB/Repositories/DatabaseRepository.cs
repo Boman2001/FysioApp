@@ -134,20 +134,11 @@ namespace Core.Infrastructure.Repositories
         {
 
             entity.UpdatedAt = DateTime.Now;
-
-            var oldEntity = await Get(entity.Id);
+            
             _context.Entry(entity).State = EntityState.Detached;
             _context.ChangeTracker.Clear();
             _dbSet.Update(entity);
             await Save();
-
-            var properties = new
-            {
-                New = entity, Old = oldEntity
-            };
-
-            await Save();
-
             return entity;
         }
 

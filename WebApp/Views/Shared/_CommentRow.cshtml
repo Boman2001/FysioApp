@@ -3,6 +3,13 @@
 
 <tr>
     <th>@Model.CreatedBy.GetFormattedName()</th>
-    <td>@Model.IsVisiblePatient ? "Ja" : "nee"</td>
+    @if (Model.IsVisiblePatient)
+    {
+        <td>Ja</td>
+    }
+    else
+    {
+        <td>Nee</td>
+    }
     <td>@Model.CommentBody</td>
 </tr>
