@@ -1,0 +1,15 @@
+﻿@model WebApp.Dtos.Comment.CreateCommentDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2></h2>
+@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<form asp-action="Create" asp-controller="Comment" method="Post" enctype="multipart/form-data" id="CreateCommentForm" ajax replace-id="partialViewWrapper">
+
+    <div id="partialViewWrapper">
+        @await Html.PartialAsync("_Form", Model)
+    </div>
+</form>

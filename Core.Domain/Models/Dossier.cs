@@ -18,6 +18,11 @@ namespace Core.Domain.Models
         public virtual  User  HeadPractitioner { get; set; }
         public DateTime RegistrationDate  { get; set; }
         public DateTime DismissionDate  { get; set; }
+
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string Housenumber { get; set; }
         public virtual TreatmentPlan TreatmentPlan { get; set; }
         public virtual IEnumerable<Comment> Comments  { get; set; }
         public virtual  IEnumerable<Treatment> Treatments { get; set; }

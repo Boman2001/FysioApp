@@ -1,0 +1,8 @@
+﻿@using ApplicationServices.ExtensionMethods
+@model WebApp.Dtos.Comment.ViewCommentDto
+
+<tr>
+    <th>@Model.CreatedBy.GetFormattedName()</th>
+    <td>@Model.IsVisiblePatient ? "Ja" : "nee"</td>
+    <td>@Model.CommentBody</td>
+</tr>

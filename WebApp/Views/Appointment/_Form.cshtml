@@ -1,0 +1,28 @@
+﻿@model WebApp.Dtos.Appointment.CreateAppointmentDto
+<input type="hidden" value="@Model.DossierId" asp-for="DossierId">
+<div class="form-group">
+    <label asp-for="TreatmentDate" class="control-label"></label>
+    <input type="datetime-local" class="form-control" asp-for="TreatmentDate" value="">
+    <span asp-validation-for="TreatmentDate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PracticionerId" class="control-label"></label>
+    <select class="form-control" asp-for="PracticionerId" asp-items="Model.Staff">
+    </select>
+    <span asp-validation-for="PracticionerId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Room" class="control-label"></label>
+    <select class="form-control" asp-for="Room">
+        <option value="None">None</option>
+        <option value="PracticeHall">Practice Hall</option>
+        <option value="TreatmentRoom">Treatment Room</option>
+    </select>
+    <span asp-validation-for="Room" class="text-danger"></span>
+</div>
+
+<div class="col">
+    <div class="form-group">
+        <input type="submit" value="afspraak aanmaken" class="btn btn-primary btn-user btn-block"/>
+    </div>
+</div>

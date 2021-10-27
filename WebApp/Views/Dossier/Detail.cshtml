@@ -1,0 +1,47 @@
+﻿@using ApplicationServices.ExtensionMethods
+@model WebApp.Dtos.Dossier.ViewDossierDto
+<div class="row">
+    <div class="col-6">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/Uploads/@Model.Patient.PictureUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Patient.GetFormattedName()</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Leeftijd : @Model.Age</li>
+                <li class="list-group-item">Beschrijving : @Model.Description</li>
+                <li class="list-group-item">Intake door : @Model.IntakeBy.GetFormattedName()</li>
+                <li class="list-group-item">Hoofdbehandelaar : @Model.HeadPractitioner.GetFormattedName()</li>
+                <li class="list-group-item">Intake Datum : @Model.AdmissionDate</li>
+                <li class="list-group-item">Diagnose: @Model.DiagnoseCode.Code , @Model.DiagnoseCode.Pathology @Model.DiagnoseCode.LocationBody</li>
+                <li class="list-group-item">Addres: @Model.Street @Model.HouseNumber @Model.City </li>
+                <li class="list-group-item">Postcode: @Model.PostalCode </li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="cod-6">
+        <div class="row">
+            @await Html.PartialAsync("_Treatment", Model.Treatments)
+        </div>
+        <div class="row">
+            @await Html.PartialAsync("_Comment", Model.Comments)
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <a href="/Treatment/Create/@Model.Id" class="btn btn-primary">Behandeling Aanmaken</a>
+
+            </div>
+            <div class="col">
+                <a href="/Comment/Create/@Model.Id" class="btn btn-primary">Opmerking Aanmaken</a>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -10,8 +10,6 @@ namespace Core.Domain.Models
     [NotMapped]
     public abstract class Entity : IEntity
     {
-        [NotMapped] public List<Activity> Activities { get; set; }
-
         [Key] 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

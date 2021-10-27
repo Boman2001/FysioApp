@@ -1,0 +1,18 @@
+﻿@model WebApp.Dtos.Comment.CreateCommentDto
+<input type="hidden" class="form-control" asp-for="DossierId" value="@Model.DossierId">
+<div class="form-group">
+    <label asp-for="CommentBody" class="control-label"></label>
+    <textarea asp-for="CommentBody" class="form-control"/> </textarea>
+    <span asp-validation-for="CommentBody" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="IsVisiblePatient" class="control-label"></label>
+    <select class="form-control" asp-for="IsVisiblePatient">
+        <option value="false">Nee</option>
+        <option value="true">Ja</option>
+    </select>
+    <span asp-validation-for="IsVisiblePatient" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <input type="submit" value="Opmerking toevoegen" class="btn btn-primary btn-user btn-block"/>
+</div>

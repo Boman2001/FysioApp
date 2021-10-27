@@ -1,0 +1,15 @@
+﻿@model WebApp.Dtos.Appointment.CreateAppointmentDto
+
+@{
+    ViewBag.Title = "Appointment";
+    Layout = "_Layout";
+}
+
+<h2>Afspraken</h2>
+
+@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<form asp-action="Create" asp-controller="Appointment" method="Post"  id="CreateForm" ajax replace-id="partialViewWrapper">
+    <div id="partialViewWrapper">
+        @await Html.PartialAsync("_Form", Model)
+    </div>
+</form>

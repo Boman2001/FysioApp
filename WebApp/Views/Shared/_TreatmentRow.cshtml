@@ -1,0 +1,8 @@
+﻿@using ApplicationServices.ExtensionMethods
+@model WebApp.Dtos.Treatment.TreatmentViewDto
+<tr>
+    <td>@Model.TreatmentDate</td>
+    <td>@Model.Description</td>
+    <td>@Model.Room</td>
+    <td>@Model.Practicioner.GetFormattedName()</td>
+</tr>

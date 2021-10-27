@@ -1,0 +1,27 @@
+﻿@using WebApp.Dtos.Treatment
+@model IEnumerable<WebApp.Dtos.Treatment.TreatmentViewDto>
+<div class="card">
+    <div class="card-header">
+        Behandelingen
+    </div>
+    <table class="table" id="">
+        <thead>
+        <tr>
+            <th scope="col">Datum</th>
+            <th scope="col">Beschrijving</th>
+            <th scope="col">KamerType</th>
+            <th scope="col">Uitgevoerd door:</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (TreatmentViewDto treatmentViewDto in Model)
+        {
+            @await Html.PartialAsync("_TreatmentRow", treatmentViewDto)
+            ;
+        }
+
+
+
+        </tbody>
+    </table>
+</div>

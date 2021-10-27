@@ -73,6 +73,9 @@ namespace WebApp
             services.AddScoped(typeof(IService<Patient>), typeof(PatientService));
             services.AddScoped(typeof(IService<Dossier>), typeof(DossierService));
             services.AddScoped(typeof(IService<Treatment>), typeof(TreatmentService));
+            services.AddScoped(typeof(IService<Treatment>), typeof(TreatmentService));
+            services.AddScoped(typeof(IService<Comment>), typeof(CommentService));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
 
         }
 

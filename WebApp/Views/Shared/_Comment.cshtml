@@ -1,0 +1,24 @@
+﻿@using WebApp.Dtos.Comment
+@model IEnumerable<WebApp.Dtos.Comment.ViewCommentDto>
+
+<div class="card">
+    <div class="card-header">
+        Opmerkingen
+    </div>
+    <table class="table" id="">
+        <thead>
+        <tr>
+            <th scope="col">Geplaatst Door</th>
+            <th scope="col">Zichtbaar voor patient</th>
+            <th scope="col">Beschrijving</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (ViewCommentDto treatmentViewDto in Model)
+        {
+            @await Html.PartialAsync("_CommentRow", treatmentViewDto);
+        }
+
+        </tbody>
+    </table>
+</div>

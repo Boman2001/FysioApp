@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -27,9 +27,9 @@ namespace Core.Infrastructure.Repositories
             return _dbSet.ToList();
         }
 
-        public Task<IEnumerable<T>> GetAsync()
+        public async Task<IEnumerable<T>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
         public async Task<T> Get(int id)

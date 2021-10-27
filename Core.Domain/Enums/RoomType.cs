@@ -3,6 +3,7 @@
     public enum RoomType
     {
         PracticeHall,
-        TreatmentRoom
+        TreatmentRoom,
+        None
     }
 }

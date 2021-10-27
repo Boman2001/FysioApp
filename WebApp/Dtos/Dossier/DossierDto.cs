@@ -23,21 +23,35 @@ namespace WebApp.Dtos.Dossier
         [Required]
         public int TreatmentPlanId { get; set; }
         [Required]
-        [Display(Name = "Intake Doctor")]
+        [Display(Name = "Intake Doktor")]
         public int IntakeById { get; set; }
         [Required]
         [Display(Name = "Patient")]
         public int PatientId { get; set; }
         
-        [Display(Name = "Head Practitioner")]
+        [Display(Name = "Hoofd Behandelaar")]
         public int HeadPracticionerId { get; set; }
         
         [Display(Name = "Supervisor")]
         public int? SupervisedById { get; set; }
+        [Display(Name = "Intake datum")]
         public DateTime AdmissionDate  { get; set; }
+        [Required]
+        [Display(Name = "Straat")]
+        public string Street { get; set; }
+        [Required]
+        [Display(Name = "Stad")]
+        public string City { get; set; }
+        [Required]
+        [Display(Name = "Post Code")]
+        [RegularExpression(@"/^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i;", ErrorMessage = "Geen Valide Postcode")]
+        public string PostalCode { get; set; }
+        [Required]
+        [Display(Name = "Huisnummer en toevoeging")]
+        public string HouseNumber { get; set; }
 
         public Core.Domain.Models.TreatmentPlan? TreatmentPlan { get; set; }
-        public IEnumerable<Comment>? Comments  { get; set; }
+        // public IEnumerable<Comments>? Comments  { get; set; }
         public IEnumerable<Core.Domain.Models.Treatment>? Treatments { get; set; }
 
     }
