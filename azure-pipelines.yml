@@ -85,17 +85,17 @@ steps:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: SQLScriptsStam'
     inputs:
-      PathtoPublish: $(Build.SourcesDirectory)/SQL/stamdbscript.sql
+      PathtoPublish: /SQL/stamdbscript.sql
       ArtifactName: SQLScriptsStam
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: SQLScriptsIdentity'
     inputs:
-      PathtoPublish: $(Build.SourcesDirectory)/SQL/dentitydbscript.sql
+      PathtoPublish: /SQL/dentitydbscript.sql
       ArtifactName: SQLScriptsIdentiy
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: SQLScriptsApplication'
     inputs:
-      PathtoPublish: $(Build.SourcesDirectory)/SQL/applicationdbscript.sql
+      PathtoPublish: /SQL/applicationdbscript.sql
       ArtifactName: SQLScriptsApplication
