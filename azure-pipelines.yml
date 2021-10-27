@@ -85,5 +85,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: SQLScripts'
   inputs:
-    PathtoPublish: $(Build.SourcesDirectory)/SQL/tododbscript.sql
+    PathtoPublish: $(Build.SourcesDirectory)/SQL/*.sql
     ArtifactName: SQLScripts
