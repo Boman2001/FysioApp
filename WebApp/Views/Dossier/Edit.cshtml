@@ -1,0 +1,17 @@
+﻿@model WebApp.Dtos.Dossier.CreateDossierDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Edit Patient</h2>
+
+<div class="card">
+    <h5 class="card-header">Dossier</h5>
+    <div class="card-body">
+        <form asp-action="Edit" asp-controller="Dossier" method="Post" enctype="multipart/form-data" id="CreateDossierForm">
+        @await Html.PartialAsync("_Form", Model)
+        </form>
+    </div>
+</div>

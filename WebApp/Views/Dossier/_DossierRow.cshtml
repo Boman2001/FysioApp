@@ -1,0 +1,14 @@
+﻿@model Core.Domain.Models.Dossier
+
+<div class="col-4">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="Uploads/@Model.Patient.PictureUrl" alt="Card image cap" style="height: 300px; width: 300px;object-fit: cover;">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Patient.FirstName @Model.Patient.Preposition @Model.Patient.LastName</h5>
+        </div>
+        <div class="card-body">
+            <a href="" class="btn btn-primary">Details</a>
+            <a href="/Treatment/Create/@Model.Id" class="btn btn-primary">Afspraak maken</a>
+        </div>
+    </div>
+</div>

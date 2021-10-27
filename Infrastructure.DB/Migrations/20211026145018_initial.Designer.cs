@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211025154128_initial")]
+    [Migration("20211026145018_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,9 +182,6 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TimePerSessionInMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TreatmentCodeId")
                         .HasColumnType("int");
 
                     b.Property<int>("TreatmentsPerWeek")

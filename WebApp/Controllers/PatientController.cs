@@ -72,13 +72,18 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(PatientDto registerDto, IFormFile picture)
         {
+
             if
             (
                 ModelState.IsValid
-                && (await this._userManager.FindByNameAsync(registerDto.Email) == null)
-                && !(this._patientService.Get().Any(p => p.Email.Equals(registerDto.Email)))
             )
             {
+                if ((await this._userManager.FindByNameAsync(registerDto.Email) != null)
+                    && (this._patientService.Get().Any(p => p.Email.Equals(registerDto.Email))))
+                {
+                    TempData["ErrorMessage"] = "Email al in gebruik";
+                    return RedirectToAction("Create", "Dossier");
+                }
                 string patientNumber = Guid.NewGuid().ToString();
                 string pictureUrl = ProcessUploadedFile(picture);
                 try

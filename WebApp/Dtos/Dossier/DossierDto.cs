@@ -35,6 +35,7 @@ namespace WebApp.Dtos.Dossier
         [Display(Name = "Supervisor")]
         public int? SupervisedById { get; set; }
         public DateTime AdmissionDate  { get; set; }
+
         public Core.Domain.Models.TreatmentPlan? TreatmentPlan { get; set; }
         public IEnumerable<Comment>? Comments  { get; set; }
         public IEnumerable<Core.Domain.Models.Treatment>? Treatments { get; set; }

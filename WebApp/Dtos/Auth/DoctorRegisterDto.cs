@@ -6,8 +6,11 @@ namespace WebApp.Dtos.Auth
     public class DoctorRegisterDto : RegisterDto
     {
         [NotNull]
+        [Required]
+        [StringLength(11)]
         public string BigNumber { get; set; }
-        [NotNull]
+        [Required]
+        [StringLength(7)]
         public string EmployeeNumber { get; set; }
         [NotNull]
         [Phone]

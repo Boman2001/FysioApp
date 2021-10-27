@@ -15,7 +15,6 @@ namespace Core.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TreatmentsPerWeek = table.Column<int>(type: "int", nullable: false),
                     TimePerSessionInMinutes = table.Column<int>(type: "int", nullable: false),
-                    TreatmentCodeId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)

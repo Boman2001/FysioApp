@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 using WebApp.Dtos.Auth;
 
 namespace WebApp.Controllers
@@ -58,11 +61,9 @@ namespace WebApp.Controllers
             Console.WriteLine(ModelState);
             return View();
         }
-
-        [HttpPost]
+        [HttpGet]
         [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostLogout()
+        public async Task<IActionResult> Logout()
         {
             await this._signInManager.SignOutAsync();
 
@@ -105,8 +106,12 @@ namespace WebApp.Controllers
                 });
             }
 
-
-            ViewBag.error = "Something went wrong, please try again later";
+            
+            if (ModelState.ErrorCount > 0){
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                allErrors.ForEach(e => { TempData["ErrorMessage"] += e.ErrorMessage + "   "; });
+            }
+            
             return View("Register", registerDto);
         }
 

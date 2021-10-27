@@ -41,7 +41,7 @@ namespace WebApp
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                options.UseSqlServer(Configuration.GetConnectionString("Default")).UseLazyLoadingProxies();
             });
 
             services.AddDbContext<SecurityDbContext>(options =>
@@ -72,6 +72,8 @@ namespace WebApp
             services.AddScoped(typeof(IWebRepository<DiagnoseCode>), typeof(WebRepository<DiagnoseCode>));
             services.AddScoped(typeof(IService<Patient>), typeof(PatientService));
             services.AddScoped(typeof(IService<Dossier>), typeof(DossierService));
+            services.AddScoped(typeof(IService<Treatment>), typeof(TreatmentService));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

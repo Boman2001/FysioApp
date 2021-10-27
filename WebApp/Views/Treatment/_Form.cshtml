@@ -1,13 +1,21 @@
 ﻿@model WebApp.Dtos.Treatment.CreateTreatmentDto
-
+<input type="hidden" value="@Model.DossierId" asp-for="DossierId">
 <div class="form-group">
     <label asp-for="TreatmentDate" class="control-label"></label>
-    <input type="date" class="form-control" asp-for="TreatmentDate">
+    <input type="datetime-local" class="form-control" asp-for="TreatmentDate" value="">
     <span asp-validation-for="TreatmentDate" class="text-danger"></span>
 </div>
-
 <div class="form-group">
-    <input type="hidden" asp-for="TreatmentCodeId" value="Model.TreatmentCode.Id" class="form-control"/>
+    <label asp-for="PracticionerId" class="control-label"></label>
+    <select class="form-control" asp-for="PracticionerId" asp-items="Model.Staff">
+    </select>
+    <span asp-validation-for="PracticionerId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="TreatmentCodeId" class="control-label"></label>
+    <select class="form-control" asp-for="TreatmentCodeId" asp-items="Model.Treatments">
+    </select>
+    <span asp-validation-for="TreatmentCode" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="Description" class="control-label"></label>
@@ -26,6 +34,6 @@
 
 <div class="col">
     <div class="form-group">
-        <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block"/>
+        <input type="submit" value="afspraak aanmaken" class="btn btn-primary btn-user btn-block"/>
     </div>
 </div>

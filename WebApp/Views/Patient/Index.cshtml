@@ -9,9 +9,15 @@
 <h2>Patienten</h2>
 
 
-<div class="d-flex justify-content-between">
+<div class="row">
     @foreach (PatientDto patient in Model)
     {
         await Html.RenderPartialAsync("_PatientRow", patient);
     }
+    <div class="col">
+        <div class="card h-100" style="width: 18rem;">
+            <a asp-controller="Patient" asp-action="Create" class="btn btn-primary h-100"> Create</a>
+        </div>
+    </div>
+
 </div>

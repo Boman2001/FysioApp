@@ -12,11 +12,14 @@ namespace WebApp.Dtos.Treatment
         public DateTime TreatmentDate { get; set; }
         [Required]
         public int TreatmentCodeId { get; set; }
-        [Required]
         public string Description  { get; set; }
         
         [Required]
+        public int PracticionerId { get; set; }
+        
+        [Required]
         public RoomType Room { get; set; }
+
         
         public TreatmentCode? TreatmentCode { get; set; }
     }

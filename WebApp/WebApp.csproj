@@ -14,6 +14,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
       <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.11" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
         <PrivateAssets>all</PrivateAssets>
@@ -34,6 +35,9 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Auth\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Dossier\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Dossier\_Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Dossier\_Form.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

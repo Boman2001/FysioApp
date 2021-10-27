@@ -30,15 +30,6 @@ namespace WebApp.Controllers
         public ActionResult Create()
         {
             CreateTreatmentPlanDto viewModel = new CreateTreatmentPlanDto();
-            IEnumerable<TreatmentCode> treatments = _treatmentCodeRepository.GetAsync().Result;
-            if (treatments != null)
-            {
-                treatments.ForEach(code =>
-                {
-                    viewModel.Treatments.Add(new SelectListItem(code.Code + " , " + code.Description,
-                        code.Id.ToString()));
-                });
-            }
 
             return View("Create", viewModel);
         }
@@ -53,7 +44,6 @@ namespace WebApp.Controllers
                 Dossier dossier = this.TempData.Get<Dossier>("dossier");
                 TreatmentPlan treatmentplan = await _treatmentPlanRepository.Add(new TreatmentPlan()
                 {
-                    TreatmentCodeId = treatmentPlanDto.TreatmentCodeId,
                     TreatmentsPerWeek = treatmentPlanDto.TreatmentsPerWeek,
                     TimePerSessionInMinutes = treatmentPlanDto.TimePerSessionInMinutes
                 });

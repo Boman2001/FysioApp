@@ -8,9 +8,6 @@ namespace Core.Domain.Models
         public int TreatmentsPerWeek { get; set; }
         public int TimePerSessionInMinutes { get; set; }
         [NotMapped]
-        public TreatmentCode TreatmentCode { get; set; }
-        public int TreatmentCodeId { get; set; }
-        [NotMapped]
         public virtual IEnumerable<Treatment> Treatments { get; set; }
         
     }

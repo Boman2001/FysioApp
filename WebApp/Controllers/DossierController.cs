@@ -9,6 +9,7 @@ using Core.DomainServices.Interfaces;
 using Infrastructure.API.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 using WebApp.Dtos.Dossier;
@@ -43,6 +44,14 @@ namespace WebApp.Controllers
 
         // GET: Patient/Create
         [Authorize(Roles = "Staff")]
+        public ActionResult Index()
+        {
+            IEnumerable<Dossier> dossiers =  _dossierService.Get();
+            return View(dossiers);
+        }
+        
+        // GET: Patient/Create
+        [Authorize(Roles = "Staff")]
         public async Task<ActionResult> Create()
         {
             CreateDossierDto viewModel = await this.fillDto(new CreateDossierDto());
@@ -71,7 +80,6 @@ namespace WebApp.Controllers
                     }
                     TreatmentPlan treatmentplan =  await  _treatmentPlanRepository.Add(new TreatmentPlan()
                     {
-                        TreatmentCodeId = dossier.TreatmentCodeId,
                         TreatmentsPerWeek = dossier.TreatmentsPerWeek,
                         TimePerSessionInMinutes = dossier.TimePerSessionInMinutes
                     });
@@ -97,8 +105,9 @@ namespace WebApp.Controllers
                     }
                     catch (ValidationException e)
                     {
-                        ViewBag.error = e;
+                        TempData["ErrorMessage"] = e.Message;
                     }
+                    
                 }
             }
 
@@ -146,46 +155,58 @@ namespace WebApp.Controllers
 
         private async Task<CreateDossierDto> fillDto(CreateDossierDto viewModel)
         {
-            IEnumerable<Doctor> doctors = _doctorRepository.Get();
-            IEnumerable<Student> students = _studentRepository.Get();
-            IEnumerable<User> users = new List<User>();
-            IEnumerable<Patient> patients = _patientRepository.Get();
-            IEnumerable<DiagnoseCode> diagnoseCodes = await _diagnoseRepository.GetAsync();
-            IEnumerable<TreatmentCode> treatments = _treatmentCodeRepository.GetAsync().Result;
-            users = users.Union(students).Union(doctors);
-            viewModel.Patients = new List<SelectListItem>();
-            viewModel.Staff = new List<SelectListItem>();
-            viewModel.Diagnoses = new List<SelectListItem>();
-            viewModel.Treatments = new List<SelectListItem>();
+            try
+            {
+                IEnumerable<Doctor> doctors = _doctorRepository.Get();
+                IEnumerable<Student> students = _studentRepository.Get();
+                IEnumerable<User> users = new List<User>();
+                IEnumerable<Patient> patients = _patientRepository.Get();
+                IEnumerable<DiagnoseCode> diagnoseCodes = await _diagnoseRepository.GetAsync();
+                IEnumerable<TreatmentCode> treatments = await _treatmentCodeRepository.GetAsync();
+                
+                //TODO haal dit op via user service en check op !patient
+                users = users.Union(students).Union(doctors);
+                viewModel.Patients = new List<SelectListItem>();
+                viewModel.Staff = new List<SelectListItem>();
+                viewModel.Diagnoses = new List<SelectListItem>();
+                viewModel.TreatmentItems = new List<SelectListItem>();
             
 
-            if (treatments != null)
-            {
-                treatments.ForEach(code =>
+                if (treatments != null)
                 {
-                    viewModel.Treatments.Add( new SelectListItem(code.Code + " , " + code.Description , code.Id.ToString()));
+                    treatments.ForEach(code =>
+                    {
+                        viewModel.TreatmentItems.Add( new SelectListItem(code.Code + " , " + code.Description , code.Id.ToString()));
+                    });
+                }
+
+                users.ForEach(doctor =>
+                {
+                    viewModel.Staff.Add(
+                        new SelectListItem(doctor.LastName + " , " + doctor.FirstName, doctor.Id.ToString()));
                 });
+
+                patients.ForEach(patient =>
+                {
+                    viewModel.Patients.Add(
+                        new SelectListItem(patient.LastName + " , " + patient.FirstName, patient.Id.ToString()));
+                });
+
+
+                diagnoseCodes.ForEach(dc =>
+                {
+                    viewModel.Diagnoses.Add(
+                        new SelectListItem(dc.Code + " , " + dc.Pathology + " " + dc.LocationBody, dc.Id.ToString()));
+                });
+                return viewModel;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
 
-            users.ForEach(doctor =>
-            {
-                viewModel.Staff.Add(
-                    new SelectListItem(doctor.LastName + " , " + doctor.FirstName, doctor.Id.ToString()));
-            });
-
-            patients.ForEach(patient =>
-            {
-                viewModel.Patients.Add(
-                    new SelectListItem(patient.LastName + " , " + patient.FirstName, patient.Id.ToString()));
-            });
-
-
-            diagnoseCodes.ForEach(dc =>
-            {
-                viewModel.Diagnoses.Add(
-                    new SelectListItem(dc.Code + " , " + dc.Pathology + " " + dc.LocationBody, dc.Id.ToString()));
-            });
-            return viewModel;
+           
         }
     }
 }

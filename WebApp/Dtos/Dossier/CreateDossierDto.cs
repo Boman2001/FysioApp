@@ -12,19 +12,15 @@ namespace WebApp.Dtos.Dossier
         public List<SelectListItem> Staff { get; set; }
         public List<SelectListItem> Patients { get; set; }
         public List<SelectListItem> Diagnoses { get; set; }
-        public List<SelectListItem> Treatments { get; set; }
-        [Required]
-        [MinLength(1, ErrorMessage = "There must be more then one treatment per week")]
-        public int TreatmentsPerWeek;
+        public List<SelectListItem> TreatmentItems { get; set; }
 
         [Required]
-        [MinLength(1, ErrorMessage = "a treatment must atleast last 1 minute")]
-        public int TimePerSessionInMinutes;
+        [Range(1, 999, ErrorMessage = "There must be more then one treatment per week")]
+        public int TreatmentsPerWeek { get; set; }
 
-        public TreatmentCode? TreatmentCode;
+        [Required]
+        [Range(1, 999, ErrorMessage = "a treatment must atleast last 1 minute")]
+        public int TimePerSessionInMinutes  { get; set; }
 
-        [Required] public int TreatmentCodeId;
-        
-        
     }
 }

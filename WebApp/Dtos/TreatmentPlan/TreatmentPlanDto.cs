@@ -14,8 +14,5 @@ namespace WebApp.Dtos.TreatmentPlan
         [MinLength(1, ErrorMessage = "a treatment must atleast last 1 minute")]
         public int TimePerSessionInMinutes;
 
-        public TreatmentCode? TreatmentCode;
-
-        [Required] public int TreatmentCodeId;
     }
 }

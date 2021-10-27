@@ -7,32 +7,41 @@
     <title>Register</title>
 </head>
 <body>
-<div>
-
-    <label for="registerType">Registreer als Type:</label>
-    <select name="registerType" id="registerType">
-        <option value="">None</option>
-        <option value="Patient">Patient</option>
-        <option value="student">Student</option>
-        <option value="doctor">Doctor</option>
-    </select>
-       @Html.ValidationSummary(false, "", new {@class = "text-danger"})
-    <form class="row" asp-action="" method="Post" enctype="multipart/form-data" id="registerForm">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="col">
-            <span id="PlaceHolder" style="display:none;"> </span>
-
+<div class="d-flex justify-content-center">
+    <div class="card text-center">
+        <div class="card-header">
+            Login
         </div>
-        <div class="col">
-            <div class="form-group">
-                <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block"/>
+        <div class="card-body">
+            <div>
+
+                <label for="registerType">Registreer als Type:</label>
+                <select name="registerType" id="registerType">
+                    <option value="">None</option>
+                    <option value="Patient">Patient</option>
+                    <option value="student">Student</option>
+                    <option value="doctor">Doctor</option>
+                </select>
+                @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+                <form class="row" asp-action="" method="Post" enctype="multipart/form-data" id="registerForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col">
+                        <span id="PlaceHolder" style="display:none;"> </span>
+
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block"/>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="text-center">
+                    @Html.ActionLink("Already have an account? Login!", "Login", "Account")
+                </div>
             </div>
         </div>
-
-    </form>
-
-    <div class="text-center">
-        @Html.ActionLink("Already have an account? Login!", "Login", "Account")
     </div>
 </div>
 </body>
