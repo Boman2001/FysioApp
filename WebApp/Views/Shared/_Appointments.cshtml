@@ -1,0 +1,38 @@
+﻿@using WebApp.Dtos.Treatment
+@using Core.Domain.Models
+@using WebApp.Dtos.Appointment
+@model IEnumerable<WebApp.Dtos.Appointment.AppointmentViewDto>
+<div class="card">
+    <div class="card-header">
+        Behandelingen
+    </div>
+    <table class="table" id="">
+        <thead>
+        <tr>
+            <th scope="col">Datum</th>
+            <th scope="col">KamerType</th>
+                @if (User.IsInRole("Staff"))
+                {
+                    <th scope="col">Patient:</th>
+            
+                }
+                else
+                {
+                    <th scope="col">Uitgevoerd door:</th>
+                }
+
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (AppointmentViewDto treatmentViewDto in Model)
+        {
+            @await Html.PartialAsync("_AppointmentRow", treatmentViewDto)
+            ;
+        }
+
+
+
+        </tbody>
+    </table>
+</div>

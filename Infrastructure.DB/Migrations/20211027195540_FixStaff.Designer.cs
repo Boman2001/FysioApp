@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211027131227_addedAppointmentAndAddress")]
-    partial class addedAppointmentAndAddress
+    [Migration("20211027195540_FixStaff")]
+    partial class FixStaff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -243,22 +243,6 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
-                {
-                    b.HasBaseType("Core.Domain.Models.User");
-
-                    b.Property<string>("BigNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Doctors");
-                });
-
             modelBuilder.Entity("Core.Domain.Models.Patient", b =>
                 {
                     b.HasBaseType("Core.Domain.Models.User");
@@ -284,9 +268,38 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+            modelBuilder.Entity("Core.Domain.Models.Staff", b =>
                 {
                     b.HasBaseType("Core.Domain.Models.User");
+
+                    b.Property<TimeSpan>("end")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("start")
+                        .HasColumnType("time");
+
+                    b.ToTable("Staff");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
+                {
+                    b.HasBaseType("Core.Domain.Models.Staff");
+
+                    b.Property<string>("BigNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+                {
+                    b.HasBaseType("Core.Domain.Models.Staff");
 
                     b.Property<string>("StudentNumber")
                         .HasColumnType("nvarchar(max)");
@@ -354,7 +367,7 @@ namespace Core.Infrastructure.Migrations
                         .HasForeignKey("DossierId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Core.Domain.Models.User", "ExcecutedBy")
+                    b.HasOne("Core.Domain.Models.Staff", "ExcecutedBy")
                         .WithMany("TreatmentsDone")
                         .HasForeignKey("ExcecutedById")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -362,15 +375,6 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Dossier");
 
                     b.Navigation("ExcecutedBy");
-                });
-
-            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
-                {
-                    b.HasOne("Core.Domain.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("Core.Domain.Models.Doctor", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Patient", b =>
@@ -382,9 +386,27 @@ namespace Core.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+            modelBuilder.Entity("Core.Domain.Models.Staff", b =>
                 {
                     b.HasOne("Core.Domain.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("Core.Domain.Models.Staff", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
+                {
+                    b.HasOne("Core.Domain.Models.Staff", null)
+                        .WithOne()
+                        .HasForeignKey("Core.Domain.Models.Doctor", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+                {
+                    b.HasOne("Core.Domain.Models.Staff", null)
                         .WithOne()
                         .HasForeignKey("Core.Domain.Models.Student", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -407,13 +429,16 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("IntakesDone");
 
                     b.Navigation("IntakesSupervised");
-
-                    b.Navigation("TreatmentsDone");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Patient", b =>
                 {
                     b.Navigation("Dossiers");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Staff", b =>
+                {
+                    b.Navigation("TreatmentsDone");
                 });
 #pragma warning restore 612, 618
         }

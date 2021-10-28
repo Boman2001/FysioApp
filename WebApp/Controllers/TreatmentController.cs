@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationServices.ExtensionMethods;
@@ -8,38 +7,29 @@ using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Infrastructure.API.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
-using WebApp.Dtos.Dossier;
 using WebApp.Dtos.Treatment;
-using WebApp.Dtos.TreatmentPlan;
 
 namespace WebApp.Controllers
 {
     public class TreatmentController : Controller
     {
-        private IWebRepository<TreatmentCode> _treatmentCodeRepository;
-        private IRepository<TreatmentPlan> _treatmentPlanService;
-        private IService<Treatment> _treatmentService;
-        private IService<Dossier> _dossierService;
+        private readonly IWebRepository<TreatmentCode> _treatmentCodeRepository;
+        private readonly IRepository<TreatmentPlan> _treatmentPlanService;
+        private readonly IService<Treatment> _treatmentService;
+        private readonly IService<Appointment> _appointmentService;
+        private readonly IService<Dossier> _dossierService;
+        private readonly IUserService _userRepository;
 
-        private readonly IRepository<Doctor> _doctorRepository;
-        private readonly IRepository<Student> _studentRepository;
-        private readonly IRepository<User> _userRepository;
-
-        public TreatmentController(IWebRepository<TreatmentCode> treatmentCodeRepository,
-            IRepository<TreatmentPlan> treatmentPlanService, IService<Treatment> treatmentService,
-            IService<Dossier> dossierService, IRepository<Doctor> doctorRepository,
-            IRepository<Student> studentRepository, IRepository<User> userRepository)
+        public TreatmentController(IWebRepository<TreatmentCode> treatmentCodeRepository, IRepository<TreatmentPlan> treatmentPlanService, IService<Treatment> treatmentService, IService<Appointment> appointmentService, IService<Dossier> dossierService, IUserService userRepository)
         {
             _treatmentCodeRepository = treatmentCodeRepository;
             _treatmentPlanService = treatmentPlanService;
             _treatmentService = treatmentService;
+            _appointmentService = appointmentService;
             _dossierService = dossierService;
-            _doctorRepository = doctorRepository;
-            _studentRepository = studentRepository;
             _userRepository = userRepository;
         }
 
@@ -49,16 +39,11 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Create([FromRoute] int dossierId)
         {
             IEnumerable<TreatmentCode> treatments = await _treatmentCodeRepository.GetAsync();
-            IEnumerable<User> doctors = _doctorRepository.Get();
-            IEnumerable<User> students = _studentRepository.Get();
             Dossier dossier = await _dossierService.Get(dossierId);
-            List<User> users = new List<User>();
+            IEnumerable<User> users = _userRepository.GetStaff();
             var treatmentCodeList = new List<SelectListItem>();
-            var StaffList = new List<SelectListItem>();
-
-            //TODO haal dit op uit user repo en check of he een student of doctor is
-            users.AddRange(doctors);
-            users.AddRange(students);
+            var staffList = new List<SelectListItem>();
+            
             if (treatments != null)
             {
                 treatments.ForEach(code =>
@@ -68,11 +53,11 @@ namespace WebApp.Controllers
                 });
             }
 
-            if (users.Count > 0)
+            if (users.ToList().Count > 0)
             {
                 users.ForEach(u =>
                 {
-                    StaffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
+                    staffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
                         u.Id == dossier.HeadPractitioner.Id));
                 });
             }
@@ -81,9 +66,55 @@ namespace WebApp.Controllers
             CreateTreatmentDto viewModel = new CreateTreatmentDto()
             {
                 Treatments = treatmentCodeList,
-                Staff = StaffList
+                Staff = staffList
             };
             viewModel.DossierId = dossierId;
+
+
+            return View("Create", viewModel);
+        }
+        
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        [Route("Treatment/Create/Appointment/{AppointmentId}")]
+        public async Task<ActionResult> CreateFromAppointment([FromRoute] int AppointmentId)
+        {
+            
+            IEnumerable<TreatmentCode> treatments = await _treatmentCodeRepository.GetAsync();
+            Appointment appointment = await _appointmentService.Get(AppointmentId);
+            Dossier dossier = appointment.Dossier;
+            IEnumerable<User> users = _userRepository.GetStaff();
+            var treatmentCodeList = new List<SelectListItem>();
+            var staffList = new List<SelectListItem>();
+
+
+            if (treatments != null)
+            {
+                treatments.ForEach(code =>
+                {
+                    treatmentCodeList.Add(new SelectListItem(code.Code + " , " + code.Description,
+                        code.Id.ToString()));
+                });
+            }
+
+            if (users.ToList().Count > 0)
+            {
+                users.ForEach(u =>
+                {
+                    staffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
+                        u.Id == dossier.HeadPractitioner.Id));
+                });
+            }
+
+
+            CreateTreatmentDto viewModel = new CreateTreatmentDto()
+            {
+                Treatments = treatmentCodeList,
+                Staff = staffList,
+                PracticionerId = appointment.ExcecutedBy.Id,
+                TreatmentDate = appointment.TreatmentDate
+            };
+            viewModel.DossierId = dossier.Id;
 
 
             return View("Create", viewModel);
@@ -98,7 +129,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 TreatmentCode treatmentCode = await _treatmentCodeRepository.Get(treatmentDto.TreatmentCodeId);
-                User user = await _userRepository.Get(treatmentDto.PracticionerId);
+                Staff user = (Staff) await _userRepository.Get(treatmentDto.PracticionerId);
                 try
                 {
                     await _treatmentService.Add(new Treatment()
@@ -121,15 +152,10 @@ namespace WebApp.Controllers
             }
 
             IEnumerable<TreatmentCode> treatments = await _treatmentCodeRepository.GetAsync();
-            IEnumerable<User> doctors = _doctorRepository.Get();
-            IEnumerable<User> students = _studentRepository.Get();
-            List<User> users = new List<User>();
+            IEnumerable<User> users = _userRepository.GetStaff();
             var treatmentCodeList = new List<SelectListItem>();
-            var StaffList = new List<SelectListItem>();
-
-            //TODO haal dit op uit user repo en check of he een student of doctor is
-            users.AddRange(doctors);
-            users.AddRange(students);
+            var staffList = new List<SelectListItem>();
+            
             if (treatments != null)
             {
                 treatments.ForEach(code =>
@@ -139,16 +165,16 @@ namespace WebApp.Controllers
                 });
             }
 
-            if (users.Count > 0)
+            if (users.ToList().Count > 0)
             {
                 users.ForEach(u =>
                 {
-                    StaffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
+                    staffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
                         u.Id == dossier.HeadPractitioner.Id));
                 });
             }
 
-            treatmentDto.Staff = StaffList;
+            treatmentDto.Staff = staffList;
             treatmentDto.Treatments = treatmentCodeList;
             ViewBag.error = "Something went wrong, please try again later";
             return View("Create", treatmentDto);

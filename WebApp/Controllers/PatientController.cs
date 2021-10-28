@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
-using WebApp.Dtos.Models;
+using WebApp.Dtos.Patient;
 
 namespace WebApp.Controllers
 {
@@ -150,7 +150,7 @@ namespace WebApp.Controllers
 
                 await _patientService.Update(new Patient()
                 {
-                    Id = patientDto.id.Value,
+                    Id = patientDto.Id.Value,
                     Email = patientDto.Email,
                     FirstName = patientDto.FirstName,
                     LastName = patientDto.LastName,
@@ -213,7 +213,7 @@ namespace WebApp.Controllers
         {
             PatientDto patientDto = new PatientDto()
             {
-                id = patient.Id,
+                Id = patient.Id,
                 FirstName = patient.FirstName,
                 LastName = patient.LastName,
                 Preposition = patient.Preposition,

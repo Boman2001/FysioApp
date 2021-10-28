@@ -1,0 +1,21 @@
+﻿@using ApplicationServices.ExtensionMethods
+@using Core.Domain.Models
+@model WebApp.Dtos.Appointment.AppointmentViewDto
+<tr>
+    <td>@Model.TreatmentDate</td>
+    <td>@Model.Room</td>
+    @if (User.IsInRole("Staff"))
+    {
+        <td>@Model.Patient.GetFormattedName()</td>
+
+    }
+    else
+    {
+        <td>@Model.Practicioner.GetFormattedName()</td>
+  
+    }
+    <td>@if (Model.TreatmentDate.Ticks > DateTime.Now.AddHours(24).Ticks)
+        {
+            <a class="btn btn-primary" >Edit</a>
+        }</td>
+</tr>

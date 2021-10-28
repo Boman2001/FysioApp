@@ -1,19 +1,19 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Core.Domain.Enums;
 
-namespace WebApp.Dtos.Models
+namespace WebApp.Dtos.Patient
 {
     public class PatientDto
     {
-        public int? id { get; set; }
-
+#nullable enable
+        public int? Id { get; set; }
+        public string? Preposition { get; set; }
+#nullable disable
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public string? Preposition { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }

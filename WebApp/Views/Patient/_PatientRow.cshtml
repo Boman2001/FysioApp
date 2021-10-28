@@ -1,4 +1,4 @@
-﻿@model WebApp.Dtos.Models.PatientDto
+﻿@model WebApp.Dtos.Patient.PatientDto
 <div class="col-4">
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="Uploads/@Model.Picture" alt="Card image cap" style="height: 300px; width: 300px;object-fit: cover;">
@@ -11,7 +11,7 @@
             <li class="list-group-item">Telefoon Nummer : @Model.PhoneNumber</li>
         </ul>
         <div class="card-body">
-            <a href="Patient/Edit/@Model.id" class="btn btn-primary">Edit</a>
+            <a href="Patient/Edit/@Model.Id" class="btn btn-primary">Edit</a>
             <a href="" class="btn btn-primary">Details</a>
         </div>
     </div>

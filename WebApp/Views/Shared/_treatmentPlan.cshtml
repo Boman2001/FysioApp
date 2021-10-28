@@ -1,0 +1,11 @@
+﻿@model WebApp.Dtos.TreatmentPlan.TreatmentPlanDto
+
+<div class="card">
+    <div class="card-header">
+        Behandelings Plan
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Aantal behandelingen per week : @Model.TreatmentsPerWeek</li>
+        <li class="list-group-item">tijd per behandeling in minuten: @Model.TimePerSessionInMinutes</li>
+    </ul>
+</div>

@@ -1,5 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using ApplicationServices.Services
+@using Core.DomainServices.Interfaces
+@using ApplicationServices.ExtensionMethods
 @inject SignInManager<IdentityUser> SignInManager;
+@inject IUserService _userService;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,57 +28,71 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
 
-                    
+
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Dossier" asp-action="Index">Dossier</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="index">Patient</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                        </li>
+                        @if (User.IsInRole("Staff"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Dossier" asp-action="Index">Dossier</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="index">Patient</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Dossiers/?email=@User.Identity.Name">Dossier</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                        }
                     }
                     else
                     {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                            
+
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                         </li>
-                        
-                        
                     }
                 </ul>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <span style="">
+                        @_userService.Get().First(u => u.Email == User.Identity.Name).GetFormattedName()
+                    </span>
+                }
+
             </div>
         </div>
     </nav>
 </header>
 <div class="container">
     <main role="main" class="pb-3">
-                @if (TempData["SuccessMessage"] != null)
-                {
-                    <div class="alert alert-success alert-dismissable">
-                        <strong>@TempData["SuccessMessage"]</strong>
-                    </div>
-                }
-        
-                @if (TempData["ErrorMessage"] != null)
-                {
-                    <div class="alert alert-danger alert-dismissable">
-                        <strong>@TempData["ErrorMessage"]</strong>
-                    </div>
-                }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <strong>@TempData["SuccessMessage"]</strong>
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <strong>@TempData["ErrorMessage"]</strong>
+            </div>
+        }
         @RenderBody()
     </main>
 </div>

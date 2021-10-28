@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain.Models
 {
-    public class Student : User
+    public class Student : Staff
     {
         public string StudentNumber { get; set; }
     }

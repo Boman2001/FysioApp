@@ -26,6 +26,7 @@ namespace Core.Domain.Models
         public virtual TreatmentPlan TreatmentPlan { get; set; }
         public virtual IEnumerable<Comment> Comments  { get; set; }
         public virtual  IEnumerable<Treatment> Treatments { get; set; }
+        public virtual  IEnumerable<Appointment> Appointments { get; set; }
         
     }
 

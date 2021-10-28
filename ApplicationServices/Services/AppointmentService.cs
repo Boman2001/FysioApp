@@ -22,17 +22,17 @@ namespace ApplicationServices.Services
 
         public new async Task<Appointment> Add(Appointment model)
         {
-            var Dossier = await _dossierService.Get(model.Dossier.Id);
-            var TreatmentPlan = await _treatmentPlanRepository.Get(model.Dossier.TreatmentPlan.Id);
+            var dossier = await _dossierService.Get(model.Dossier.Id);
+            var treatmentPlan = await _treatmentPlanRepository.Get(model.Dossier.TreatmentPlan.Id);
             model.TreatmentEndDate =
                 model.TreatmentDate.AddMinutes(model.Dossier.TreatmentPlan.TimePerSessionInMinutes);
-            if (TreatmentPlan.TreatmentsPerWeek <= Dossier.Treatments
+            if (treatmentPlan.TreatmentsPerWeek <= dossier.Treatments
                 .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count)
             {
                 throw new ValidationException("Het maximum aantal afspraken zijn al aangemaakt voor deze week");
             }
             
-            if (inBuisinessHours(model.TreatmentDate) && inBuisinessHours(model.TreatmentEndDate))
+            if (!(model.ExcecutedBy.InBuisinessHours(model.TreatmentDate) && model.ExcecutedBy.InBuisinessHours(model.TreatmentEndDate)))
             {
                 throw new ValidationException("Deze behandelinmg valt buiten de werktijden van uw doctor");
             }
@@ -46,6 +46,11 @@ namespace ApplicationServices.Services
             {
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
+            
+            if (model.TreatmentDate.Date.Ticks > DateTime.Now.Ticks)
+            {
+                throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
+            }
 
             return await _repository.Add(model);
         }
@@ -54,15 +59,6 @@ namespace ApplicationServices.Services
         {
             return date1.AddDays(-(int)date1.DayOfWeek) == date2.AddDays(-(int)date2.DayOfWeek);
         }
-
-        private bool inBuisinessHours(DateTime toCheck)
-        {
-            TimeSpan start = TimeSpan.Parse("9:00"); 
-            TimeSpan end = TimeSpan.Parse("17:00");
-            TimeSpan CheckTimespan =  toCheck.TimeOfDay;
-
-            return (CheckTimespan < end && CheckTimespan > start && toCheck.DayOfWeek != DayOfWeek.Saturday &&
-                    toCheck.DayOfWeek != DayOfWeek.Sunday);
-        }
+        
     }
 }

@@ -1,8 +1,9 @@
-﻿@model WebApp.Dtos.Dossier.ViewDossierDto
+﻿@model IEnumerable<WebApp.Dtos.Appointment.AppointmentViewDto>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "afspraken";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>Afspraken</h2>
+@await Html.PartialAsync("_Appointments", Model)

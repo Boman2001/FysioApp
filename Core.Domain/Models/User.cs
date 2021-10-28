@@ -16,7 +16,7 @@ namespace Core.Domain.Models
         [NotMapped]
         public virtual IEnumerable<Comment> CommentsCreated { get; set; }
         [NotMapped]
-        public virtual IEnumerable<Treatment> TreatmentsDone { get; set; }
+        public virtual IEnumerable<Appointment> TreatmentsDone { get; set; }
         
         public virtual IEnumerable<Dossier> HeadPractisionerOf { get; set; }
 

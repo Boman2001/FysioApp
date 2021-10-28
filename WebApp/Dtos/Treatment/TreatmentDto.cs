@@ -20,7 +20,7 @@ namespace WebApp.Dtos.Treatment
         [Required]
         public RoomType Room { get; set; }
 
-        
+        #nullable enable
         public TreatmentCode? TreatmentCode { get; set; }
     }
 }

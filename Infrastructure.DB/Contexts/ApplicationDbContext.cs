@@ -15,10 +15,12 @@ namespace Core.Infrastructure.Contexts
         }
 
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Staff> Staff { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Dossier> Dossiers { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -27,52 +29,54 @@ namespace Core.Infrastructure.Contexts
             
             builder.Entity<Comment>().ToTable("Comments");
             builder.Entity<Dossier>().ToTable("Dossiers");
-            builder.Entity<Treatment>().ToTable("Treatment");
+            builder.Entity<Appointment>().HasDiscriminator<bool>("isTreatment")
+                .HasValue<Appointment>(false).HasValue<Treatment>(true);
             builder.Entity<TreatmentPlan>().ToTable("TreatmentPlans");
             
             
             builder.Entity<User>().ToTable("Users");
+            builder.Entity<Staff>().ToTable("Staff");
             builder.Entity<Student>().ToTable("Students");
             builder.Entity<Patient>().ToTable("Patients");
             builder.Entity<Doctor>().ToTable("Doctors");
 
             builder.Entity<Comment>()
-                .HasOne( C => C.isPostedOn)
-                .WithMany(D => D.Comments)
+                .HasOne( comment => comment.isPostedOn)
+                .WithMany(dossier => dossier.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
             
             builder.Entity<Comment>()
-                .HasOne( C => C.CreatedBy)
-                .WithMany(U => U.CommentsCreated)
+                .HasOne( comment => comment.CreatedBy)
+                .WithMany(user => user.CommentsCreated)
                 .OnDelete(DeleteBehavior.Cascade);
             
-            builder.Entity<Treatment>()
-                .HasOne( C => C.Dossier)
-                .WithMany(D => D.Treatments)
-                .OnDelete(DeleteBehavior.Cascade);
+            // builder.Entity<Treatment>()
+            //     .HasOne( treatment => treatment.Dossier)
+            //     .WithMany(dossier => dossier.Treatments)
+            //     .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Treatment>()
-                .HasOne( C => C.ExcecutedBy)
-                .WithMany(U => U.TreatmentsDone)
+            builder.Entity<Appointment>()
+                .HasOne( treatment => treatment.ExcecutedBy)
+                .WithMany(staff => staff.TreatmentsDone)
                 .OnDelete(DeleteBehavior.Cascade);
             
             builder.Entity<Dossier>()
-                .HasOne( D => D.Patient)
-                .WithMany(P => P.Dossiers)
+                .HasOne( dossier => dossier.Patient)
+                .WithMany(patient => patient.Dossiers)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder.Entity<Dossier>()
-                .HasOne( D => D.IntakeBy)
-                .WithMany(P => P.IntakesDone)
+                .HasOne( dossier => dossier.IntakeBy)
+                .WithMany(user => user.IntakesDone)
                 .OnDelete(DeleteBehavior.NoAction);
             
             builder.Entity<Dossier>()
-                .HasOne( D => D.SupervisedBy)
-                .WithMany(P => P.IntakesSupervised)
+                .HasOne( dossier => dossier.SupervisedBy)
+                .WithMany(user => user.IntakesSupervised)
                 .OnDelete(DeleteBehavior.NoAction); 
             
             builder.Entity<Dossier>()
-                .HasMany<Treatment>( T => T.Treatments)
+                .HasMany<Appointment>( T => T.Appointments)
                 .WithOne(T=> T.Dossier)
                 .OnDelete(DeleteBehavior.Cascade);
         }

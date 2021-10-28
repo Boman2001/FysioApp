@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
+using WebApp.Dtos.Appointment;
 using WebApp.Dtos.Comment;
 using WebApp.Dtos.Dossier;
 using WebApp.Dtos.Treatment;
@@ -79,7 +80,9 @@ namespace WebApp.Controllers
                 {
                     User head = await _userRepository.Get(dossier.HeadPracticionerId);
                     User intakeBy = await _userRepository.Get(dossier.IntakeById);
+#nullable enable
                     User? supervisor = null;
+#nullable disable
                     if (dossier.SupervisedById.HasValue)
                     {
                         supervisor = await _userRepository.Get(dossier.SupervisedById.Value);
@@ -230,7 +233,9 @@ namespace WebApp.Controllers
                 {
                     User head = await _userRepository.Get(dossier.HeadPracticionerId);
                     User intakeBy = await _userRepository.Get(dossier.IntakeById);
+#nullable enable
                     User? supervisor = null;
+#nullable disable
                     if (dossier.SupervisedById.HasValue)
                     {
                         supervisor = await _userRepository.Get(dossier.SupervisedById.Value);
@@ -308,6 +313,17 @@ namespace WebApp.Controllers
                     TreatmentCodeId = t.TreatmentCodeId.Value
                 });
             });
+            
+            dossier.Appointments.ForEach(t =>
+            {
+                treatmentViewDtos.Add(new TreatmentViewDto()
+                {
+                    Practicioner = t.ExcecutedBy,
+                    Room = t.Room,
+                    TreatmentDate = t.TreatmentDate,
+                    PracticionerId = t.ExcecutedBy.Id,
+                });
+            });
             ViewDossierDto dossierDto = new ViewDossierDto()
             {
                 Patient = dossier.Patient,
@@ -334,6 +350,80 @@ namespace WebApp.Controllers
                 Id = dossier.Id
             };
             return View(dossierDto);
+        }
+        
+         [HttpGet]
+        [Authorize(Roles = "Patient")]
+         [Route("Dossiers")]
+        public async Task<ActionResult> Details([FromQuery] string email)
+        {
+            IEnumerable<TreatmentCode> treatmentcodes = await  _treatmentCodeRepository.GetAsync();
+            Dossier dossier = _dossierService.Get().First(d => d.Patient.Email == email);
+            List<ViewCommentDto> commentDtos = new List<ViewCommentDto>();
+            List<AppointmentViewDto> appointmentViewDtos = new List<AppointmentViewDto>();
+            DiagnoseCode diagnoseCode = await _diagnoseRepository.Get(dossier.DiagnoseCodeId);
+            dossier.Comments.Where(c => c.IsVisiblePatient ).ForEach(c =>
+            {
+                commentDtos.Add(new ViewCommentDto()
+                {
+                    CommentBody = c.CommentBody,
+                    CreatedBy = c.CreatedBy,
+                    IsVisiblePatient = c.IsVisiblePatient,
+                    CreatedById = c.CreatedBy.Id
+                    
+                });
+            });
+
+            dossier.Appointments.ForEach(t =>
+            {
+                appointmentViewDtos.Add(new AppointmentViewDto()
+                {
+                    Practicioner = t.ExcecutedBy,
+                    Room = t.Room,
+                    TreatmentDate = t.TreatmentDate,
+                    PracticionerId = t.ExcecutedBy.Id,
+                    Patient = t.Dossier.Patient
+
+                });
+            });
+            
+            dossier.Treatments.ForEach(t =>
+            {
+                appointmentViewDtos.Add(new AppointmentViewDto()
+                {
+                    Practicioner = t.ExcecutedBy,
+                    Room = t.Room,
+                    TreatmentDate = t.TreatmentDate,
+                    PracticionerId = t.ExcecutedBy.Id,
+                    Patient = t.Dossier.Patient
+                });
+            });
+            ViewDossierDto dossierDto = new ViewDossierDto()
+            {
+                Patient = dossier.Patient,
+                DiagnoseCodeId = dossier.DiagnoseCodeId,
+                Description = dossier.Description,
+                IsStudent = dossier.IsStudent,
+                AdmissionDate = dossier.RegistrationDate,
+                HeadPractitioner = dossier.HeadPractitioner,
+                SupervisedBy = dossier.SupervisedBy,
+                IntakeBy = dossier.IntakeBy,
+                TreatmentPlan = new TreatmentPlanDto()
+                {
+                    TreatmentsPerWeek = dossier.TreatmentPlan.TreatmentsPerWeek,
+                    TimePerSessionInMinutes = dossier.TreatmentPlan.TimePerSessionInMinutes
+                },
+                Street = dossier.Street,
+                HouseNumber = dossier.Housenumber,
+                PostalCode = dossier.PostalCode,
+                Comments = commentDtos ,
+                Appointments = appointmentViewDtos,
+                DiagnoseCode = diagnoseCode,
+                Age = dossier.Age,
+                City = dossier.City,
+                Id = dossier.Id
+            };
+            return View("Detail",dossierDto);
         }
     }
 }

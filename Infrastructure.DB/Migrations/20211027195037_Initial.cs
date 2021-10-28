@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Core.Infrastructure.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,26 +44,6 @@ namespace Core.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Doctors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    BigNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployeeNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Doctors_Users_Id",
-                        column: x => x.Id,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
                 {
@@ -87,17 +67,18 @@ namespace Core.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "Staff",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    StudentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    start = table.Column<TimeSpan>(type: "time", nullable: false),
+                    end = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Staff", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Users_Id",
+                        name: "FK_Staff_Users_Id",
                         column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -119,6 +100,11 @@ namespace Core.Infrastructure.Migrations
                     SupervisedById = table.Column<int>(type: "int", nullable: true),
                     HeadPractitionerId = table.Column<int>(type: "int", nullable: true),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DismissionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Housenumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TreatmentPlanId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -154,6 +140,44 @@ namespace Core.Infrastructure.Migrations
                         column: x => x.SupervisedById,
                         principalTable: "Users",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Doctors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    BigNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Doctors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Doctors_Staff_Id",
+                        column: x => x.Id,
+                        principalTable: "Staff",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    StudentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Staff_Id",
+                        column: x => x.Id,
+                        principalTable: "Staff",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,17 +217,17 @@ namespace Core.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DossierId = table.Column<int>(type: "int", nullable: true),
-                    TreatmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TreatmentCodeId = table.Column<int>(type: "int", nullable: false),
+                    TreatmentCodeId = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Particulatities = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Room = table.Column<int>(type: "int", nullable: false),
-                    ExcecutedById = table.Column<int>(type: "int", nullable: true),
-                    ExcecutedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DossierId = table.Column<int>(type: "int", nullable: true),
+                    TreatmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TreatmentEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Room = table.Column<int>(type: "int", nullable: false),
+                    ExcecutedById = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -215,9 +239,9 @@ namespace Core.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Treatment_Users_ExcecutedById",
+                        name: "FK_Treatment_Staff_ExcecutedById",
                         column: x => x.ExcecutedById,
-                        principalTable: "Users",
+                        principalTable: "Staff",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -284,6 +308,9 @@ namespace Core.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Dossiers");
+
+            migrationBuilder.DropTable(
+                name: "Staff");
 
             migrationBuilder.DropTable(
                 name: "Patients");

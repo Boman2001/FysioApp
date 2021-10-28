@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211026145018_initial")]
-    partial class initial
+    [Migration("20211027195037_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,6 +68,9 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -80,8 +83,14 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int>("DiagnoseCodeId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DismissionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("HeadPractitionerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Housenumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IntakeById")
                         .HasColumnType("int");
@@ -92,8 +101,14 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SupervisedById")
                         .HasColumnType("int");
@@ -141,19 +156,19 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int?>("ExcecutedById")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ExcecutedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Particulatities")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Room")
                         .HasColumnType("int");
 
-                    b.Property<int>("TreatmentCodeId")
+                    b.Property<int?>("TreatmentCodeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TreatmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TreatmentEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -228,22 +243,6 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
-                {
-                    b.HasBaseType("Core.Domain.Models.User");
-
-                    b.Property<string>("BigNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Doctors");
-                });
-
             modelBuilder.Entity("Core.Domain.Models.Patient", b =>
                 {
                     b.HasBaseType("Core.Domain.Models.User");
@@ -269,9 +268,38 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+            modelBuilder.Entity("Core.Domain.Models.Staff", b =>
                 {
                     b.HasBaseType("Core.Domain.Models.User");
+
+                    b.Property<TimeSpan>("end")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("start")
+                        .HasColumnType("time");
+
+                    b.ToTable("Staff");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
+                {
+                    b.HasBaseType("Core.Domain.Models.Staff");
+
+                    b.Property<string>("BigNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+                {
+                    b.HasBaseType("Core.Domain.Models.Staff");
 
                     b.Property<string>("StudentNumber")
                         .HasColumnType("nvarchar(max)");
@@ -299,7 +327,7 @@ namespace Core.Infrastructure.Migrations
             modelBuilder.Entity("Core.Domain.Models.Dossier", b =>
                 {
                     b.HasOne("Core.Domain.Models.User", "HeadPractitioner")
-                        .WithMany()
+                        .WithMany("HeadPractisionerOf")
                         .HasForeignKey("HeadPractitionerId");
 
                     b.HasOne("Core.Domain.Models.User", "IntakeBy")
@@ -339,7 +367,7 @@ namespace Core.Infrastructure.Migrations
                         .HasForeignKey("DossierId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Core.Domain.Models.User", "ExcecutedBy")
+                    b.HasOne("Core.Domain.Models.Staff", "ExcecutedBy")
                         .WithMany("TreatmentsDone")
                         .HasForeignKey("ExcecutedById")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -347,15 +375,6 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Dossier");
 
                     b.Navigation("ExcecutedBy");
-                });
-
-            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
-                {
-                    b.HasOne("Core.Domain.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("Core.Domain.Models.Doctor", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Patient", b =>
@@ -367,9 +386,27 @@ namespace Core.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+            modelBuilder.Entity("Core.Domain.Models.Staff", b =>
                 {
                     b.HasOne("Core.Domain.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("Core.Domain.Models.Staff", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Doctor", b =>
+                {
+                    b.HasOne("Core.Domain.Models.Staff", null)
+                        .WithOne()
+                        .HasForeignKey("Core.Domain.Models.Doctor", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Student", b =>
+                {
+                    b.HasOne("Core.Domain.Models.Staff", null)
                         .WithOne()
                         .HasForeignKey("Core.Domain.Models.Student", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -387,16 +424,21 @@ namespace Core.Infrastructure.Migrations
                 {
                     b.Navigation("CommentsCreated");
 
+                    b.Navigation("HeadPractisionerOf");
+
                     b.Navigation("IntakesDone");
 
                     b.Navigation("IntakesSupervised");
-
-                    b.Navigation("TreatmentsDone");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Patient", b =>
                 {
                     b.Navigation("Dossiers");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Staff", b =>
+                {
+                    b.Navigation("TreatmentsDone");
                 });
 #pragma warning restore 612, 618
         }

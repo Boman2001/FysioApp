@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain.Models
 {
-    public class Doctor : User
+    public class Doctor : Staff
     {
         public string BigNumber { get; set; }
         public string EmployeeNumber { get; set; }

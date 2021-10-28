@@ -31,12 +31,12 @@ namespace ApplicationServices.Services
                 throw new ValidationException("Het maximum aantal afspraken zijn al aangemaakt voor deze week");
             }
             
-            if (model.TreatmentCode != null && !model.TreatmentCode.ExplanationRequired || model.Description.Count() > 0)
+            if (model.TreatmentCode == null && !model.TreatmentCode.ExplanationRequired || model.Description.Count() == 0)
             {
                 throw new ValidationException("Voor dit type behandeling is een beschrijving verplicht");
             }
 
-            if (inBuisinessHours(model.TreatmentDate) && inBuisinessHours(model.TreatmentEndDate))
+            if (!(model.ExcecutedBy.InBuisinessHours(model.TreatmentDate) && model.ExcecutedBy.InBuisinessHours(model.TreatmentEndDate)))
             {
                 throw new ValidationException("Deze behandelinmg valt buiten de werktijden van uw doctor");
             }
@@ -50,6 +50,11 @@ namespace ApplicationServices.Services
             {
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
+            
+            if (model.TreatmentDate.Date.Ticks > DateTime.Now.Ticks)
+            {
+                throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
+            }
 
             return await _repository.Add(model);
 
@@ -59,14 +64,6 @@ namespace ApplicationServices.Services
             return date1.AddDays(-(int)date1.DayOfWeek) == date2.AddDays(-(int)date2.DayOfWeek);
         }
 
-        private bool inBuisinessHours(DateTime toCheck)
-        {
-            TimeSpan start = TimeSpan.Parse("9:00"); 
-            TimeSpan end = TimeSpan.Parse("17:00");
-            TimeSpan CheckTimespan =  toCheck.TimeOfDay;
 
-            return (CheckTimespan < end && CheckTimespan > start && toCheck.DayOfWeek != DayOfWeek.Saturday &&
-                    toCheck.DayOfWeek != DayOfWeek.Sunday);
-        }
     }
 }

@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace WebApp.Dtos.Auth
 {
-    public class DoctorRegisterDto : RegisterDto
+    public class DoctorRegisterDto : StaffDto
     {
         [NotNull]
         [Required]
