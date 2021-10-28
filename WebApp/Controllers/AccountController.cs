@@ -111,7 +111,7 @@ namespace WebApp.Controllers
         {
             await this._signInManager.SignOutAsync();
 
-            return this.RedirectToAction("Register", "Account");
+            return this.RedirectToAction("Login", "Account");
         }
 
         [HttpPost]

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Dtos.Appointment.AppointmentViewDto>
+﻿@model WebApp.Dtos.Appointment.AppointmentIndexDto
 
 @{
     ViewBag.Title = "afspraken";
@@ -10,7 +10,8 @@
     <input type="date" name="day" id="day" value="@DateTime.Today.ToString("yyyy-MM-dd")">
     <input type="submit">
 </form>
-@await Html.PartialAsync("_Appointments", Model)
+@await Html.PartialAsync("_Appointments", Model.AppointmentViewDtos)
+@await Html.PartialAsync("_Treatment", Model.treatmentViewDtos)
 
 <script>
 window.onload = function () {

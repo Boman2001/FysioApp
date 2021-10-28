@@ -46,6 +46,7 @@ namespace StamApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [AllowAnonymous]
         public async Task<ActionResult<T>> Get(int id)
         {
             var item = await _repository.Get(id);

@@ -24,6 +24,11 @@
 </div>
  
 <div class="form-group">
+    <label asp-for="Particulatities" class="control-label"></label>
+    <textarea asp-for="Particulatities" class="form-control"/> </textarea>
+    <span asp-validation-for="Particulatities" class="text-danger"></span>
+</div>
+<div class="form-group">
     <label asp-for="Room" class="control-label"></label>
     <select class="form-control" asp-for="Room">
         <option value="PracticeHall">Practice Hall</option>

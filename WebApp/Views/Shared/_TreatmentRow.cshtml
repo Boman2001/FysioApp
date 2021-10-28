@@ -1,8 +1,22 @@
 ﻿@using ApplicationServices.ExtensionMethods
+@using Core.Domain.Models
 @model WebApp.Dtos.Treatment.TreatmentViewDto
 <tr>
     <td>@Model.TreatmentDate</td>
     <td>@Model.Description</td>
     <td>@Model.Room</td>
     <td>@Model.Practicioner.GetFormattedName()</td>
+    @if (Model.createdAt.AddDays(1) > DateTime.Now)
+    {
+        <td>
+            <a class="btn btn-primary" href="Treatment/Edit/@Model.Id">aanpassen</a>
+
+        </td>
+        <td>
+            <form asp-action="Delete" asp-controller="Treatment" method="Post">
+                <input type="hidden" name="id" value="@Model.Id">
+                <input class="btn btn-primary" type="submit" value="Verwijderen">
+            </form>
+        </td>
+    }
 </tr>

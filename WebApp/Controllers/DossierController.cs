@@ -309,7 +309,7 @@ namespace WebApp.Controllers
                         Room = t.Room,
                         TreatmentDate = t.TreatmentDate,
                         PracticionerId = t.ExcecutedBy.Id,
-                        TreatmentCodeId = t.TreatmentCodeId.Value,
+                        TreatmentCodeId = t.TreatmentCodeId,
                         Id = t.Id
                     });
                 });

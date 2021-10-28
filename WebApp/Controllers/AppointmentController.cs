@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,6 +54,7 @@ namespace WebApp.Controllers
             }
 
             List<AppointmentViewDto> appointmentViewDtos = new List<AppointmentViewDto>();
+            List<TreatmentViewDto> treatmentViewDtos = new List<TreatmentViewDto>();
             appointments.ForEach(t =>
             {
                 appointmentViewDtos.Add(new AppointmentViewDto()
@@ -70,7 +71,7 @@ namespace WebApp.Controllers
 
             treatments.ForEach(t =>
             {
-                appointmentViewDtos.Add(new AppointmentViewDto()
+                treatmentViewDtos.Add(new TreatmentViewDto()
                 {
                     Practicioner = t.ExcecutedBy,
                     Room = t.Room,
@@ -78,7 +79,10 @@ namespace WebApp.Controllers
                     PracticionerId = t.ExcecutedBy.Id,
                     Patient = t.Dossier.Patient,
                     Id = t.Id,
-                    DossierId = t.Dossier.Id
+                    DossierId = t.Dossier.Id,
+                    Description = t.Description,
+                    TreatmentCode = t.TreatmentCode,
+                    createdAt =  t.CreatedAt
 
                 });
             });
@@ -86,14 +90,20 @@ namespace WebApp.Controllers
             if (day != DateTime.Today)
             {
                 appointmentViewDtos = appointmentViewDtos.Where(dto => dto.TreatmentDate.Date == day.Date).ToList();
+                treatmentViewDtos = treatmentViewDtos.Where(dto => dto.TreatmentDate.Date == day.Date).ToList();
             }
             else
             {
                 appointmentViewDtos = appointmentViewDtos.Where(dto => dto.TreatmentDate.Date == DateTime.Now.Date).ToList();
+                treatmentViewDtos = treatmentViewDtos.Where(dto => dto.TreatmentDate.Date == DateTime.Now.Date).ToList();
 
             }
             
-            return View(appointmentViewDtos.OrderBy(dto => dto.TreatmentDate ));
+            return View(new AppointmentIndexDto()
+            {
+                treatmentViewDtos = treatmentViewDtos,
+                AppointmentViewDtos = appointmentViewDtos
+            });
         }
 
         [HttpGet]

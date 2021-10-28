@@ -8,6 +8,7 @@ using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Core.Infrastructure.Contexts;
 using Core.Infrastructure.Repositories;
+using Core.Infrastructure.Seeders.SecurityDb;
 using Infrastructure.API.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -128,7 +129,7 @@ namespace WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
 
             if (env.IsDevelopment())
@@ -170,6 +171,8 @@ namespace WebApp
 
                 await next.Invoke();
             });
+            
+            SecurityDbInitalizer.SeedData(userManager, roleManager);
         }
     }
 }

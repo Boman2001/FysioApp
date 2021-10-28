@@ -8,16 +8,9 @@
         </div>
         <div class="card-body">
             <a href="/Dossier/Detail/@Model.Patient.Id" class="btn btn-primary">Details</a>
-            @if (User.IsInRole("Staff"))
-            {
-                <a href="/Treatment/Create/@Model.Id" class="btn btn-primary">Afspraak maken</a>
 
-            }
-            else
-            {
-                <a href="/Appointment/Create/@Model.Id" class="btn btn-primary">Afspraak maken</a>
+            <a href="/Appointment/Create/@Model.Id" class="btn btn-primary">Afspraak maken</a>
 
-            }
         </div>
     </div>
 </div>

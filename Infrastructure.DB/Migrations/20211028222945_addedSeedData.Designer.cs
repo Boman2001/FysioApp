@@ -4,14 +4,16 @@ using Core.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211028222945_addedSeedData")]
+    partial class addedSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,7 +208,8 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -221,6 +224,9 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email")
+                        .HasName("AlternateKey_Email");
 
                     b.ToTable("Users");
                 });
@@ -238,7 +244,7 @@ namespace Core.Infrastructure.Migrations
                     b.Property<string>("Particulatities")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TreatmentCodeId")
+                    b.Property<int>("TreatmentCodeId")
                         .HasColumnType("int");
 
                     b.HasIndex("DossierId1");
@@ -281,6 +287,36 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2021, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(2966),
+                            Email = "Danmaarkaas2@gmail.com",
+                            FirstName = "Paula",
+                            LastName = "PatientenBerg",
+                            Preposition = "van der",
+                            BirthDay = new DateTime(1965, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(3627),
+                            Gender = 1,
+                            PatientNumber = "dfb87071-7eef-4e81-91ab-461d5e2c5fad",
+                            PhoneNumber = "0636303815",
+                            PictureUrl = "ee23a151-8ea2-40d6-aad6-9834d3bd4da3_2.jpg"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2021, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(4474),
+                            Email = "Danmaarkaas3@gmail.com",
+                            FirstName = "Pavlov",
+                            LastName = "PatientStan",
+                            Preposition = "",
+                            BirthDay = new DateTime(2000, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(4487),
+                            Gender = 0,
+                            PatientNumber = "5b01effe-2016-4597-94b5-a537db81b354",
+                            PhoneNumber = "0636303816",
+                            PictureUrl = "506cf9b3-c437-46bd-944e-3dfcb1d17e8b_9.jpg"
+                        });
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Staff", b =>
@@ -310,6 +346,22 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2021, 10, 29, 0, 29, 45, 28, DateTimeKind.Local).AddTicks(5369),
+                            Email = "Danmaarkaas1@gmail.com",
+                            FirstName = "Dirk",
+                            LastName = "DoctorMan",
+                            Preposition = "De",
+                            end = new TimeSpan(0, 0, 0, 0, 0),
+                            start = new TimeSpan(0, 0, 0, 0, 0),
+                            BigNumber = "29292929929",
+                            EmployeeNumber = "0636303815",
+                            PhoneNumber = "0636303815"
+                        });
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Student", b =>
@@ -320,6 +372,20 @@ namespace Core.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2021, 10, 29, 0, 29, 45, 49, DateTimeKind.Local).AddTicks(9073),
+                            Email = "Danmaarkaas@gmail.com",
+                            FirstName = "Stefan",
+                            LastName = "Student",
+                            Preposition = "De",
+                            end = new TimeSpan(0, 0, 0, 0, 0),
+                            start = new TimeSpan(0, 0, 0, 0, 0),
+                            StudentNumber = "2153494"
+                        });
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Appointment", b =>
