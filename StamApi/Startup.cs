@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using ApplicationServices.Helpers;
 using Core.DomainServices.Interfaces;
 using Core.Infrastructure.Contexts;
 using Core.Infrastructure.Repositories;
@@ -31,7 +32,24 @@ namespace StamApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "StamApi", Version = "v1"}); });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "StamApi", Version = "v1"});
+                c.AddSecurityDefinition(
+                    "Bearer",
+                    new OpenApiSecurityScheme()
+                    {
+                        Name = "Authorization",
+
+                        Type = SecuritySchemeType.ApiKey,
+
+                        Scheme = "Bearer",
+                        BearerFormat = "JWT",
+
+                        In = ParameterLocation.Header,
+                    }
+                );
+            });
             services.AddDbContext<StamDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
@@ -66,13 +84,14 @@ namespace StamApi
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuerSigningKey = true,
+                    ValidateIssuerSigningKey = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT:Secret"])),
                     ValidateIssuer = false,
                     ValidateAudience = false
@@ -87,6 +106,7 @@ namespace StamApi
 
             services.AddScoped<DbContext, StamDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(DatabaseRepository<>));
+            services.AddScoped(typeof(IAuthHelper), typeof(AuthHelper));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -103,6 +123,8 @@ namespace StamApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -113,7 +135,6 @@ namespace StamApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 

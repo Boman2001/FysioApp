@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using ApplicationServices.Helpers;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -25,19 +27,61 @@ namespace WebApp.Controllers
         private readonly IRepository<Doctor> _doctorRepository;
         private readonly IRepository<Student> _studentRepository;
         private readonly IService<Patient> _patientService;
+        private readonly IUserService _userService;
+        private readonly IAuthHelper _authHelper;
 
-        public AccountController(IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager,
-            IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository,
-            IService<Patient> patientService)
+        public AccountController(IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager, IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository, IService<Patient> patientService, IUserService userService, IAuthHelper authHelper)
         {
-            this._webHostEnvironment = webHostEnvironment;
-            this._userManager = userManager;
-            this._roleManager = roleManager;
-            this._signInManager = signInManager;
+            _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
             _doctorRepository = doctorRepository;
             _studentRepository = studentRepository;
             _patientService = patientService;
+            _userService = userService;
+            _authHelper = authHelper;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public async Task<IActionResult> Edit()
+        {
+           User user =  _userService.Get(u => u.Email == User.Identity.Name).First();
+
+           if (user is Student)
+           {
+               Student student = await _studentRepository.Get(user.Id);
+               return View("EditStudent",new StudentRegisterDto()
+               {
+                   FirstName = student.FirstName,
+                   Preposition = student.Preposition,
+                   start = student.start,
+                   end = student.end,
+                   Email = student.Email,
+                   LastName = student.LastName,
+                   StudentNumber = student.StudentNumber
+               });
+
+           }else if (user is Doctor)
+           {
+               Doctor doctor = await _doctorRepository.Get(user.Id);
+               return View("EditDoctor", new DoctorRegisterDto()
+               {
+                   FirstName = doctor.FirstName,
+                   Preposition = doctor.Preposition,
+                   LastName = doctor.LastName,
+                   start = doctor.start,
+                   end = doctor.end,
+                   Email = doctor.Email,
+                   BigNumber = doctor.BigNumber,
+                   EmployeeNumber = doctor.EmployeeNumber,
+                   PhoneNumber =  doctor.PhoneNumber
+               });
+
+           }
+           return View();
+
         }
 
         [HttpGet]
@@ -58,7 +102,6 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            Console.WriteLine(ModelState);
             return View();
         }
 
@@ -215,6 +258,8 @@ namespace WebApp.Controllers
                             true));
                         if (he.Succeeded)
                         {
+                            var token = await _authHelper.GenerateToken(loginViewModel.Email);
+                            HttpContext.Session.Set("token",Encoding.ASCII.GetBytes(token));
                             return RedirectToAction("Index", "Home");
                         }
                     }

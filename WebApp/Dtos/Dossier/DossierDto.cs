@@ -28,16 +28,7 @@ namespace WebApp.Dtos.Dossier
 
         [Display(Name = "Supervisor")] public int? SupervisedById { get; set; }
         [Display(Name = "Intake datum")] public DateTime AdmissionDate { get; set; }
-        [Required] [Display(Name = "Straat")] public string Street { get; set; }
-        [Required] [Display(Name = "Stad")] public string City { get; set; }
 
-        [Required]
-        [Display(Name = "Post Code")]
-        public string PostalCode { get; set; }
-
-        [Required]
-        [Display(Name = "Huisnummer en toevoeging")]
-        public string HouseNumber { get; set; }
         #nullable enable
         public DiagnoseCode? DiagnoseCode { get; set; }
 

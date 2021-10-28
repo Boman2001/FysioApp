@@ -1,32 +1,32 @@
 using System;
+using System.Net.Http.Headers;
 using System.Security;
 using System.Text;
+using ApplicationServices.Helpers;
 using ApplicationServices.Services;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Core.Infrastructure.Contexts;
 using Core.Infrastructure.Repositories;
 using Infrastructure.API.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using SendGrid;
 
 namespace WebApp
 {
     public class Startup
     {
-
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
-        public Startup(IConfiguration configuration,IWebHostEnvironment environment) {
-            
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        {
             this.Configuration = configuration;
             this.Environment = environment;
         }
@@ -34,10 +34,57 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           IMvcBuilder mvcBuilder = services.AddControllersWithViews();
-            if (this.Environment.IsDevelopment()) {
+            IMvcBuilder mvcBuilder = services.AddControllersWithViews();
+            if (this.Environment.IsDevelopment())
+            {
                 mvcBuilder.AddRazorRuntimeCompilation();
             }
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+
+                options.SlidingExpiration = true;
+            });
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddHttpContextAccessor();
+
+            services.AddHttpClient(
+                "default",
+                configureClient: (serviceProvider, client) =>
+                {
+                    client.BaseAddress = new Uri($"{Configuration.GetConnectionString("Web")}/");
+
+                    //If User is authenticated, add token to HTTP client.
+                    IHttpContextAccessor httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
+                    HttpContext httpContext = httpContextAccessor?.HttpContext;
+
+                    if
+                    (
+                        httpContext != null
+                        && httpContext.User.Identity != null
+                        && httpContext.User.Identity.IsAuthenticated
+                        && httpContext.Session.TryGetValue("token", out byte[] tokenBytes)
+                    )
+                    {
+                        client.DefaultRequestHeaders.Authorization = (
+                            new AuthenticationHeaderValue("Bearer", Encoding.ASCII.GetString(tokenBytes))
+                        );
+                    }
+                }
+            );
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -60,7 +107,8 @@ namespace WebApp
                 }).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SecurityDbContext>()
                 .AddDefaultTokenProviders();
-            
+
+
             services.AddOptions();
             services.Configure<SecurityStampValidatorOptions>(options =>
                 options.ValidationInterval = TimeSpan.FromMinutes(5));
@@ -76,12 +124,13 @@ namespace WebApp
             services.AddScoped(typeof(IService<Comment>), typeof(CommentService));
             services.AddScoped(typeof(IService<Appointment>), typeof(AppointmentService));
             services.AddScoped(typeof(IUserService), typeof(UserService));
-
+            services.AddScoped(typeof(IAuthHelper), typeof(AuthHelper));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -97,17 +146,19 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
             app.Use(async (context, next) =>
             {
                 if (!context.User.Identity.IsAuthenticated
@@ -116,6 +167,7 @@ namespace WebApp
                     context.Response.Redirect("Account/Login");
                     throw new SecurityException("Not Authorized");
                 }
+
                 await next.Invoke();
             });
         }

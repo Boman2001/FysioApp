@@ -132,6 +132,12 @@ namespace WebApp.Controllers
                 Staff user = (Staff) await _userRepository.Get(treatmentDto.PracticionerId);
                 try
                 {
+                    Appointment appointmentToDelete = _appointmentService.Get(a =>
+                        a.TreatmentDate == treatmentDto.TreatmentDate && a.Dossier.Id == dossier.Id).First();
+                    if (appointmentToDelete != null)
+                    {
+                        await _appointmentService.Delete(appointmentToDelete);
+                    }
                     await _treatmentService.Add(new Treatment()
                     {
                         TreatmentDate = treatmentDto.TreatmentDate,
@@ -142,6 +148,7 @@ namespace WebApp.Controllers
                         Dossier = dossier,
                         ExcecutedBy = user,
                     });
+
                     TempData["SuccessMessage"] = "Success";
                     return RedirectToAction("Index", "Home");
                 }

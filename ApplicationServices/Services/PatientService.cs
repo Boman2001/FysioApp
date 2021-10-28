@@ -27,5 +27,18 @@ namespace ApplicationServices.Services
             }
 
         }
+
+        public new async Task<Patient> Update(Patient model)
+        {
+            DateTime today = DateTime.Now;
+            if ( today.Year - model.BirthDay.Year >= 16 )
+            {
+                return await _repository.Add(model);
+            }
+            else
+            {
+                throw new ValidationException("Patiënt is te jong");
+            }
+        }
     }
 }

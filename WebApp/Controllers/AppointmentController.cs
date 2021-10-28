@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationServices.ExtensionMethods;
@@ -31,7 +32,7 @@ namespace WebApp.Controllers
         }
 
         // GET
-        public IActionResult Index()
+        public IActionResult Index( [FromQuery] DateTime day)
         {
             List<Appointment> appointments = new List<Appointment>();
             List<Treatment> treatments = new List<Treatment>();
@@ -61,7 +62,9 @@ namespace WebApp.Controllers
                     Room = t.Room,
                     TreatmentDate = t.TreatmentDate,
                     PracticionerId = t.ExcecutedBy.Id,
-                    Patient = t.Dossier.Patient
+                    Patient = t.Dossier.Patient,
+                    Id = t.Id,
+                    DossierId = t.Dossier.Id
                 });
             });
 
@@ -73,10 +76,24 @@ namespace WebApp.Controllers
                     Room = t.Room,
                     TreatmentDate = t.TreatmentDate,
                     PracticionerId = t.ExcecutedBy.Id,
-                    Patient = t.Dossier.Patient
+                    Patient = t.Dossier.Patient,
+                    Id = t.Id,
+                    DossierId = t.Dossier.Id
+
                 });
             });
-            return View(appointmentViewDtos);
+
+            if (day != DateTime.Today)
+            {
+                appointmentViewDtos = appointmentViewDtos.Where(dto => dto.TreatmentDate.Date == day.Date).ToList();
+            }
+            else
+            {
+                appointmentViewDtos = appointmentViewDtos.Where(dto => dto.TreatmentDate.Date == DateTime.Now.Date).ToList();
+
+            }
+            
+            return View(appointmentViewDtos.OrderBy(dto => dto.TreatmentDate ));
         }
 
         [HttpGet]
@@ -160,6 +177,94 @@ namespace WebApp.Controllers
             treatmentDto.Staff = StaffList;
             ViewBag.error = "Something went wrong, please try again later";
             return View("Create", treatmentDto);
+        }
+        
+        
+        [HttpGet]
+        [Authorize(Roles = "Staff, Patient")]
+        [Route("Appointment/edit/{appointmentId}")]
+        public async Task<ActionResult> Edit([FromRoute] int appointmentId)
+        {
+            Appointment appointment = await _appointmentService.Get(appointmentId);
+            Dossier dossier = appointment.Dossier;
+            List<User> users = new List<User>();
+            if (User.IsInRole("Staff"))
+            {
+                users =  _userService.GetStaff().ToList();
+            }
+            else
+            {
+                users.Add(dossier.HeadPractitioner);
+            }
+
+            List<SelectListItem> StaffList = new List<SelectListItem>();
+
+            if (users.ToList().Count > 0)
+            {
+                users.ForEach(u =>
+                {
+                    StaffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
+                        u.Id == dossier.HeadPractitioner.Id));
+                });
+            }
+
+
+            CreateAppointmentDto viewModel = new CreateAppointmentDto()
+            {
+                Staff = StaffList,
+                PracticionerId = appointment.ExcecutedBy.Id,
+                Room = appointment.Room,
+                DossierId = appointment.Dossier.Id,
+                TreatmentDate = appointment.TreatmentDate
+            };
+
+
+            return View("Edit", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Staff, Patient")]
+        public async Task<ActionResult> Edit(CreateAppointmentDto treatmentDto)
+        {
+            Dossier dossier = await _dossierService.Get(treatmentDto.DossierId);
+            if (ModelState.IsValid)
+            {
+                Staff user = (Staff) await _userService.Get(treatmentDto.PracticionerId);
+                try
+                {
+                    await _appointmentService.Update(new Appointment()
+                    {
+                        TreatmentDate = treatmentDto.TreatmentDate,
+                        Room = treatmentDto.Room,
+                        Dossier = dossier,
+                        ExcecutedBy = user,
+                    });
+                    TempData["SuccessMessage"] = "Success";
+                    return RedirectToAction("Index", "Appointment");
+                }
+                catch (ValidationException e)
+                {
+                    TempData["ErrorMessage"] = e.Message;
+                }
+            }
+
+            IEnumerable<User> users = _userService.GetStaff();
+
+            List<SelectListItem> StaffList = new List<SelectListItem>();
+
+            if (users.ToList().Count > 0)
+            {
+                users.ForEach(u =>
+                {
+                    StaffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
+                        u.Id == dossier.HeadPractitioner.Id));
+                });
+            }
+
+            treatmentDto.Staff = StaffList;
+            ViewBag.error = "Something went wrong, please try again later";
+            return View("Edit", treatmentDto);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Core.Infrastructure.Contexts
         public SecurityDbContext(DbContextOptions<SecurityDbContext> contextOptions) : base(contextOptions)
         {
         }
+        
     }
 }

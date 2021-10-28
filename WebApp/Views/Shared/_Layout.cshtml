@@ -67,11 +67,23 @@
                         </li>
                     }
                 </ul>
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                @if (User.Identity != null && User.Identity.IsAuthenticated )
                 {
-                    <span style="">
-                        @_userService.Get().First(u => u.Email == User.Identity.Name).GetFormattedName()
-                    </span>
+                    @if (User.IsInRole("Staff"))
+                    {
+                        <span >
+                            <a asp-controller="Account" asp-action="Edit"> @_userService.Get().First(u => u.Email == User.Identity.Name).GetFormattedName()</a>
+                       
+                        </span>
+                    }
+                    else
+                    {
+                        <span >
+                            <a href="Patient/edit/@_userService.Get().First(u => u.Email == User.Identity.Name).Id"> @_userService.Get().First(u => u.Email == User.Identity.Name).GetFormattedName()</a>
+                       
+                        </span>
+                    }
+
                 }
 
             </div>

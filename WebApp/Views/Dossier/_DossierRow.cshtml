@@ -7,7 +7,7 @@
             <h5 class="card-title">@Model.Patient.FirstName @Model.Patient.Preposition @Model.Patient.LastName</h5>
         </div>
         <div class="card-body">
-            <a href="/Dossier/Detail/@Model.Id" class="btn btn-primary">Details</a>
+            <a href="/Dossier/Detail/@Model.Patient.Id" class="btn btn-primary">Details</a>
             @if (User.IsInRole("Staff"))
             {
                 <a href="/Treatment/Create/@Model.Id" class="btn btn-primary">Afspraak maken</a>

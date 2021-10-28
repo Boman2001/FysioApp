@@ -44,6 +44,7 @@ namespace WebApp.Controllers
             {
                 User user = _userService.Get(u => u.Email.Equals(User.Identity.Name)).First();
                 Dossier dossier = await _dossierService.Get(createCommentDto.DossierId);
+                int patientID = dossier.Patient.Id;
                 Comment comment = await _commentService.Add(new Comment()
                 {
                     CommentBody = createCommentDto.CommentBody,
@@ -52,11 +53,10 @@ namespace WebApp.Controllers
                     IsVisiblePatient = createCommentDto.IsVisiblePatient
                 });
                 
-//                 dossier
-// .Comments.ToList().Add(comment);
                 await _dossierService.Update(dossier);
+               
                 TempData["SuccessMessage"] = "Success";
-                return RedirectToAction("Detail", "Dossier",createCommentDto.DossierId);
+                return RedirectToAction("Detail", "Dossier", new {id = patientID});
             }
                 
             return View(createCommentDto);

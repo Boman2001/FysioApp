@@ -10,24 +10,28 @@ using System.Threading.Tasks;
 using Core.Domain.Interfaces;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.API.Repositories
 {
     public class WebRepository<T> : IWebRepository<T> where T : Entity
     {
         private readonly HttpClient client;
+        
 
-        public WebRepository()
+        public WebRepository(IHttpClientFactory clientFactory)
         {
-            this.client = new HttpClient() { BaseAddress = new Uri("https://localhost:5003/api/")};
+
+            this.client = clientFactory.CreateClient("default");
         }
+
 
         public IEnumerable<T> Get()
         {
             IEnumerable<T> responseBody = null;
             try	
             {
-                HttpResponseMessage response = this.client.GetAsync(typeof(T).ToString().Split(".")[3]).Result;
+                HttpResponseMessage response = this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"s").Result;
                 response.EnsureSuccessStatusCode();
                 responseBody = response.Content.ReadFromJsonAsync<IEnumerable<T>>().Result;
                 return responseBody;
@@ -46,7 +50,7 @@ namespace Infrastructure.API.Repositories
             IEnumerable<T> responseBody = null;
             try	
             {
-                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]);
+                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"s");
                 response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadFromJsonAsync<IEnumerable<T>>();
                 return responseBody;
@@ -65,7 +69,7 @@ namespace Infrastructure.API.Repositories
             T responseBody = null;
             try	
             {
-                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"/"+id);
+                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"s"+"/"+id);
                 response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadFromJsonAsync<T>();
                 return responseBody;
@@ -143,21 +147,5 @@ namespace Infrastructure.API.Repositories
         {
             throw new NotImplementedException();
         }
-
-        // private string Login()
-        // {
-        //     try	
-        //     {
-        //         HttpResponseMessage response = await this.client.PostAsync("auth/Login");
-        //         response.EnsureSuccessStatusCode();
-        //         var responseBody = await response.Content.ReadFromJsonAsync<IEnumerable<T>>();
-        //         return responseBody;
-        //     }
-        //     catch(HttpRequestException e)
-        //     {
-        //         Console.WriteLine("\nException Caught!");	
-        //         Console.WriteLine("Message :{0} ",e.Message);
-        //     }
-        // }
     }
 }

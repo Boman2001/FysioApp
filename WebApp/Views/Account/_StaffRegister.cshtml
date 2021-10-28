@@ -4,13 +4,34 @@
     await Html.RenderPartialAsync("_Register");
 }
 
-<div class="form-group">
-    <label asp-for="start" class="control-label"></label>
-    <input type="time" asp-for="start" class="form-control"/>
-    <span asp-validation-for="start" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label asp-for="end" class="control-label"></label>
-    <input type="time" asp-for="end" class="form-control"/>
-    <span asp-validation-for="end" class="text-danger"></span>
-</div>
+@if (Model == null)
+{
+    <div class="form-group">
+        <label asp-for="start" class="control-label"></label>
+        <input type="time" asp-for="start" asp-format="hh\\:mm" class="form-control"/>
+        <span asp-validation-for="start" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="end" class="control-label"></label>
+        <input type="time" asp-for="end" asp-format="hh\\:mm"  class="form-control"/>
+        <span asp-validation-for="end" class="text-danger"></span>
+    </div>
+
+}
+else
+{
+    <div class="form-group">
+        <label asp-for="start" class="control-label"></label>
+        <input type="time" asp-for="start" asp-format="hh\\:mm" class="form-control" value="@Model.start.ToString("hh\\:mm" )"/>
+        <span asp-validation-for="start" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="end" class="control-label"></label>
+        <input type="time" asp-for="end" asp-format="hh\\:mm"  class="form-control" value="@Model.end.ToString("hh\\:mm"  )" />
+        <span asp-validation-for="end" class="text-danger"></span>
+    </div>
+
+}
+
+
+

@@ -51,10 +51,6 @@ namespace ApplicationServices.Services
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
             
-            if (model.TreatmentDate.Date.Ticks > DateTime.Now.Ticks)
-            {
-                throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
-            }
 
             return await _repository.Add(model);
 

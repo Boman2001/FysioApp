@@ -12,6 +12,11 @@ namespace Core.Domain.Models
         public string PhoneNumber { get; set; }
         public DateTime BirthDay { get; set; }
         public Gender Gender { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string HouseNumber { get; set; }
+        
         public virtual  IEnumerable<Dossier> Dossiers { get; set; }
     }
 }

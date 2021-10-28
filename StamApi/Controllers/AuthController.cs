@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationServices.Helpers;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -20,44 +21,41 @@ namespace StamApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IIdentityRepository _identityRepository;
-        private readonly IRepository<User> _userInformationRepository;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IAuthHelper _authHelper;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AuthController(
-            IIdentityRepository identityRepository,
-            IRepository<User> userInformationRepository,
-            UserManager<IdentityUser> userManager,
-            IConfiguration configuration)
+        public AuthController(IIdentityRepository identityRepository, UserManager<IdentityUser> userManager,
+            IAuthHelper authHelper, SignInManager<IdentityUser> signInManager)
         {
             _identityRepository = identityRepository;
-            _userInformationRepository = userInformationRepository;
             _userManager = userManager;
+            _authHelper = authHelper;
+            _signInManager = signInManager;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto login)
         {
-            var user = await _identityRepository.GetUserByEmail(login.Email);
-            var userInformation = _userInformationRepository.Get(u => u.Id.ToString() == user.Id).FirstOrDefault();
 
-            if (user == null || userInformation == null) return NotFound();
-            try
+            IdentityUser user = await this._userManager.FindByEmailAsync(login.Email);
+
+            if (user != null)
             {
-                SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+                var he = (await this._signInManager.PasswordSignInAsync(user, login.Password, true,
+                    true));
+                if (he.Succeeded)
                 {
-                    Subject = new ClaimsIdentity(new[] { new Claim("Email", user.Email) }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("frambozenvlavoetbal")), SecurityAlgorithms.HmacSha256Signature)
-                };
-                SecurityToken token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
+                    return Ok(new {Token = await _authHelper.GenerateToken(login.Email)});
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
 
-                return Ok(new {Token = new JwtSecurityTokenHandler().WriteToken(token)});
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new {message = ex.Message});
-            }
+            return BadRequest();
+
         }
-
     }
 }

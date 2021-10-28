@@ -13,6 +13,7 @@ namespace ApplicationServices.ExtensionMethods
             user.HeadPractisionerOf.ToList().ForEach(dossier =>
             {
                 dossier.Treatments.ToList().ForEach(treatment => timeSlots.Add(new Tuple<DateTime, DateTime>(treatment.TreatmentDate, treatment.TreatmentEndDate)) );
+                dossier.Appointments.ToList().ForEach(treatment => timeSlots.Add(new Tuple<DateTime, DateTime>(treatment.TreatmentDate, treatment.TreatmentEndDate)) );
             });
 
             return timeSlots.TrueForAll(timeSlot =>

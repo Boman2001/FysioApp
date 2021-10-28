@@ -1,0 +1,22 @@
+﻿@model WebApp.Dtos.Auth.StudentRegisterDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>aanpassen</h2>
+@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<form class="row" asp-action="" method="Post" enctype="multipart/form-data" id="registerForm">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col">
+
+        @await Html.PartialAsync("_StudentRegister", Model)
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <input type="submit" value="account aanpassen" class="btn btn-primary btn-user btn-block"/>
+        </div>
+    </div>
+
+</form>

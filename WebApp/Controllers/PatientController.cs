@@ -97,7 +97,11 @@ namespace WebApp.Controllers
                         BirthDay = registerDto.BirthDay,
                         Gender = registerDto.Gender,
                         PatientNumber = patientNumber,
-                        IdNumber = registerDto.IdNumber
+                        IdNumber = registerDto.IdNumber,
+                        Street = registerDto.Street,
+                        HouseNumber = registerDto.HouseNumber,
+                        PostalCode = registerDto.PostalCode,
+                        City = registerDto.City,
                     });
                 }
                 catch (ValidationException e)
@@ -112,8 +116,6 @@ namespace WebApp.Controllers
                 allErrors.ForEach(e => { TempData["ErrorMessage"] += e.ErrorMessage + "   "; });
             }
 
-            var temdata = TempData;
-
             return RedirectToAction("Create", "Dossier");
         }
 
@@ -123,8 +125,6 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             Patient patient = await _patientService.Get(id);
-
-
             return View("Edit", this.ToDto(patient));
         }
 
@@ -142,52 +142,72 @@ namespace WebApp.Controllers
                     return View(patientDto);
                 }
 
-                string pictureUrl = patientDto.Picture;
-                if (picture != null)
+                if (User.IsInRole("Staff"))
                 {
-                    pictureUrl = ProcessUploadedFile(picture);
+                    string pictureUrl = patientDto.Picture;
+                    if (picture != null)
+                    {
+                        pictureUrl = ProcessUploadedFile(picture);
+                    }
+
+                    await _patientService.Update(new Patient()
+                    {
+                        Email = patientDto.Email,
+                        FirstName = patientDto.FirstName,
+                        LastName = patientDto.LastName,
+                        Preposition = patientDto.Preposition,
+                        PhoneNumber = patientDto.PhoneNumber,
+                        PictureUrl = pictureUrl,
+                        BirthDay = patientDto.BirthDay,
+                        Gender = patientDto.Gender,
+                        PatientNumber = patientDto.PatientNumber.ToString(),
+                        IdNumber = patientDto.IdNumber,
+                        Street = patientDto.Street,
+                        HouseNumber = patientDto.HouseNumber,
+                        PostalCode = patientDto.PostalCode,
+                        City = patientDto.City,
+                    });
+                    TempData["SuccessMessage"] = $"Patient Bijgewerkt";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Patient patient = await _patientService.Get(patientDto.Id.Value);
+                    patient.City = patientDto.City;
+                    patient.Street = patientDto.Street;
+                    patient.PostalCode = patientDto.PostalCode;
+                    patient.HouseNumber = patientDto.HouseNumber;
+                    await _patientService.Update(new Patient()
+                    {
+                        Email = patient.Email,
+                        FirstName = patient.FirstName,
+                        LastName = patient.LastName,
+                        Preposition = patient.Preposition,
+                        PhoneNumber = patient.PhoneNumber,
+                        PictureUrl = patient.PictureUrl,
+                        BirthDay = patient.BirthDay,
+                        Gender = patient.Gender,
+                        PatientNumber = patient.PatientNumber,
+                        IdNumber = patient.IdNumber,
+                        Street = patient.Street,
+                        HouseNumber = patient.HouseNumber,
+                        PostalCode = patient.PostalCode,
+                        City = patient.City,
+                    });
+                    TempData["SuccessMessage"] = $"Patient Bijgewerkt";
+                    return RedirectToAction("Index", "Appointment");
                 }
 
-                await _patientService.Update(new Patient()
-                {
-                    Id = patientDto.Id.Value,
-                    Email = patientDto.Email,
-                    FirstName = patientDto.FirstName,
-                    LastName = patientDto.LastName,
-                    Preposition = patientDto.Preposition,
-                    PhoneNumber = patientDto.PhoneNumber,
-                    PictureUrl = pictureUrl,
-                    BirthDay = patientDto.BirthDay,
-                    Gender = patientDto.Gender,
-                    PatientNumber = patientDto.ToString(),
-                    IdNumber = patientDto.IdNumber
-                });
-                TempData["SuccessMessage"] = $"Patient Bijgewerkt";
-                return RedirectToAction("Index");
+               
+               
             }
-            catch
+            catch(ValidationException e)
             {
+                TempData["ErrorMessage"] = e.Message; 
                 return View("_Edit", patientDto);
             }
         }
-
-
-        // POST: Patient/Delete/5
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public ActionResult Delete(int id, PatientDto patientDto)
-        // {
-        //     try
-        //     {
-        //         // TODO: Add delete logic here
-        //
-        //         return RedirectToAction();
-        //     }
-        //     catch
-        //     {
-        //         return View("Details");
-        //     }
-        // }
+        
 
         private string ProcessUploadedFile(IFormFile picture)
         {

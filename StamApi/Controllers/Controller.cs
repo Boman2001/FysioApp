@@ -13,7 +13,7 @@ namespace StamApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
+    [Authorize(Roles = "Staff")]
     [ApiConventionType(typeof(DefaultApiConventions))]
     public abstract class Controller<T, D> : ControllerBase where T : Entity
     {
@@ -28,8 +28,8 @@ namespace StamApi.Controllers
             _identityRepository = identityRepository;
             _mapper = mapper;
         }
-        
-                [HttpGet]
+
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]

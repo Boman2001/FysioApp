@@ -1,4 +1,6 @@
-﻿using Core.Domain.Models;
+﻿using System;
+using Core.Domain.Enums;
+using Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Infrastructure.Contexts
@@ -50,11 +52,6 @@ namespace Core.Infrastructure.Contexts
                 .WithMany(user => user.CommentsCreated)
                 .OnDelete(DeleteBehavior.Cascade);
             
-            // builder.Entity<Treatment>()
-            //     .HasOne( treatment => treatment.Dossier)
-            //     .WithMany(dossier => dossier.Treatments)
-            //     .OnDelete(DeleteBehavior.Cascade);
-
             builder.Entity<Appointment>()
                 .HasOne( treatment => treatment.ExcecutedBy)
                 .WithMany(staff => staff.TreatmentsDone)
@@ -79,6 +76,57 @@ namespace Core.Infrastructure.Contexts
                 .HasMany<Appointment>( T => T.Appointments)
                 .WithOne(T=> T.Dossier)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // builder.Entity<Student>().HasData(new Student()
+            // {
+            //     FirstName = "Stefan",
+            //     Preposition = "De",
+            //     LastName = "Student",
+            //     Email = "Danmaarkaas@gmail.com",
+            //     StudentNumber = "2153494",
+            //     start = new TimeSpan(0),
+            //         end = new TimeSpan(0)
+            // });
+            //
+            // builder.Entity<Doctor>().HasData(new Doctor()   
+            // {
+            //     FirstName = "Dirk",
+            //     Preposition = "De",
+            //     LastName = "DoctorMan",
+            //     Email = "Danmaarkaas1@gmail.com",
+            //      BigNumber = "29292929929",
+            //     start = new TimeSpan(0),
+            //     end = new TimeSpan(0),
+            //     PhoneNumber = "0636303815",
+            //      EmployeeNumber = "0636303815"
+            // });
+            //
+            // builder.Entity<Patient>().HasData(new Patient()   
+            // {
+            //     FirstName = "Paula",
+            //     Preposition = "van der",
+            //     LastName = "PatientenBerg",
+            //     Email = "Danmaarkaas2@gmail.com",
+            //     PhoneNumber = "0636303815",
+            //     Gender = Gender.Female,
+            //     BirthDay = DateTime.Now.AddYears(-56),
+            //     PatientNumber = Guid.NewGuid().ToString(),
+            //     PictureUrl = "ee23a151-8ea2-40d6-aad6-9834d3bd4da3_2.jpg"
+            // });
+            //
+            // builder.Entity<Patient>().HasData(new Patient()   
+            // {
+            //     FirstName = "Pavlov",
+            //     Preposition = "",
+            //     LastName = "PatientStan",
+            //     Email = "Danmaarkaas3@gmail.com",
+            //     PhoneNumber = "0636303816",
+            //     Gender = Gender.Male,
+            //     BirthDay = DateTime.Now.AddYears(-21),
+            //     PatientNumber = Guid.NewGuid().ToString(),
+            //     PictureUrl = "ee23a151-8ea2-40d6-aad6-9834d3bd4da3_2.jpg"
+            // });
+            
         }
     }
 }

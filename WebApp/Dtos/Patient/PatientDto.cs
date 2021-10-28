@@ -30,5 +30,16 @@ namespace WebApp.Dtos.Patient
         public DateTime BirthDay { get; set; }
         [Required]
         public Gender Gender { get; set; }
+        
+        [Required] [Display(Name = "Straat")] public string Street { get; set; }
+        [Required] [Display(Name = "Stad")] public string City { get; set; }
+
+        [Required]
+        [Display(Name = "Post Code")]
+        public string PostalCode { get; set; }
+
+        [Required]
+        [Display(Name = "Huisnummer en toevoeging")]
+        public string HouseNumber { get; set; }
     }
 }
