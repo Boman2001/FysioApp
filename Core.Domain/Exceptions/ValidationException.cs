@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Runtime.Serialization;
 
 namespace Core.Domain.Exceptions
@@ -12,6 +13,7 @@ namespace Core.Domain.Exceptions
         protected ValidationException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+#nullable enable
 
         public ValidationException(string? message) : base(message)
         {
@@ -21,4 +23,5 @@ namespace Core.Domain.Exceptions
         {
         }
     }
+#nullable disable
 }
