@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
@@ -13,27 +11,24 @@ namespace ApplicationServices.Services
         public PatientService(IRepository<Patient> repository) : base(repository)
         {
         }
-        
+
         public new async Task<Patient> Add(Patient model)
         {
             DateTime today = DateTime.Now;
-            if ( today.Year - model.BirthDay.Year >= 16 )
-            {
-                return await _repository.Add(model);
-            }
-            else
+            if (today.Year - model.BirthDay.Year < 16)
             {
                 throw new ValidationException("Patiënt is te jong");
             }
 
+            return await _repository.Add(model);
         }
 
         public new async Task<Patient> Update(Patient model)
         {
             DateTime today = DateTime.Now;
-            if ( today.Year - model.BirthDay.Year >= 16 )
+            if (today.Year - model.BirthDay.Year >= 16)
             {
-                return await _repository.Add(model);
+                return await _repository.Update(model);
             }
             else
             {

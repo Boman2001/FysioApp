@@ -43,13 +43,13 @@ namespace ApplicationServices.Services
                 throw new ValidationException("Uw doctor is al bezet op dit moment");
             }
 
-            if (model.TreatmentDate.Date.Ticks <= model.Dossier.RegistrationDate.Ticks &&
+            if (model.TreatmentDate.Ticks <= model.Dossier.RegistrationDate.Ticks ||
                 model.TreatmentEndDate.Ticks >= model.Dossier.DismissionDate.Ticks)
             {
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
 
-            if (model.TreatmentDate.Date.Ticks < DateTime.Now.Ticks)
+            if (model.TreatmentDate.Ticks < DateTime.Now.Ticks)
             {
                 throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
             }
@@ -75,30 +75,34 @@ namespace ApplicationServices.Services
                 throw new ValidationException("Deze behandelinmg valt buiten de werktijden van uw doctor");
             }
 
-            if (!_repository.Get(ap =>
-                    ap.Dossier.Patient.Email == model.Dossier.Patient.Email && ap.TreatmentDate == model.TreatmentDate)
-                .Any())
+            if (!model.ExcecutedBy.IsAvailable(model.TreatmentDate, model.TreatmentEndDate))
             {
-                if (!model.ExcecutedBy.IsAvailable(model.TreatmentDate, model.TreatmentEndDate))
-                {
-                    throw new ValidationException("Uw doctor is al bezet op dit moment");
-                }
+                throw new ValidationException("Uw doctor is al bezet op dit moment");
             }
 
-
-            if (model.TreatmentDate.Date.Ticks <= model.Dossier.RegistrationDate.Ticks &&
+            if (model.TreatmentDate.Ticks <= model.Dossier.RegistrationDate.Ticks ||
                 model.TreatmentEndDate.Ticks >= model.Dossier.DismissionDate.Ticks)
             {
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
 
-            if (model.TreatmentDate.Date.Ticks < DateTime.Now.Ticks)
+            if (model.TreatmentDate.Ticks < DateTime.Now.Ticks)
             {
                 throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
             }
-
             return await _repository.Update(model);
         }
+        public new Task Delete(Appointment model)
+        {
+            if (DateTime.Now > model.TreatmentDate.AddHours(-24))
+            {
+                throw new ValidationException(
+                    "een behandeling kan niet verwijderd worden binnen 24 uur van het begin van de afspraak");
+            }
+
+            return _repository.Delete(model);
+        }
+        
 
         private bool AreFallingInSameWeek(DateTime date1, DateTime date2)
         {

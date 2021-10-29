@@ -14,43 +14,40 @@ namespace Core.Infrastructure.Seeders.SecurityDb
 
         public static void SeedUsers(UserManager<IdentityUser> userManager)
         {
-            if (userManager.FindByNameAsync("Drik@deDoktor.com").Result == null)
+            List<Tuple<string, bool>> usernames = new List<Tuple<string, bool>>()
             {
-                List<Tuple<string, bool>> usernames = new List<Tuple<string, bool>>()
+                new Tuple<string, bool>("Drik@deDoktor.com", true),
+                new Tuple<string, bool>("stefan@DeStudent.com", true),
+                new Tuple<string, bool>("Paula@vanderpatientenberg.com", false),
+                new Tuple<string, bool>("Pavlov@PatientStan.com", false),
+            };
+
+            usernames.ForEach(async username =>
+            {
+                var user = new IdentityUser()
                 {
-                    new Tuple<string, bool>("Drik@deDoktor.com", true),
-                    new Tuple<string, bool>("stefan@DeStudent.com", true),
-                    new Tuple<string, bool>("Paula@vanderpatientenberg.com", false),
-                    new Tuple<string, bool>("Pavlov@PatientStan.com", false),
+                    UserName = username.Item1,
+                    Email = username.Item1,
+                    NormalizedUserName = username.Item1.ToUpper(),
+                    NormalizedEmail = username.Item1.ToUpper()
                 };
 
-                usernames.ForEach(username =>
+                var password = "GxEZMx8QUJTn8Z3";
+
+                var result = await userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
                 {
-                    var user = new IdentityUser()
+                    if (username.Item2)
                     {
-                        UserName = username.Item1,
-                        Email = username.Item1,
-                        NormalizedUserName = username.Item1.ToUpper(),
-                        NormalizedEmail = username.Item1.ToUpper()
-                    };
-
-                    var password = "GxEZMx8QUJTn8Z3";
-
-                    var result = userManager.CreateAsync(user, password).Result;
-
-                    if (result.Succeeded)
-                    {
-                        if (username.Item2)
-                        {
-                            userManager.AddToRoleAsync(user, "Staff").Wait();
-                        }
-                        else
-                        {
-                            userManager.AddToRoleAsync(user, "Patient").Wait();
-                        }
+                        var identityResult = await userManager.AddToRoleAsync(user, "Staff");
                     }
-                });
-            }
+                    else
+                    {
+                        var identityResult = await userManager.AddToRoleAsync(user, "Patient");
+                    }
+                }
+            });
         }
 
         public static void SeedRoles(RoleManager<IdentityRole> roleManager)

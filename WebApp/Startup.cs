@@ -126,10 +126,11 @@ namespace WebApp
             services.AddScoped(typeof(IService<Appointment>), typeof(AppointmentService));
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddScoped(typeof(IAuthHelper), typeof(AuthHelper));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
             if (env.IsDevelopment())
@@ -172,7 +173,6 @@ namespace WebApp
                 await next.Invoke();
             });
             
-            SecurityDbInitalizer.SeedData(userManager, roleManager);
         }
     }
 }
