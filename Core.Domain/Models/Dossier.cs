@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +15,9 @@ namespace Core.Domain.Models
         public int DiagnoseCodeId { get; set; }
         public bool IsStudent { get; set; }
         public virtual  User IntakeBy  { get; set; }
+#nullable enable
         public virtual  User? SupervisedBy  { get; set; }
+#nullable disable
         public virtual  User  HeadPractitioner { get; set; }
         public DateTime RegistrationDate  { get; set; }
         public DateTime DismissionDate  { get; set; }

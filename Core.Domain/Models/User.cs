@@ -7,7 +7,9 @@ namespace Core.Domain.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+#nullable enable
         public string? Preposition { get; set; }
+#nullable disable
         public string Email { get; set; }
         [NotMapped]
         public virtual IEnumerable<Dossier> IntakesDone { get; set; }
