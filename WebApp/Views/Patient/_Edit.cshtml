@@ -2,7 +2,7 @@
 @Html.ValidationSummary(false, "", new {@class = "text-danger"})
 <form asp-action="Edit" asp-controller="Patient" method="Post" enctype="multipart/form-data" id="editPatientForm" ajax replace-id="partialViewWrapper">
 
-    <img src="/Uploads/@Model.Picture" alt="picture" height="200px">
+    <img src="@Model.Picture" alt="picture" height="200px">
     <div id="partialViewWrapper">
         <input type="hidden" asp-for="Picture" class="form-control" value="@Model.Picture"/>
         @await Html.PartialAsync("_Form", Model)

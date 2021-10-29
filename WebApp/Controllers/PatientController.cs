@@ -217,7 +217,7 @@ namespace WebApp.Controllers
 
         private string ProcessUploadedFile(IFormFile picture)
         {
-            string uniqueFileName = null;
+            string uniqueFileName = "data:image/jpeg;base64,";
 
             string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
             if (!Directory.Exists(uploadsFolder))
@@ -225,13 +225,13 @@ namespace WebApp.Controllers
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            uniqueFileName = Guid.NewGuid().ToString() + "_" + picture.FileName;
-            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            using (var ms = new MemoryStream())
             {
-                picture.CopyTo(fileStream);
+                picture.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                uniqueFileName += Convert.ToBase64String(fileBytes);
+                // act on the Base64 data
             }
-
             return uniqueFileName;
         }
 
