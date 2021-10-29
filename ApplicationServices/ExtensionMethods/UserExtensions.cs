@@ -18,8 +18,8 @@ namespace ApplicationServices.ExtensionMethods
 
             return timeSlots.TrueForAll(timeSlot =>
             {
-                return start.Ticks <= timeSlot.Item1.Ticks && start.Ticks >= timeSlot.Item2.Ticks &&
-                       end.Ticks <= timeSlot.Item1.Ticks && end.Ticks >= timeSlot.Item2.Ticks;
+                return start.Ticks <= timeSlot.Item1.Ticks || start.Ticks >= timeSlot.Item2.Ticks &&
+                    end.Ticks <= timeSlot.Item1.Ticks || end.Ticks >= timeSlot.Item2.Ticks;
 
             });
         }

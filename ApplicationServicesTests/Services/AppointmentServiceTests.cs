@@ -269,7 +269,7 @@ namespace ApplicationServicesTests.Services
                 Room = RoomType.None,
                 CreatedAt = DateTime.Now,
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Now.AddMinutes(5),
+                TreatmentDate = DateTime.Now.AddMinutes(10),
                 TreatmentEndDate = DateTime.Now.AddHours(1),
             };
             // Act
@@ -1016,7 +1016,7 @@ namespace ApplicationServicesTests.Services
                         Room = RoomType.None,
                         CreatedAt = DateTime.Now,
                         ExcecutedBy = staff,
-                        TreatmentDate = DateTime.Now.AddMinutes(5),
+                        TreatmentDate = DateTime.Now,
                         TreatmentEndDate = DateTime.Now.AddHours(2),
                     }
                 };

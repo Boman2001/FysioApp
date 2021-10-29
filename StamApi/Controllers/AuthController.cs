@@ -1,21 +1,12 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ApplicationServices.Helpers;
-using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using StamApi.Models.Auth;
 
 namespace StamApi.Controllers
 {
-
     [Route("api/auth/")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -34,10 +25,27 @@ namespace StamApi.Controllers
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// Logs you in
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /auth/login
+        /// {
+        ///     "email": "Drik@deDoktor.com",
+        ///     "password": "GxEZMx8QUJTn8Z3"
+        ///}
+        ///
+        /// </remarks>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns>A newly generated jwt token</returns>
+        /// <response code="200">Returns the newly created token</response>
+        /// <response code="400">If the credentials are wrong</response>    
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto login)
         {
-
             IdentityUser user = await this._userManager.FindByEmailAsync(login.Email);
 
             if (user != null)
@@ -55,7 +63,6 @@ namespace StamApi.Controllers
             }
 
             return BadRequest();
-
         }
     }
 }

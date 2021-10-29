@@ -10,13 +10,13 @@ namespace StamApi.GraphQL.Queries
 {
     [ExtendObjectType(typeof(Query))]
     public class DiagnoseCodeQuery {
-
-        public IEnumerable<DiagnoseCode> DiagnosisTypes([Service]IRepository<DiagnoseCode> diagnosisTypeApplicationService) {
+        
+        public IEnumerable<DiagnoseCode> diagnoseCodes([Service]IRepository<DiagnoseCode> diagnosisTypeApplicationService) {
 
             return diagnosisTypeApplicationService.Get();
         }
         
-        public async Task<DiagnoseCode> DiagnoseCode(int id, [Service]IService<DiagnoseCode> diagnosisTypeApplicationService) {
+        public async Task<DiagnoseCode> diagnoseCode(int id, [Service]IRepository<DiagnoseCode> diagnosisTypeApplicationService) {
 
             return await diagnosisTypeApplicationService.Get(id);
         }

@@ -26,7 +26,7 @@ namespace ApplicationServices.Services
             var treatmentPlan = await _treatmentPlanRepository.Get(model.Dossier.TreatmentPlan.Id);
             model.TreatmentEndDate =
                 model.TreatmentDate.AddMinutes(model.Dossier.TreatmentPlan.TimePerSessionInMinutes);
-            if (treatmentPlan.TreatmentsPerWeek <= dossier.Treatments
+            if (treatmentPlan.TreatmentsPerWeek <= dossier.Appointments
                 .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count)
             {
                 throw new ValidationException("Het maximum aantal afspraken zijn al aangemaakt voor deze week");
@@ -53,6 +53,7 @@ namespace ApplicationServices.Services
             {
                 throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
             }
+
 
             return await _repository.Add(model);
         }
@@ -90,8 +91,17 @@ namespace ApplicationServices.Services
             {
                 throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
             }
-            return await _repository.Update(model);
+
+            if (model.Id == 0)
+            {
+                return await _repository.Update(model);
+            }
+            else
+            {
+                return await _repository.Update(model.Id, model);
+            }
         }
+
         public new Task Delete(Appointment model)
         {
             if (DateTime.Now > model.TreatmentDate.AddHours(-24))
@@ -102,11 +112,17 @@ namespace ApplicationServices.Services
 
             return _repository.Delete(model);
         }
-        
+
+        public new async Task<Appointment> Update(int id, Appointment model)
+        {
+            model.Id = id;
+            return await this.Update(model);
+        }
+
 
         private bool AreFallingInSameWeek(DateTime date1, DateTime date2)
         {
-            return date1.AddDays(-(int) date1.DayOfWeek) == date2.AddDays(-(int) date2.DayOfWeek);
+            return date1.Date.AddDays(-(int) date1.DayOfWeek) == date2.Date.AddDays(-(int) date2.DayOfWeek);
         }
     }
 }

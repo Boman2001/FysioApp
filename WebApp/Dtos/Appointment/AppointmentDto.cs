@@ -6,6 +6,7 @@ namespace WebApp.Dtos.Appointment
 {
     public class AppointmentDto
     {
+        
         [Required]
         public DateTime TreatmentDate { get; set; }
         
@@ -16,5 +17,6 @@ namespace WebApp.Dtos.Appointment
         public RoomType Room { get; set; }
         [Required]
         public int DossierId { get; set; }
+        public int Id { get; set; }
     }
 }

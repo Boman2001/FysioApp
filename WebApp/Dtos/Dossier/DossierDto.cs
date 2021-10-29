@@ -8,7 +8,9 @@ namespace WebApp.Dtos.Dossier
 {
     public class DossierDto
     {
+        public int Id { get; set; }
         public string Description { get; set; }
+
 
         [Required]
         [Display(Name = "Diagnose")]
@@ -27,7 +29,10 @@ namespace WebApp.Dtos.Dossier
         [Display(Name = "Hoofd Behandelaar")] public int HeadPracticionerId { get; set; }
 
         [Display(Name = "Supervisor")] public int? SupervisedById { get; set; }
+        [Required]
         [Display(Name = "Intake datum")] public DateTime AdmissionDate { get; set; }
+        [Required]
+        [Display(Name = "Ontslag datum")] public DateTime DismissalDate { get; set; }
 
         #nullable enable
         public DiagnoseCode? DiagnoseCode { get; set; }

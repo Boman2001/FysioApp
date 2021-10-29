@@ -147,6 +147,7 @@ namespace WebApp.Controllers
                         Room = treatmentDto.Room,
                         Dossier = dossier,
                         ExcecutedBy = user,
+                        Particulatities = treatmentDto.Particulatities
                     });
 
                     TempData["SuccessMessage"] = "Success";
@@ -227,7 +228,8 @@ namespace WebApp.Controllers
                 Particulatities = treatment.Particulatities,
                 Room = treatment.Room,
                 TreatmentCode = treatments.First(t => t.Id == treatment.TreatmentCodeId),
-                TreatmentDate = treatment.TreatmentDate
+                TreatmentDate = treatment.TreatmentDate,
+                
                 
             };
             viewModel.DossierId = treatment.Dossier.Id;

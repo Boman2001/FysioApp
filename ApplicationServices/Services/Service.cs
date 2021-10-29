@@ -67,6 +67,12 @@ namespace ApplicationServices.Services
             _repository.Detach(model);
             return await  _repository.Update(model);
         }
+        
+        public async Task<T> Update(int id, T model)
+        {
+            return await  _repository.Update(id,model);
+        }
+
 
         public Task Delete(int id)
         {

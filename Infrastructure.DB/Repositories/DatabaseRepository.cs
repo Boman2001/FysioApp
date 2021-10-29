@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace Core.Infrastructure.Repositories
 {
@@ -18,7 +19,7 @@ namespace Core.Infrastructure.Repositories
         private readonly DbSet<T> _dbSet;
         public DatabaseRepository(DbContext context)
         {
-            _context = context;
+            _context = context; 
             _dbSet = _context.Set<T>();
         }
 
@@ -140,6 +141,22 @@ namespace Core.Infrastructure.Repositories
             _dbSet.Update(entity);
             await Save();
             return entity;
+        }
+        
+        public async Task<T> Update(int id, T entity)
+        {
+
+            entity.UpdatedAt = DateTime.Now;
+
+            T existing = await _dbSet.FindAsync(id);
+
+            if (existing != null)
+            {
+                _context.Entry(existing).CurrentValues.SetValues(entity);
+               await  _context.SaveChangesAsync();
+            }
+
+            return existing;
         }
 
         public async Task Delete(int id)

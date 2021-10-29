@@ -23,7 +23,7 @@
         {
             @if (_appointmentService.Get(Model.Id).Result is Appointment)
             {
-                <a class="btn btn-primary" href="Treatment/Create/Appointment/@Model.Id">Maak behandeling</a>
+                <a class="btn btn-primary" href="/Treatment/Create/Appointment/@Model.Id">Maak behandeling</a>
             }
             <a class="btn btn-primary" href="/Dossier/Detail/@Model.DossierId">Naar dossier</a>
         }

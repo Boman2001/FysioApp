@@ -27,17 +27,13 @@ namespace WebApp.Controllers
         private readonly IWebRepository<TreatmentCode> _treatmentCodeRepository;
         private readonly IRepository<Doctor> _doctorRepository;
         private readonly IRepository<Student> _studentRepository;
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserService _userRepository;
         private readonly IRepository<Patient> _patientRepository;
         private readonly IWebRepository<DiagnoseCode> _diagnoseRepository;
         private readonly IService<Dossier> _dossierService;
         private readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
 
-        public DossierController(IWebRepository<TreatmentCode> treatmentCodeRepository,
-            IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository,
-            IRepository<User> userRepository, IRepository<Patient> patientRepository,
-            IWebRepository<DiagnoseCode> diagnoseRepository, IService<Dossier> dossierService,
-            IRepository<TreatmentPlan> treatmentPlanRepository)
+        public DossierController(IWebRepository<TreatmentCode> treatmentCodeRepository, IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository, IUserService userRepository, IRepository<Patient> patientRepository, IWebRepository<DiagnoseCode> diagnoseRepository, IService<Dossier> dossierService, IRepository<TreatmentPlan> treatmentPlanRepository)
         {
             _treatmentCodeRepository = treatmentCodeRepository;
             _doctorRepository = doctorRepository;
@@ -105,6 +101,7 @@ namespace WebApp.Controllers
                         SupervisedBy = supervisor,
                         IntakeBy = intakeBy,
                         TreatmentPlan = treatmentplan,
+                        DismissionDate =dossier.DismissalDate
                     };
 
                     try
@@ -167,15 +164,11 @@ namespace WebApp.Controllers
         {
             try
             {
-                IEnumerable<Doctor> doctors = _doctorRepository.Get();
-                IEnumerable<Student> students = _studentRepository.Get();
-                IEnumerable<User> users = new List<User>();
+                IEnumerable<User> users = _userRepository.GetStaff();
                 IEnumerable<Patient> patients = _patientRepository.Get();
                 IEnumerable<DiagnoseCode> diagnoseCodes = await _diagnoseRepository.GetAsync();
                 IEnumerable<TreatmentCode> treatments = await _treatmentCodeRepository.GetAsync();
-
-                //TODO haal dit op via user service en check op !patient
-                users = users.Union(students).Union(doctors);
+                
                 viewModel.Patients = new List<SelectListItem>();
                 viewModel.Staff = new List<SelectListItem>();
                 viewModel.Diagnoses = new List<SelectListItem>();
@@ -194,7 +187,7 @@ namespace WebApp.Controllers
                 users.ForEach(doctor =>
                 {
                     viewModel.Staff.Add(
-                        new SelectListItem(doctor.LastName + " , " + doctor.FirstName, doctor.Id.ToString()));
+                        new SelectListItem(doctor.LastName + " , " + doctor.FirstName, doctor.Id.ToString(), doctor.Email == User.Identity.GetName()));
                 });
 
                 patients.ForEach(patient =>
@@ -216,6 +209,36 @@ namespace WebApp.Controllers
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public async Task<ActionResult> Edit([FromRoute] int Id)
+        {
+            Dossier dossier = await _dossierService.Get(Id);
+            CreateDossierDto createDossierDto = new CreateDossierDto()
+            {
+                Id = Id,
+                Description = dossier.Description,
+                Patient = dossier.Patient,
+                Treatments = dossier.Treatments,
+                AdmissionDate = dossier.RegistrationDate,
+                DismissalDate = dossier.DismissionDate,
+                SupervisedBy = dossier.SupervisedBy,
+                HeadPractitioner = dossier.HeadPractitioner,
+                IntakeBy = dossier.IntakeBy,
+                IsStudent = dossier.IsStudent,
+                PatientId = dossier.Patient.Id,
+                TreatmentPlan = dossier.TreatmentPlan,
+                DiagnoseCodeId = dossier.DiagnoseCodeId,
+                HeadPracticionerId = dossier.HeadPractitioner.Id,
+                IntakeById = dossier.IntakeBy.Id,
+                SupervisedById = dossier.SupervisedBy.Id,
+                TreatmentPlanId = dossier.TreatmentPlan.Id,
+                TreatmentsPerWeek = dossier.TreatmentPlan.TreatmentsPerWeek,
+                TimePerSessionInMinutes = dossier.TreatmentPlan.TimePerSessionInMinutes
+            };
+            return View("Edit" ,await this.fillDto(createDossierDto));
         }
 
         [HttpPost]
@@ -254,7 +277,8 @@ namespace WebApp.Controllers
                         HeadPractitioner = head,
                         SupervisedBy = supervisor,
                         IntakeBy = intakeBy,
-                        TreatmentPlan = treatmentplan
+                        TreatmentPlan = treatmentplan,
+                        DismissionDate = dossier.DismissalDate,
                     };
 
                     try
@@ -286,6 +310,7 @@ namespace WebApp.Controllers
                 IEnumerable<TreatmentCode> treatmentcodes =  _treatmentCodeRepository.GetAsync().Result;
                 List<ViewCommentDto> commentDtos = new List<ViewCommentDto>();
                 List<TreatmentViewDto> treatmentViewDtos = new List<TreatmentViewDto>();
+                List<AppointmentViewDto> appointmentViewDtos = new List<AppointmentViewDto>();
                 DiagnoseCode diagnoseCode =  _diagnoseRepository.Get(dossier.DiagnoseCodeId).Result;
                 dossier.Comments.ForEach(c =>
                 {
@@ -316,13 +341,14 @@ namespace WebApp.Controllers
 
                 dossier.Appointments.ForEach(t =>
                 {
-                    treatmentViewDtos.Add(new TreatmentViewDto()
+                    appointmentViewDtos.Add(new AppointmentViewDto()
                     {
                         Practicioner = t.ExcecutedBy,
                         Room = t.Room,
                         TreatmentDate = t.TreatmentDate,
                         PracticionerId = t.ExcecutedBy.Id,
-                        Id = t.Id
+                        Id = t.Id,
+                        Patient = patient
                     });
                 });
                 ViewDossierDto dossierDto = new ViewDossierDto()
@@ -342,6 +368,7 @@ namespace WebApp.Controllers
                     },
                     Comments = commentDtos,
                     Treatments = treatmentViewDtos,
+                    Appointments = appointmentViewDtos,
                     DiagnoseCode = diagnoseCode,
                     Age = dossier.Age,
                     Id = dossier.Id
@@ -356,12 +383,11 @@ namespace WebApp.Controllers
         [HttpGet]
         [Authorize(Roles = "Patient")]
         [Route("Dossiers")]
-        public async Task<ActionResult> Details([FromQuery] string email)
+        public ActionResult Details([FromQuery] string email)
         {
-
+            email = User.Identity.Name;
             List<ViewDossierDto> dossierDtos = new List<ViewDossierDto>();
             Patient patient = _patientRepository.Get(p => p.Email == email).First();
-            IEnumerable<TreatmentCode> treatmentcodes = await _treatmentCodeRepository.GetAsync();
 
             patient.Dossiers.ForEach(dossier =>
             {
@@ -423,11 +449,16 @@ namespace WebApp.Controllers
                     Appointments = appointmentViewDtos,
                     DiagnoseCode = diagnoseCode,
                     Age = dossier.Age,
-                    Id = dossier.Id
+                    Id = dossier.Id,
+                    
                 };
                 dossierDtos.Add(dossierDto);
                 
             });
+            if (dossierDtos.Count == 0)
+            {
+                TempData["ErrorMessage"] = "geen dossier Gevonden";
+            }
             return View("Detail", dossierDtos);
         }
     }

@@ -21,6 +21,7 @@ namespace Core.DomainServices.Interfaces
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
         Task<T> Add(T model);
         Task<T> Update(T model);
+        Task<T> Update(int id, T model);
         Task Delete(int id);
         Task Delete(T model);
     }

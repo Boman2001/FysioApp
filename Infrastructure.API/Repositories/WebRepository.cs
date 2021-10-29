@@ -123,6 +123,11 @@ namespace Infrastructure.API.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<T> Update(int id, T entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Delete(int id)
         {
             throw new NotImplementedException();

@@ -7,15 +7,19 @@ namespace Core.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //Drik@deDoktor.com", true),
+            // new Tuple<string, bool>("stefan@DeStudent.com", true),
+            // new Tuple<string, bool>("", false),
+            // new Tuple<string, bool>("Pavlov@PatientStan.com"
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "FirstName", "LastName", "Preposition", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 29, 0, 29, 45, 28, DateTimeKind.Local).AddTicks(5369), null, "Danmaarkaas1@gmail.com", "Dirk", "DoctorMan", "De", null },
-                    { 3, new DateTime(2021, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(2966), null, "Danmaarkaas2@gmail.com", "Paula", "PatientenBerg", "van der", null },
-                    { 4, new DateTime(2021, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(4474), null, "Danmaarkaas3@gmail.com", "Pavlov", "PatientStan", "", null },
-                    { 2, new DateTime(2021, 10, 29, 0, 29, 45, 49, DateTimeKind.Local).AddTicks(9073), null, "Danmaarkaas@gmail.com", "Stefan", "Student", "De", null }
+                    { 1, new DateTime(2021, 10, 29, 0, 29, 45, 28, DateTimeKind.Local).AddTicks(5369), null, "Drik@deDoktor.com", "Drik", "DoctorMan", "De", null },
+                    { 3, new DateTime(2021, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(2966), null, "Paula@vanderpatientenberg.com", "Paula", "PatientenBerg", "van der", null },
+                    { 4, new DateTime(2021, 10, 29, 0, 29, 45, 47, DateTimeKind.Local).AddTicks(4474), null, "Pavlov@PatientStan.com", "Pavlov", "PatientStan", "", null },
+                    { 2, new DateTime(2021, 10, 29, 0, 29, 45, 49, DateTimeKind.Local).AddTicks(9073), null, "stefan@DeStudent.com", "Stefan", "Student", "De", null }
                 });
 
             migrationBuilder.InsertData(
@@ -39,7 +43,7 @@ namespace Core.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Doctors",
                 columns: new[] { "Id", "BigNumber", "EmployeeNumber", "PhoneNumber" },
-                values: new object[] { 1, "29292929929", "0636303815", "0636303815" });
+                values: new object[] { 1, "29292929929", "2153494", "0636303815" });
 
             migrationBuilder.InsertData(
                 table: "Students",

@@ -27,7 +27,16 @@
         <div class="row">
             @if (User.IsInRole("Staff"))
             {
-                @await Html.PartialAsync("_Treatment", Model.Treatments)
+                @if (Model.Treatments != null)
+                {
+                    @await Html.PartialAsync("_Treatment", Model.Treatments)
+
+                }
+                @if (Model.Appointments != null)
+                {
+                    @await Html.PartialAsync("_Appointments", Model.Appointments)
+
+                }
             }
             else
             {

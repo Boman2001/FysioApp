@@ -23,12 +23,25 @@ namespace ApplicationServices.Services
             return await _repository.Add(model);
         }
 
+        public new async Task<Patient> Update(int id,Patient model)
+        {
+            DateTime today = DateTime.Now;
+            if (today.Year - model.BirthDay.Year >= 16)
+            {
+                return await _repository.Update(id, model);
+            }
+            else
+            {
+                throw new ValidationException("Patiënt is te jong");
+            }
+        }
+
         public new async Task<Patient> Update(Patient model)
         {
             DateTime today = DateTime.Now;
             if (today.Year - model.BirthDay.Year >= 16)
             {
-                return await _repository.Update(model);
+                return await _repository.Update( model);
             }
             else
             {

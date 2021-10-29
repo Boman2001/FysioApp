@@ -17,6 +17,12 @@ else
     </div> 
 }
 
+@if (Model.Id != 0)
+{
+    <input type="hidden" asp-for="Id" value="@Model.Id">
+
+}
+
 <div class="form-group">
     <label asp-for="PracticionerId" class="control-label"></label>
     <select class="form-control" asp-for="PracticionerId" asp-items="Model.Staff">
@@ -25,8 +31,8 @@ else
 </div>
 <div class="form-group">
     <label asp-for="Room" class="control-label"></label>
-    <select class="form-control" asp-for="Room">
-        <option value="None">None</option>
+    <select disabled class="form-control" asp-for="Room">
+        <option selected  value="None">None</option>
         <option value="PracticeHall">Practice Hall</option>
         <option value="TreatmentRoom">Treatment Room</option>
     </select>

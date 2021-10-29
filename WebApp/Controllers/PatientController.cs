@@ -150,8 +150,11 @@ namespace WebApp.Controllers
                         pictureUrl = ProcessUploadedFile(picture);
                     }
 
-                    await _patientService.Update(new Patient()
+                    var dbpatient = _patientService.Get(p=> p.Email == patientDto.Email).First();
+
+                    Patient patient = new Patient()
                     {
+                        Id = dbpatient.Id,
                         Email = patientDto.Email,
                         FirstName = patientDto.FirstName,
                         LastName = patientDto.LastName,
@@ -160,13 +163,15 @@ namespace WebApp.Controllers
                         PictureUrl = pictureUrl,
                         BirthDay = patientDto.BirthDay,
                         Gender = patientDto.Gender,
-                        PatientNumber = patientDto.PatientNumber.ToString(),
+                        PatientNumber = dbpatient.PatientNumber,
                         IdNumber = patientDto.IdNumber,
                         Street = patientDto.Street,
                         HouseNumber = patientDto.HouseNumber,
                         PostalCode = patientDto.PostalCode,
                         City = patientDto.City,
-                    });
+                    };
+
+                    await _patientService.Update(dbpatient.Id ,patient);
                     TempData["SuccessMessage"] = $"Patient Bijgewerkt";
                     return RedirectToAction("Index");
                 }
@@ -177,8 +182,9 @@ namespace WebApp.Controllers
                     patient.Street = patientDto.Street;
                     patient.PostalCode = patientDto.PostalCode;
                     patient.HouseNumber = patientDto.HouseNumber;
-                    await _patientService.Update(new Patient()
+                    await _patientService.Update(patient.Id, new Patient()
                     {
+                        Id = patient.Id,
                         Email = patient.Email,
                         FirstName = patient.FirstName,
                         LastName = patient.LastName,
@@ -243,7 +249,11 @@ namespace WebApp.Controllers
                 Picture = patient.PictureUrl,
                 PhoneNumber = patient.PhoneNumber,
                 BirthDay = patient.BirthDay,
-                Gender = patient.Gender
+                Gender = patient.Gender,
+                Street = patient.Street,
+                HouseNumber = patient.HouseNumber,
+                PostalCode = patient.PostalCode,
+                City = patient.City,
             };
             return patientDto;
         }

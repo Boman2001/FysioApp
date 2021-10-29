@@ -1,0 +1,1650 @@
+{
+	"info": {
+		"_postman_id": "01340998-ca75-4112-af21-aa578dacc7ad",
+		"name": "StamApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Diagnose Codes",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/DiagnoseCodes/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "5000",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"id\": -16943105,\n \"createdAt\": \"1970-04-20T05:25:20.262Z\",\n \"updatedAt\": \"1944-11-17T19:07:57.470Z\",\n \"deletedAt\": \"1955-10-09T14:37:08.800Z\",\n \"code\": \"proident enim inc\",\n \"locationBody\": \"esse minim reprehenderit\",\n \"pathology\": \"aute aliqua labore nostrud nulla\"\n}"
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										},
+										{
+											"name": "Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/DiagnoseCodes/:id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "5000",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										},
+										{
+											"name": "Error",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/DiagnoseCodes/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "5000",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										},
+										{
+											"name": "Error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/DiagnoseCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"DiagnoseCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/DiagnoseCodes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/DiagnoseCodes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"DiagnoseCodes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"id\": 40665821,\n  \"code\": \"dolor dolor cupidatat qui\",\n  \"locationBody\": \"non ea cillum\",\n  \"pathology\": \"enim\"\n },\n {\n  \"id\": 63392657,\n  \"code\": \"sed nostrud\",\n  \"locationBody\": \"aliquip amet culpa deserunt aute\",\n  \"pathology\": \"dolore non Excepteur anim\"\n }\n]"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								},
+								{
+									"name": "Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/DiagnoseCodes",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/DiagnoseCodes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"DiagnoseCodes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": -16943105,\n \"createdAt\": \"1970-04-20T05:25:20.262Z\",\n \"updatedAt\": \"1944-11-17T19:07:57.470Z\",\n \"deletedAt\": \"1955-10-09T14:37:08.800Z\",\n \"code\": \"proident enim inc\",\n \"locationBody\": \"esse minim reprehenderit\",\n \"pathology\": \"aute aliqua labore nostrud nulla\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								},
+								{
+									"name": "Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 64369403,\n    \"code\": \"ut aliqua in\",\n    \"locationBody\": \"sint consectetur elit\",\n    \"pathology\": \"labore \"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/DiagnoseCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DiagnoseCodes"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Graphql All",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query{\r\n    DiagnoseCode{\r\n        pathology,\r\n        id,\r\n        code,\r\n        locationBody\r\n    }\r\n\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/graphql",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Graph Code",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query{\r\n    diagnoseCode(id:5000){\r\n        pathology\r\n        id\r\n        code\r\n        locationBody\r\n    }\r\n\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/graphql",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Treatment Codes",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/TreatmentCodes/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "310",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"id\": 51149099,\n \"createdAt\": \"1977-09-22T21:20:40.116Z\",\n \"updatedAt\": \"1952-09-16T12:58:03.628Z\",\n \"deletedAt\": \"2007-11-15T17:05:44.474Z\",\n \"code\": \"enim\",\n \"description\": \"labore sed minim c\",\n \"explanationRequired\": true\n}"
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										},
+										{
+											"name": "Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/TreatmentCodes/:id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "310",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										},
+										{
+											"name": "Error",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/TreatmentCodes/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "310",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Unauthorized",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										},
+										{
+											"name": "Error",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/TreatmentCodes/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"TreatmentCodes",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "36443575",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/TreatmentCodes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/TreatmentCodes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"TreatmentCodes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"id\": -78141089,\n  \"code\": \"dolore est\",\n  \"description\": \"reprehenderit fugiat sunt\",\n  \"explanationRequired\": false\n },\n {\n  \"id\": -18702240,\n  \"code\": \"velit veniam mollit\",\n  \"description\": \"ut deserunt\",\n  \"explanationRequired\": false\n }\n]"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								},
+								{
+									"name": "Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/TreatmentCodes",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/TreatmentCodes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"TreatmentCodes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": 51149099,\n \"createdAt\": \"1977-09-22T21:20:40.116Z\",\n \"updatedAt\": \"1952-09-16T12:58:03.628Z\",\n \"deletedAt\": \"2007-11-15T17:05:44.474Z\",\n \"code\": \"enim\",\n \"description\": \"labore sed minim c\",\n \"explanationRequired\": true\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								},
+								{
+									"name": "Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 40222990,\n    \"code\": \"est Lorem\",\n    \"description\": \"tempor nostrud cupidatat\",\n    \"explanationRequired\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/TreatmentCodes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"TreatmentCodes"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"type\": \"sint\",\n \"title\": \"dolore pariatur nostrud\",\n \"status\": 24813073,\n \"detail\": \"ea eiusmod officia anim in\",\n \"instance\": \"pariatur amet cupidatat\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "/api/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"email\": \"Drik@deDoktor.com\",\n     \"password\": \"GxEZMx8QUJTn8Z3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"hWy-LbtkAsj@fUNewRNadYsnGBQQRhxPR.exk\",\n    \"password\": \"fugiat nisi magna\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjNjMyYjEwMi0wZjY5LTQ5YmUtYTczMi1hMjhiYjk0ZTAyY2YiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiRHJpa0BkZURva3Rvci5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdGFmZiIsImV4cCI6MTYzNjEzMTQwMn0.SvK61BO54aQ5l66XTVJF4ZsgoLukp1y8Glh7fH4g1Lc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}

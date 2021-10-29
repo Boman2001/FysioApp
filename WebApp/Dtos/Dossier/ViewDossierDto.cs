@@ -9,8 +9,7 @@ namespace WebApp.Dtos.Dossier
     public class ViewDossierDto : DossierDto
 
     {
-        public int Id { get; set; }
-        #nullable enable
+#nullable enable
         public new TreatmentPlanDto? TreatmentPlan { get; set; }
         public IEnumerable<ViewCommentDto>? Comments { get; set; }
         public new IEnumerable<TreatmentViewDto>? Treatments { get; set; }

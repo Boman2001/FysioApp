@@ -82,7 +82,8 @@ namespace WebApp.Controllers
                     DossierId = t.Dossier.Id,
                     Description = t.Description,
                     TreatmentCode = t.TreatmentCode,
-                    createdAt =  t.CreatedAt
+                    createdAt =  t.CreatedAt,
+                    Particulatities = t.Particulatities
 
                 });
             });
@@ -163,7 +164,12 @@ namespace WebApp.Controllers
                         ExcecutedBy = user,
                     });
                     TempData["SuccessMessage"] = "Success";
-                    return RedirectToAction("Index", "Home");
+                    if (User.IsInRole("Staff"))
+                    {
+                        return RedirectToAction("Index", "Dossier");
+
+                    }
+                    return RedirectToAction("Details", "Dossier");
                 }
                 catch (ValidationException e)
                 {
@@ -221,6 +227,7 @@ namespace WebApp.Controllers
 
             CreateAppointmentDto viewModel = new CreateAppointmentDto()
             {
+                Id = appointmentId,
                 Staff = StaffList,
                 PracticionerId = appointment.ExcecutedBy.Id,
                 Room = appointment.Room,
@@ -243,7 +250,7 @@ namespace WebApp.Controllers
                 Staff user = (Staff) await _userService.Get(treatmentDto.PracticionerId);
                 try
                 {
-                    await _appointmentService.Update(new Appointment()
+                    await _appointmentService.Update(treatmentDto.Id,new Appointment()
                     {
                         TreatmentDate = treatmentDto.TreatmentDate,
                         Room = treatmentDto.Room,

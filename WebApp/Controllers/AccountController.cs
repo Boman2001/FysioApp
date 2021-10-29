@@ -20,7 +20,6 @@ namespace WebApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -30,9 +29,11 @@ namespace WebApp.Controllers
         private readonly IUserService _userService;
         private readonly IAuthHelper _authHelper;
 
-        public AccountController(IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager, IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository, IService<Patient> patientService, IUserService userService, IAuthHelper authHelper)
+        public AccountController(UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager,
+            IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository,
+            IService<Patient> patientService, IUserService userService, IAuthHelper authHelper)
         {
-            _webHostEnvironment = webHostEnvironment;
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
@@ -47,41 +48,40 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Staff")]
         public async Task<IActionResult> Edit()
         {
-           User user =  _userService.Get(u => u.Email == User.Identity.Name).First();
+            User user = _userService.Get(u => u.Email == User.Identity.Name).First();
 
-           if (user is Student)
-           {
-               Student student = await _studentRepository.Get(user.Id);
-               return View("EditStudent",new StudentRegisterDto()
-               {
-                   FirstName = student.FirstName,
-                   Preposition = student.Preposition,
-                   start = student.start,
-                   end = student.end,
-                   Email = student.Email,
-                   LastName = student.LastName,
-                   StudentNumber = student.StudentNumber
-               });
+            if (user is Student)
+            {
+                Student student = await _studentRepository.Get(user.Id);
+                return View("EditStudent", new StudentRegisterDto()
+                {
+                    FirstName = student.FirstName,
+                    Preposition = student.Preposition,
+                    start = student.start,
+                    end = student.end,
+                    Email = student.Email,
+                    LastName = student.LastName,
+                    StudentNumber = student.StudentNumber
+                });
+            }
+            else if (user is Doctor)
+            {
+                Doctor doctor = await _doctorRepository.Get(user.Id);
+                return View("EditDoctor", new DoctorRegisterDto()
+                {
+                    FirstName = doctor.FirstName,
+                    Preposition = doctor.Preposition,
+                    LastName = doctor.LastName,
+                    start = doctor.start,
+                    end = doctor.end,
+                    Email = doctor.Email,
+                    BigNumber = doctor.BigNumber,
+                    EmployeeNumber = doctor.EmployeeNumber,
+                    PhoneNumber = doctor.PhoneNumber
+                });
+            }
 
-           }else if (user is Doctor)
-           {
-               Doctor doctor = await _doctorRepository.Get(user.Id);
-               return View("EditDoctor", new DoctorRegisterDto()
-               {
-                   FirstName = doctor.FirstName,
-                   Preposition = doctor.Preposition,
-                   LastName = doctor.LastName,
-                   start = doctor.start,
-                   end = doctor.end,
-                   Email = doctor.Email,
-                   BigNumber = doctor.BigNumber,
-                   EmployeeNumber = doctor.EmployeeNumber,
-                   PhoneNumber =  doctor.PhoneNumber
-               });
-
-           }
-           return View();
-
+            return View();
         }
 
         [HttpGet]
@@ -240,74 +240,138 @@ namespace WebApp.Controllers
                 ViewBag.error = "Something went wrong, please try again later";
                 return View("Register", registerDto);
             }
+
             return View("Register", registerDto);
         }
 
         [HttpPost]
-            [AllowAnonymous]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> PostLogin(LoginDto loginViewModel)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostLogin(LoginDto loginViewModel)
+        {
+            if (this.ModelState.IsValid)
             {
-                if (this.ModelState.IsValid)
-                {
-                    IdentityUser user = await this._userManager.FindByEmailAsync(loginViewModel.Email);
+                IdentityUser user = await this._userManager.FindByEmailAsync(loginViewModel.Email);
 
-                    if (user != null)
+                if (user != null)
+                {
+                    var he = (await this._signInManager.PasswordSignInAsync(user, loginViewModel.Password, true,
+                        true));
+                    if (he.Succeeded)
                     {
-                        var he = (await this._signInManager.PasswordSignInAsync(user, loginViewModel.Password, true,
-                            true));
-                        if (he.Succeeded)
-                        {
-                            var token = await _authHelper.GenerateToken(loginViewModel.Email);
-                            HttpContext.Session.Set("token",Encoding.ASCII.GetBytes(token));
-                            return RedirectToAction("Index", "Home");
-                        }
+                        var token = await _authHelper.GenerateToken(loginViewModel.Email);
+                        HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+                        return RedirectToAction("Index", "Home");
                     }
                 }
-
-                this.ModelState.AddModelError("", "Invalid Credentials");
-                return View("Login", loginViewModel);
             }
 
-            [HttpGet]
-            [AllowAnonymous]
-            public ActionResult Student()
-            {
-                return PartialView("_StudentRegister");
-            }
+            this.ModelState.AddModelError("", "Invalid Credentials");
+            return View("Login", loginViewModel);
+        }
 
-            [HttpGet]
-            [AllowAnonymous]
-            public ActionResult Doctor()
-            {
-                return PartialView("_DoctorRegister");
-            }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Student()
+        {
+            return PartialView("_StudentRegister");
+        }
 
-            [HttpGet]
-            [AllowAnonymous]
-            public ActionResult Patient()
-            {
-                return PartialView("_PatientRegister");
-            }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Doctor()
+        {
+            return PartialView("_DoctorRegister");
+        }
 
-            private string ProcessUploadedFile(IFormFile picture)
-            {
-                string uniqueFileName = null;
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Patient()
+        {
+            return PartialView("_PatientRegister");
+        }
 
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
-                if (!Directory.Exists(uploadsFolder))
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Staff")]
+        public async Task<IActionResult> EditDoctor(DoctorRegisterDto registerDto)
+        {
+            if
+            (
+                ModelState.IsValid
+            )
+            {
+                var user =  this._doctorRepository.Get(user => user.Email == registerDto.Email).First();
+                await this._doctorRepository.Update(user.Id,new Doctor()
                 {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + picture.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    picture.CopyTo(fileStream);
-                }
-
-                return uniqueFileName;
+                    Email = registerDto.Email,
+                    FirstName = registerDto.FirstName,
+                    LastName = registerDto.LastName,
+                    PhoneNumber = registerDto.PhoneNumber,
+                    EmployeeNumber = registerDto.EmployeeNumber,
+                    BigNumber = registerDto.BigNumber,
+                    start = registerDto.start,
+                    end = registerDto.end,
+                    Id = user.Id,
+                    Preposition = user.Preposition,
+                    CommentsCreated = user.CommentsCreated,
+                    IntakesDone = user.IntakesDone,
+                    IntakesSupervised = user.IntakesSupervised,
+                    HeadPractisionerOf = user.HeadPractisionerOf,
+                    TreatmentsDone = user.TreatmentsDone
+                });
+                TempData["SuccesMessage"] = "aanpassing succesvol";
+                return RedirectToAction("Index", "Appointment");
             }
+
+
+            if (ModelState.ErrorCount > 0)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                allErrors.ForEach(e => { TempData["ErrorMessage"] += e.ErrorMessage + "   "; });
+            }
+
+            return View("EditDoctor", registerDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Staff")]
+        public async Task<IActionResult> EditStudent(StudentRegisterDto registerDto)
+        {
+            if
+            (
+                ModelState.IsValid
+            )
+            {
+               var user =  this._userService.Get(user => user.Email == registerDto.Email).First();
+                await this._studentRepository.Update(user.Id,new Student()
+                {
+                    Email = registerDto.Email,
+                    FirstName = registerDto.FirstName,
+                    LastName = registerDto.LastName,
+                    StudentNumber = registerDto.StudentNumber,
+                    start = registerDto.start,
+                    end = registerDto.end,
+                    Id = user.Id,
+                    Preposition = user.Preposition,
+                    CommentsCreated = user.CommentsCreated,
+                    IntakesDone = user.IntakesDone,
+                    IntakesSupervised = user.IntakesSupervised,
+                    HeadPractisionerOf = user.HeadPractisionerOf,
+                    TreatmentsDone = user.TreatmentsDone
+                });
+                TempData["SuccesMessage"] = "aanpassing succesvol";
+                return RedirectToAction("Index", "Appointment");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                allErrors.ForEach(e => { TempData["ErrorMessage"] += e.ErrorMessage + "   "; });
+            }
+
+            return View("EditStudent", registerDto);
         }
     }
+}
