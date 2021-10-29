@@ -43,6 +43,10 @@ class Patient{
 - string: PhoneNumber {get; set;}
 }
 
+class Staff{
++TimeSpan: start { get; set; }
++TimeSpan: end { get;set; }
+}
 enum Gender{
 MALE,
 FEMALE,
@@ -114,6 +118,9 @@ User: CreatedBy {get; set;}
 boolean: VisibleForPatient {get; set;}
 }
 
+class ValidationExeption{
+}
+
 IEntity <.. Entity
 Entity -[#000]-|> Treatment
 Entity -[#000]-|> TreatmentCode
@@ -122,8 +129,9 @@ Entity -[#000]-|> Dossier
 Entity -[#000]-|> Room 
 Entity -[#000]-|> TreatmentPlan
 Entity -[#000]-|> Comment
-User -[#F00]-|> Doctor
-User -[#F00]-|> Student
+User -[#F00]-|> Staff
+Staff -[#F00]-|> Doctor
+Staff -[#F00]-|> Student
 User -[#F00]-|> Patient
 Dossier -[#0F0]-> Treatment : Dossier
 Dossier -[#0F0]- User
@@ -162,6 +170,14 @@ interface IService{
 + Update(T model): Task;
 + Delete(int id): Task;
 }
+
+interface IUserService
+    {
+       + GetDoctors(): IEnumerable<User>
+       + GetStudents(): IEnumerable<User>
+       + GetPatients(): IEnumerable<User>
+       + GetStaff(): IEnumerable<User>
+    }
 }
 package Infrastructure.API{
 class WebRepository{

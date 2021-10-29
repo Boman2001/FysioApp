@@ -75,6 +75,7 @@
                             <a asp-controller="Account" asp-action="Edit"> @_userService.Get().First(u => u.Email == User.Identity.Name).GetFormattedName()</a>
                        
                         </span>
+                        @await Component.InvokeAsync("Counter")
                     }
                     else
                     {
