@@ -9,7 +9,7 @@ namespace Core.Infrastructure.Factories
         public StamDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<StamDbContext>();
-            optionsBuilder.UseSqlServer("server=host.docker.internal,1434;user=sa;password=8jkGh47hnDw89Haq8LN2;Database=FysioStam;MultipleActiveResultSets=True;");
+            optionsBuilder.UseSqlServer("server=sql.bogaers.org,1434;user=FysioUser;password=VNGE9DRkH5jDzpkv;Database=FysioStam;MultipleActiveResultSets=True;");
 
             return new StamDbContext(optionsBuilder.Options);
         }

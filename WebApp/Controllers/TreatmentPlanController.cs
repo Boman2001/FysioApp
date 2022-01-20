@@ -52,7 +52,7 @@ namespace WebApp.Controllers
                 await _dossierService.Add(dossier);
 
                 TempData["SuccessMessage"] = "Success";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Appointment");
             }
 
             ViewBag.error = "Something went wrong, please try again later";

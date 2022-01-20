@@ -84,6 +84,10 @@ namespace WebApp
                             new AuthenticationHeaderValue("Bearer", Encoding.ASCII.GetString(tokenBytes))
                         );
                     }
+                    else
+                    {
+                        httpContext.Response.Redirect("/Account/Logout");
+                    }
                 }
             );
             services.AddControllersWithViews();
@@ -117,6 +121,7 @@ namespace WebApp
 
             services.AddScoped<DbContext, ApplicationDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(DatabaseRepository<>));
+            services.AddScoped(typeof(IAppointmentRepository), typeof(AppointmentRepository));
             services.AddScoped(typeof(IWebRepository<TreatmentCode>), typeof(WebRepository<TreatmentCode>));
             services.AddScoped(typeof(IWebRepository<DiagnoseCode>), typeof(WebRepository<DiagnoseCode>));
             services.AddScoped(typeof(IService<Patient>), typeof(PatientService));

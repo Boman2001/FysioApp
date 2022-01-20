@@ -15,8 +15,8 @@ namespace Core.Infrastructure.Repositories
     public class DatabaseRepository<T> : IRepository<T>
         where T : Entity
     {
-        private readonly DbContext _context;
-        private readonly DbSet<T> _dbSet;
+        internal readonly DbContext _context;
+        internal readonly DbSet<T> _dbSet;
         public DatabaseRepository(DbContext context)
         {
             _context = context; 

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationServices.ExtensionMethods;
+using ApplicationServices.Services;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
@@ -136,7 +137,7 @@ namespace WebApp.Controllers
                         a.TreatmentDate == treatmentDto.TreatmentDate && a.Dossier.Id == dossier.Id).FirstOrDefault();
                     if (appointmentToDelete != null)
                     {
-                        await _appointmentService.Delete(appointmentToDelete);
+                        await _appointmentService.Delete(appointmentToDelete.Id);
                     }
                     await _treatmentService.Add(new Treatment()
                     {
@@ -151,7 +152,7 @@ namespace WebApp.Controllers
                     });
 
                     TempData["SuccessMessage"] = "Success";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Appointment");
                 }
                 catch (ValidationException e)
                 {
@@ -262,7 +263,7 @@ namespace WebApp.Controllers
                     });
 
                     TempData["SuccessMessage"] = "Success";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Appointment");
                 }
                 catch (ValidationException e)
                 {

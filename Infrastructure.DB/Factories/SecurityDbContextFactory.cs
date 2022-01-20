@@ -9,7 +9,7 @@ namespace Core.Infrastructure.Factories
         public SecurityDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<SecurityDbContext>();
-            optionsBuilder.UseSqlServer("server=host.docker.internal,1434;user=sa;password=8jkGh47hnDw89Haq8LN2;Database=FysioIdentity;MultipleActiveResultSets=True;");
+            optionsBuilder.UseSqlServer("server=sql.bogaers.org,1434;user=FysioUser;password=VNGE9DRkH5jDzpkv;Database=FysioIdentity;MultipleActiveResultSets=True;");
 
             return new SecurityDbContext(optionsBuilder.Options);
         }

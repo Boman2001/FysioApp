@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApplicationServices.Helpers;
+using Core.Domain.Exceptions;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 using WebApp.Dtos.Auth;
+using WebApp.Dtos.Patient;
 
 namespace WebApp.Controllers
 {
@@ -203,6 +205,77 @@ namespace WebApp.Controllers
             return View("Register", registerDto);
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostRegisterPatientSelf(PatientRegisterDto registerDto, IFormFile picture)
+        {
+              if
+            (
+                ModelState.IsValid
+            )
+            {
+                if ((await this._userManager.FindByNameAsync(registerDto.Email) != null)
+                    && (this._patientService.Get().Any(p => p.Email.Equals(registerDto.Email))))
+                {
+                    TempData["ErrorMessage"] = "Email al in gebruik";
+                    return RedirectToAction("Create", "Dossier");
+                }
+
+                string patientNumber = Guid.NewGuid().ToString();
+                string pictureUrl = ProcessUploadedFile(picture);
+                try
+                {
+                    await _patientService.Add(new Patient()
+                    {
+                        Email = registerDto.Email,
+                        FirstName = registerDto.FirstName,
+                        LastName = registerDto.LastName,
+                        Preposition = registerDto.Preposition,
+                        PhoneNumber = registerDto.PhoneNumber,
+                        PictureUrl = pictureUrl,
+                        BirthDay = registerDto.BirthDay,
+                        Gender = registerDto.Gender,
+                        PatientNumber = patientNumber,
+                        IdNumber = registerDto.IdNumber,
+                        Street = registerDto.Street,
+                        HouseNumber = registerDto.HouseNumber,
+                        PostalCode = registerDto.PostalCode,
+                        City = registerDto.City,
+                    });
+                    
+                    IdentityUser user = new IdentityUser(registerDto.Email) {Email = registerDto.Email};
+                    await this._userManager.CreateAsync(user, registerDto.Password);
+
+                    if (!await _roleManager.RoleExistsAsync("Patient"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Patient"));
+                    }
+
+                    await this._userManager.AddToRoleAsync(user, "Patient");
+                    return await this.PostLogin(new LoginDto()
+                    {
+                        Email = registerDto.Email,
+                        Password = registerDto.Password
+                    });
+                }
+                catch (ValidationException e)
+                {
+                    TempData["ErrorMessage"] = e.Message;
+                }
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                allErrors.ForEach(e => { TempData["ErrorMessage"] += e.ErrorMessage + "   "; });
+            }
+
+            return View("Register");
+        }
+        
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -255,13 +328,13 @@ namespace WebApp.Controllers
 
                 if (user != null)
                 {
-                    var he = (await this._signInManager.PasswordSignInAsync(user, loginViewModel.Password, true,
+                    var signInResult = (await this._signInManager.PasswordSignInAsync(user, loginViewModel.Password, true,
                         true));
-                    if (he.Succeeded)
+                    if (signInResult.Succeeded)
                     {
                         var token = await _authHelper.GenerateToken(loginViewModel.Email);
                         HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Appointment");
                     }
                 }
             }
@@ -289,6 +362,13 @@ namespace WebApp.Controllers
         public ActionResult Patient()
         {
             return PartialView("_PatientRegister");
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult PatientSelf()
+        {
+            return PartialView("_PatientSelfRegister");
         }
 
         [HttpPost]
@@ -372,6 +452,26 @@ namespace WebApp.Controllers
             }
 
             return View("EditStudent", registerDto);
+        }
+        
+        private string ProcessUploadedFile(IFormFile picture)
+        {
+            string uniqueFileName = "data:image/jpeg;base64,";
+
+            // string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
+            // if (!Directory.Exists(uploadsFolder))
+            // {
+            //     Directory.CreateDirectory(uploadsFolder);
+            // }
+
+            using (var ms = new MemoryStream())
+            {
+                picture.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                uniqueFileName += Convert.ToBase64String(fileBytes);
+                // act on the Base64 data
+            }
+            return uniqueFileName;
         }
     }
 }

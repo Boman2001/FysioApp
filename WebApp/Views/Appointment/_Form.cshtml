@@ -4,7 +4,7 @@
 {
     <div class="form-group">
         <label asp-for="TreatmentDate" class="control-label"></label>
-        <input type="datetime-local" class="form-control" asp-for="TreatmentDate" value="">
+        <input type="datetime-local" class="form-control" asp-for="TreatmentDate" value="" id="TreatmentDate">
         <span asp-validation-for="TreatmentDate" class="text-danger"></span>
     </div>
 }
@@ -12,7 +12,7 @@ else
 {
     <div class="form-group">
         <label asp-for="TreatmentDate" class="control-label"></label>
-        <input type="datetime-local" class="form-control" asp-for="TreatmentDate">
+        <input type="datetime-local" class="form-control" asp-for="TreatmentDate" id="TreatmentDate">
         <span asp-validation-for="TreatmentDate" class="text-danger"></span>
     </div> 
 }
@@ -25,7 +25,7 @@ else
 
 <div class="form-group">
     <label asp-for="PracticionerId" class="control-label"></label>
-    <select class="form-control" asp-for="PracticionerId" asp-items="Model.Staff">
+    <select class="form-control" asp-for="PracticionerId" asp-items="Model.Staff" id="PracticionerId">
     </select>
     <span asp-validation-for="PracticionerId" class="text-danger"></span>
 </div>

@@ -137,7 +137,10 @@ namespace WebApp.Controllers
 
             CreateAppointmentDto viewModel = new CreateAppointmentDto()
             {
-                Staff = StaffList
+                Staff = StaffList,
+                Dossier = dossier,
+                TreatmentPlan = dossier.TreatmentPlan
+
             };
             viewModel.DossierId = dossierId;
 
@@ -191,6 +194,8 @@ namespace WebApp.Controllers
             }
 
             treatmentDto.Staff = StaffList;
+            treatmentDto.Dossier = dossier;
+            treatmentDto.TreatmentPlan = dossier.TreatmentPlan;
             ViewBag.error = "Something went wrong, please try again later";
             return View("Create", treatmentDto);
         }
@@ -282,6 +287,30 @@ namespace WebApp.Controllers
             treatmentDto.Staff = StaffList;
             ViewBag.error = "Something went wrong, please try again later";
             return View("Edit", treatmentDto);
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Appointments([FromQuery(Name = "id")]int id ,[FromQuery(Name = "time")] string time)
+        {
+            DateTime date = DateTime.Parse(time);
+            List<Appointment> appointments = new List<Appointment>();
+            appointments = _appointmentService.Get(a => a.ExcecutedBy.Id == id && a.TreatmentDate.Equals(date)).ToList();
+            List<AppointmentViewDto> appointmentViewDtos = new List<AppointmentViewDto>();
+            appointments.ForEach(t =>
+            {
+                appointmentViewDtos.Add(new AppointmentViewDto()
+                {
+                    Practicioner = t.ExcecutedBy,
+                    Room = t.Room,
+                    TreatmentDate = t.TreatmentDate,
+                    PracticionerId = t.ExcecutedBy.Id,
+                    Patient = t.Dossier.Patient,
+                    Id = t.Id,
+                    DossierId = t.Dossier.Id
+                });
+            });
+            return PartialView("_Appointments", appointmentViewDtos  );
         }
     }
 }

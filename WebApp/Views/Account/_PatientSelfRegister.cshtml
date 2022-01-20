@@ -1,0 +1,77 @@
+﻿@model WebApp.Dtos.Auth.PatientRegisterDto
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control"/>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Preposition" class="control-label"></label>
+        <input asp-for="Preposition" class="form-control"/>
+        <span asp-validation-for="Preposition" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control"/>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+<div class="form-group">
+    <label asp-for="Email" class="control-label"></label>
+    <input asp-for="Email" class="form-control"/>
+    <span type="email" asp-validation-for="Email" class="text-danger"></span>
+</div>
+    <div class="form-group">
+
+        <label asp-for="Password" class="control-label"></label>
+        <input type="password" class="form-control" asp-for="Password">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+        <div class="form-group">
+            <label asp-for="IdNumber" class="control-label"></label>
+            <input class="form-control" asp-for="IdNumber">
+            <span asp-validation-for="IdNumber" class="text-danger"></span>
+        </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label"></label>
+        <input class="form-control" asp-for="PhoneNumber">
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BirthDay" class="control-label"></label>
+        <input type="date" class="form-control" asp-for="BirthDay">
+        <span asp-validation-for="BirthDay" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Picture" class="control-label"></label>
+        <input type="file" asp-for="Picture" class="form-control"/>
+        <span asp-validation-for="Picture" class="text-danger"></span>
+    </div>
+<div class="form-group">
+    <label asp-for="Gender" class="control-label"></label>
+    <select class="form-control" asp-for="Gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+    <span asp-validation-for="Gender" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Street" class="control-label">Street</label>
+    <input class="form-control" asp-for="Street">
+    <span asp-validation-for="Street" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="City" class="control-label">City</label>
+    <input class="form-control" asp-for="City">
+    <span asp-validation-for="City" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PostalCode" class="control-label">Postal Code</label>
+    <input class="form-control" asp-for="PostalCode">
+    <span asp-validation-for="PostalCode" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="HouseNumber" class="control-label">House Number</label>
+    <input class="form-control" asp-for="HouseNumber">
+    <span asp-validation-for="HouseNumber" class="text-danger"></span>
+</div>

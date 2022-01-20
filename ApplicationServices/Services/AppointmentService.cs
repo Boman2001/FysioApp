@@ -13,7 +13,7 @@ namespace ApplicationServices.Services
         private readonly IService<Dossier> _dossierService;
         private readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
 
-        public AppointmentService(IRepository<Appointment> repository, IService<Dossier> dossierService,
+        public AppointmentService(IAppointmentRepository repository, IService<Dossier> dossierService,
             IRepository<TreatmentPlan> treatmentPlanRepository) : base(repository)
         {
             _dossierService = dossierService;
@@ -110,6 +110,11 @@ namespace ApplicationServices.Services
                     "een behandeling kan niet verwijderd worden binnen 24 uur van het begin van de afspraak");
             }
 
+            return _repository.Delete(model);
+        }
+        
+        public new Task Delete(int model)
+        {
             return _repository.Delete(model);
         }
 

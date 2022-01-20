@@ -109,7 +109,7 @@ namespace WebApp.Controllers
                         Dossier result = await _dossierService.Add(dossierEnt);
                         TempData["SuccessMessage"] =
                             $"{result.Patient.FirstName} {result.Patient.Preposition} {result.Patient.LastName}'s Dossier is aangemaakt";
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Appointment");
                     }
                     catch (ValidationException e)
                     {
@@ -286,7 +286,7 @@ namespace WebApp.Controllers
                         Dossier result = await _dossierService.Add(dossierEnt);
                         TempData["SuccessMessage"] =
                             $"{result.Patient.FirstName} {result.Patient.Preposition} {result.Patient.LastName}'s Dossier is aangemaakt";
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Appointment");
                     }
                     catch (ValidationException e)
                     {

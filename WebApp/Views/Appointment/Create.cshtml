@@ -6,10 +6,60 @@
 }
 
 <h2>Afspraken</h2>
-
-@Html.ValidationSummary(false, "", new {@class = "text-danger"})
-<form asp-action="Create" asp-controller="Appointment" method="Post"  id="CreateForm" ajax replace-id="partialViewWrapper">
-    <div id="partialViewWrapper">
-        @await Html.PartialAsync("_Form", Model)
+<div class="row">
+    <p>the patient is in treatment from @Model.Dossier.RegistrationDate until @Model.Dossier.DismissionDate, and has @Model.Dossier.TreatmentPlan.TreatmentsPerWeek, @Model.Dossier.TreatmentPlan.TimePerSessionInMinutes minute appointments per week.   </p>
+</div>
+<div class="row">
+    <div class="col-sm">
+        @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+        <form asp-action="Create" asp-controller="Appointment" method="Post"  id="CreateForm" ajax replace-id="partialViewWrapper">
+            <div id="partialViewWrapper">
+                @await Html.PartialAsync("_Form", Model)
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-sm">
+        <div id="PlaceHolder">
+            
+        </div>
+    </div>
+</div>
+
+<script>
+$('#PracticionerId').change( function() {
+
+     /* Get the selected value of dropdownlist */
+     var selectedID = $(this).val();
+     var selectedDate = $("#TreatmentDate").val();
+     console.log(selectedDate)
+     if (selectedID !== ""){
+     /* Request the partial view with .get request. */
+     $.get('/Appointment/Appointments?id=' + selectedID+ "&time=" + selectedDate, function(data) {
+         /* data is the pure html returned from action method, load it to your page */
+         $('#PlaceHolder').html(data);
+         /* little fade in effect */
+         $('#PlaceHolder').fadeIn('fast');
+     });
+     }
+
+});
+
+$('#TreatmentDate').change( function() {
+
+     /* Get the selected value of dropdownlist */
+     var selectedID = $(this).val();
+     var selectedDate = $("#TreatmentDate").val();
+     console.log(selectedDate)
+     if (selectedID !== ""){
+     /* Request the partial view with .get request. */
+     $.get('/Appointment/Appointments?id=' + selectedID+ "&time=" + selectedDate, function(data) {
+         /* data is the pure html returned from action method, load it to your page */
+         $('#PlaceHolder').html(data);
+         /* little fade in effect */
+         $('#PlaceHolder').fadeIn('fast');
+     });
+     }
+
+});
+
+</script>
