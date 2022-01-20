@@ -14,13 +14,13 @@ namespace ApplicationServicesTests.Services
 {
     public class AppointmentServiceTests
     {
-        private Mock<IRepository<Appointment>> repository;
+        private Mock<IAppointmentRepository> repository;
         private readonly Mock<IRepository<TreatmentPlan>> _treatmentPlanRepository;
         private readonly Mock<IService<Dossier>> _dossierService;
 
         public AppointmentServiceTests()
         {
-            repository = new Mock<IRepository<Appointment>>();
+            repository = new Mock<IAppointmentRepository>();
             _treatmentPlanRepository = new Mock<IRepository<TreatmentPlan>>();
             _dossierService = new Mock<IService<Dossier>>();
             Mock<Dossier> dossierMock = new Mock<Dossier>();
