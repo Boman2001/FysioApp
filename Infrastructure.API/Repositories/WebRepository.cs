@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Core.Domain.Interfaces;
 using Core.Domain.Models;
-using Core.DomainServices.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.API.Repositories
 {
     public class WebRepository<T> : IWebRepository<T> where T : Entity
     {
         private readonly HttpClient client;
-        
+
 
         public WebRepository(IHttpClientFactory clientFactory)
         {
-
             this.client = clientFactory.CreateClient("default");
         }
 
@@ -29,17 +23,17 @@ namespace Infrastructure.API.Repositories
         public IEnumerable<T> Get()
         {
             IEnumerable<T> responseBody = null;
-            try	
+            try
             {
-                HttpResponseMessage response = this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"s").Result;
+                HttpResponseMessage response = this.client.GetAsync(typeof(T).ToString().Split(".")[3] + "s").Result;
                 response.EnsureSuccessStatusCode();
                 responseBody = response.Content.ReadFromJsonAsync<IEnumerable<T>>().Result;
                 return responseBody;
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");	
-                Console.WriteLine("Message :{0} ",e.Message);
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
             }
 
             return responseBody;
@@ -48,17 +42,17 @@ namespace Infrastructure.API.Repositories
         public async Task<IEnumerable<T>> GetAsync()
         {
             IEnumerable<T> responseBody = null;
-            try	
+            try
             {
-                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"s");
+                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3] + "s");
                 response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadFromJsonAsync<IEnumerable<T>>();
                 return responseBody;
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");	
-                Console.WriteLine("Message :{0} ",e.Message);
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
             }
 
             return responseBody;
@@ -67,17 +61,18 @@ namespace Infrastructure.API.Repositories
         public async Task<T> Get(int id)
         {
             T responseBody = null;
-            try	
+            try
             {
-                HttpResponseMessage response = await this.client.GetAsync(typeof(T).ToString().Split(".")[3]+"s"+"/"+id);
+                HttpResponseMessage response =
+                    await this.client.GetAsync(typeof(T).ToString().Split(".")[3] + "s" + "/" + id);
                 response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadFromJsonAsync<T>();
                 return responseBody;
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");	
-                Console.WriteLine("Message :{0} ",e.Message);
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
             }
 
             return responseBody;
@@ -108,7 +103,8 @@ namespace Infrastructure.API.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+        public IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
         {
             throw new NotImplementedException();
         }
