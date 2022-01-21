@@ -10,5 +10,7 @@ namespace WebApp.Dtos.Treatment
         public Core.Domain.Models.Patient Patient { get; set; }
         public int DossierId { get; set; }
         public DateTime createdAt { get; set; }
+        public DateTime TreatmentEndDate { get; set; }
+
     }
 }

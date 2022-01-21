@@ -77,7 +77,7 @@ namespace ApplicationServicesTests.Services
             // Assert
             ValidationException exception = await Assert.ThrowsAsync<ValidationException>(act);
 
-            Assert.Equal("Patiënt is te jong", exception.Message);
+            Assert.Equal("Patient is not old enough must be atleast 16", exception.Message);
         }
         
         [Fact]

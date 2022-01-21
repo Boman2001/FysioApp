@@ -331,6 +331,7 @@ namespace WebApp.Controllers
                         Description = t.Description,
                         Practicioner = t.ExcecutedBy,
                         TreatmentCode = treatmentCode,
+                        TreatmentEndDate = t.TreatmentDate.AddMinutes(t.Dossier.TreatmentPlan.TimePerSessionInMinutes),
                         Room = t.Room,
                         TreatmentDate = t.TreatmentDate,
                         PracticionerId = t.ExcecutedBy.Id,
@@ -347,6 +348,7 @@ namespace WebApp.Controllers
                         Room = t.Room,
                         TreatmentDate = t.TreatmentDate,
                         PracticionerId = t.ExcecutedBy.Id,
+                        TreatmentEndDate = t.TreatmentDate.AddMinutes(t.Dossier.TreatmentPlan.TimePerSessionInMinutes),
                         Id = t.Id,
                         Patient = patient
                     });
