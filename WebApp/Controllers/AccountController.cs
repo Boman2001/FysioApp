@@ -279,7 +279,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostRegisterPatient(PatientRegisterDto registerDto)
+        public async Task<IActionResult> PostRegisterPatient(RegisterDto registerDto)
         {
             if
             (

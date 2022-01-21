@@ -8,17 +8,6 @@ namespace WebApp.Dtos.Auth
 {
     public class PatientRegisterDto : RegisterDto
     {
-#nullable enable
-        public int? Id { get; set; }
-        public string? Preposition { get; set; }
-#nullable disable
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
         public string PatientNumber { get; set; }
         [Required]
         [Display(Name = "Student Or Employee Number")]
