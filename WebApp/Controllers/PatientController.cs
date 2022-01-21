@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
+using ImageMagick;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 using WebApp.Dtos.Patient;
+using WebApp.helpers;
 
 namespace WebApp.Controllers
 {
@@ -83,7 +85,7 @@ namespace WebApp.Controllers
                 }
 
                 string patientNumber = Guid.NewGuid().ToString();
-                string pictureUrl = ProcessUploadedFile(picture);
+                string pictureUrl = ImageHelper.ProcessUploadedFile(picture);
                 try
                 {
                     await _patientService.Add(new Patient()
@@ -147,7 +149,7 @@ namespace WebApp.Controllers
                     string pictureUrl = patientDto.Picture;
                     if (picture != null)
                     {
-                        pictureUrl = ProcessUploadedFile(picture);
+                        pictureUrl = ImageHelper.ProcessUploadedFile(picture);
                     }
 
                     var dbpatient = _patientService.Get(p=> p.Email == patientDto.Email).First();
@@ -215,25 +217,7 @@ namespace WebApp.Controllers
         }
         
 
-        private string ProcessUploadedFile(IFormFile picture)
-        {
-            string uniqueFileName = "data:image/jpeg;base64,";
 
-            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            using (var ms = new MemoryStream())
-            {
-                picture.CopyTo(ms);
-                var fileBytes = ms.ToArray();
-                uniqueFileName += Convert.ToBase64String(fileBytes);
-                // act on the Base64 data
-            }
-            return uniqueFileName;
-        }
 
         private PatientDto ToDto(Patient patient)
         {

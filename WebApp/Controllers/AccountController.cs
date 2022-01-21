@@ -8,15 +8,15 @@ using ApplicationServices.Helpers;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
+using ImageMagick;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyTested.AspNetCore.Mvc.Utilities.Extensions;
 using WebApp.Dtos.Auth;
-using WebApp.Dtos.Patient;
+using WebApp.helpers;
 
 namespace WebApp.Controllers
 {
@@ -211,7 +211,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostRegisterPatientSelf(PatientRegisterDto registerDto, IFormFile picture)
         {
-              if
+            if
             (
                 ModelState.IsValid
             )
@@ -224,7 +224,7 @@ namespace WebApp.Controllers
                 }
 
                 string patientNumber = Guid.NewGuid().ToString();
-                string pictureUrl = ProcessUploadedFile(picture);
+                string pictureUrl = ImageHelper.ProcessUploadedFile(picture);
                 try
                 {
                     await _patientService.Add(new Patient()
@@ -424,7 +424,7 @@ namespace WebApp.Controllers
                 ModelState.IsValid
             )
             {
-               var user =  this._userService.Get(user => user.Email == registerDto.Email).First();
+                var user =  this._userService.Get(user => user.Email == registerDto.Email).First();
                 await this._studentRepository.Update(user.Id,new Student()
                 {
                     Email = registerDto.Email,
@@ -454,24 +454,5 @@ namespace WebApp.Controllers
             return View("EditStudent", registerDto);
         }
         
-        private string ProcessUploadedFile(IFormFile picture)
-        {
-            string uniqueFileName = "data:image/jpeg;base64,";
-
-            // string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
-            // if (!Directory.Exists(uploadsFolder))
-            // {
-            //     Directory.CreateDirectory(uploadsFolder);
-            // }
-
-            using (var ms = new MemoryStream())
-            {
-                picture.CopyTo(ms);
-                var fileBytes = ms.ToArray();
-                uniqueFileName += Convert.ToBase64String(fileBytes);
-                // act on the Base64 data
-            }
-            return uniqueFileName;
-        }
     }
 }

@@ -7,6 +7,8 @@
     <ItemGroup>
       <PackageReference Include="Blazorise.Bulma" Version="0.9.4.6" />
       <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.4.6" />
+      <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="8.6.1" />
+      <PackageReference Include="Magick.NET.Core" Version="8.6.1" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
@@ -25,6 +27,7 @@
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
       <PackageReference Include="MyTested.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
       <PackageReference Include="System.Net.Http" Version="4.3.4" />
     </ItemGroup>
 
