@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
@@ -17,7 +18,12 @@ namespace ApplicationServices.Services
             DateTime today = DateTime.Now;
             if (today.Year - model.BirthDay.Year < 16)
             {
-                throw new ValidationException("Patiënt is te jong");
+                throw new ValidationException("Patient is not old enough must be atleast 16");
+            }
+
+            if (_repository.Get( a => a.Email == model.Email).Count() > 0)
+            {
+                throw new ValidationException("Patient email not unique");
             }
 
             return await _repository.Add(model);
@@ -32,7 +38,7 @@ namespace ApplicationServices.Services
             }
             else
             {
-                throw new ValidationException("Patiënt is te jong");
+                throw new ValidationException("Patient is not old enough must be atleast 16");
             }
         }
 
@@ -45,7 +51,7 @@ namespace ApplicationServices.Services
             }
             else
             {
-                throw new ValidationException("Patiënt is te jong");
+                throw new ValidationException("Patient is not old enough must be atleast 16");
             }
         }
     }

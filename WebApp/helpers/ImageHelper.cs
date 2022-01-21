@@ -18,7 +18,7 @@ namespace WebApp.helpers
                 {
                     image.Format = image.Format; // Get or Set the format of the image.
                     image.Resize(300, 300); // fit the image into the requested width and height. 
-                    image.Quality = 10; // This is the Compression level.
+                    image.Quality = 20; // This is the Compression level.
                     uniqueFileName+= image.ToBase64(MagickFormat.Jpg);
                 }
                 // += Convert.ToBase64String(fileBytes);
