@@ -3,9 +3,16 @@
 
 
 
-  [Database]
+  [AppDatabase]
+  [StamDatabase]
+  [IdentityDatabase]
+  [Core.Domain]
   [DomainServices]
-
+  [ApplicationServices]
+  [Infrastructure.DB]
+  [Infrastructure.API]
+  [StamApi]
+  [WebApp]
 
 
 
