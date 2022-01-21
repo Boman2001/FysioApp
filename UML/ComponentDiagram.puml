@@ -1,0 +1,14 @@
+﻿@startuml
+'https://plantuml.com/component-diagram
+
+
+
+  [Database]
+  [DomainServices]
+
+
+
+
+
+
+@enduml
