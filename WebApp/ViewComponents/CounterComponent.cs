@@ -6,16 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
+using Core.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.ViewComponents
 {
     [ViewComponent(Name = "Counter")]
     public class CounterComponenet : ViewComponent{
-        private readonly IRepository<Appointment> _repository;
+        private readonly IAppointmentRepository _repository;
         private readonly IRepository<Treatment> _Trepository;
 
-        public CounterComponenet(IRepository<Appointment> repository, IRepository<Treatment> trepository)
+        public CounterComponenet(IAppointmentRepository repository, IRepository<Treatment> trepository)
         {
             _repository = repository;
             _Trepository = trepository;

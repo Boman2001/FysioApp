@@ -5,6 +5,7 @@
 @inject IService<Appointment> _appointmentService;
 <tr>
     <td>@Model.TreatmentDate</td>
+    <td>@Model.TreatmentEndDate</td>
     <td>@Model.Room</td>
     @if (User.IsInRole("Staff"))
     {

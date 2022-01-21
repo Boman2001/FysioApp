@@ -209,6 +209,10 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Edit([FromRoute] int appointmentId)
         {
             Appointment appointment = await _appointmentService.Get(appointmentId);
+            if (appointment == null)
+            {
+                appointment = (Appointment) await _treatmentService.Get(appointmentId);
+            }
             Dossier dossier = appointment.Dossier;
             List<User> users = new List<User>();
             if (User.IsInRole("Staff"))

@@ -9,8 +9,9 @@
     <table class="table" id="">
         <thead>
         <tr>
-            <th scope="col">Datum</th>
-            <th scope="col">KamerType</th>
+            <th scope="col">Start date</th>
+            <th scope="col">End date</th>
+            <th scope="col">Roomtype</th>
                 @if (User.IsInRole("Staff"))
                 {
                     <th scope="col">Patient:</th>
@@ -18,7 +19,7 @@
                 }
                 else
                 {
-                    <th scope="col">Uitgevoerd door:</th>
+                    <th scope="col">Executed by:</th>
                 }
 
             <th scope="col"></th>

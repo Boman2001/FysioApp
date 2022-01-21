@@ -7,7 +7,7 @@
     <td>@Model.Description</td>
     <td>@Model.Room</td>
     <td>@Model.Practicioner.GetFormattedName()</td>
-    @if (Model.createdAt.AddDays(1) > DateTime.Now)
+    @if (Model.createdAt.AddDays(1) > DateTime.Now && User.IsInRole("Staff") )
     {
         <td>
             <a class="btn btn-primary" href="Treatment/Edit/@Model.Id">aanpassen</a>
