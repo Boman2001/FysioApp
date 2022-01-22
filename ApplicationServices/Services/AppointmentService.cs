@@ -62,10 +62,17 @@ namespace ApplicationServices.Services
 
         public new async Task<Appointment> Update(Appointment model)
         {
+            
             var dossier = await _dossierService.Get(model.Dossier.Id);
             var treatmentPlan = await _treatmentPlanRepository.Get(model.Dossier.TreatmentPlan.Id);
             model.TreatmentEndDate =
                 model.TreatmentDate.AddMinutes(model.Dossier.TreatmentPlan.TimePerSessionInMinutes);
+
+            if (model.ExcecutedBy == null)
+            {
+                var old = await _repository.Get(model.Id);
+                model.ExcecutedBy = old.ExcecutedBy;
+            }
             if (treatmentPlan.TreatmentsPerWeek <= dossier.Treatments
                 .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count)
             {
