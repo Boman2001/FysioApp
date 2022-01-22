@@ -24,6 +24,7 @@ namespace WebApp.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            var item = await _repository.Get(0);
             var items = _repository.Get(appointment => appointment.TreatmentDate.Date == DateTime.Today);
             var items1 = _Trepository.Get(appointment => appointment.TreatmentDate.Date == DateTime.Today);
             return View(items.Count() + items1.Count());
