@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationServices.ExtensionMethods;
+using ApplicationServices.Helpers;
 using Core.Domain.Exceptions;
 using Core.Domain.Models;
 using Core.DomainServices.Interfaces;
@@ -12,12 +13,13 @@ namespace ApplicationServices.Services
     {
         private readonly IService<Dossier> _dossierService;
         private readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
-
-        public AppointmentService(IAppointmentRepository repository, IService<Dossier> dossierService,
-            IRepository<TreatmentPlan> treatmentPlanRepository) : base(repository)
+        private readonly IDatetimeHelper _datetimeHelper;
+        
+        public AppointmentService(IRepository<Appointment> repository, IService<Dossier> dossierService, IRepository<TreatmentPlan> treatmentPlanRepository, IDatetimeHelper datetimeHelper) : base(repository)
         {
             _dossierService = dossierService;
             _treatmentPlanRepository = treatmentPlanRepository;
+            _datetimeHelper = datetimeHelper;
         }
 
         public new async Task<Appointment> Add(Appointment model)
@@ -49,7 +51,7 @@ namespace ApplicationServices.Services
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
 
-            if (model.TreatmentDate.Ticks < DateTime.Now.Ticks)
+            if (model.TreatmentDate.Ticks < _datetimeHelper.Now().Ticks)
             {
                 throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
             }
@@ -87,7 +89,7 @@ namespace ApplicationServices.Services
                 throw new ValidationException("een behandeling kan niet geplanned worden buiten een behandel periode");
             }
 
-            if (model.TreatmentDate.Ticks < DateTime.Now.Ticks)
+            if (model.TreatmentDate.Ticks < _datetimeHelper.Now().Ticks)
             {
                 throw new ValidationException("een behandeling kan alleen in de toekomst geplanned worden");
             }
@@ -104,7 +106,7 @@ namespace ApplicationServices.Services
 
         public new Task Delete(Appointment model)
         {
-            if (DateTime.Now > model.TreatmentDate.AddHours(-24))
+            if (_datetimeHelper.Now() > model.TreatmentDate.AddHours(-24))
             {
                 throw new ValidationException(
                     "een behandeling kan niet verwijderd worden binnen 24 uur van het begin van de afspraak");
