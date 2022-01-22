@@ -1,0 +1,36 @@
+﻿@startuml
+'https://plantuml.com/deployment-diagram
+
+node pc{
+[Browers]
+}
+pc -down-- Azure : TCP/IP
+node Azure{
+component Webapp
+component WebappBackup
+component StamApi
+component StamApiBackup
+
+
+}
+Azure -down-- DatabaseServer 
+node DatabaseServer{
+component StamDb
+component IdentityDb
+component ApplicationDb
+}
+Webapp ..> ApplicationDb
+WebappBackup ..> ApplicationDb
+StamApi ..> StamDb
+StamApiBackup ..> StamDb
+Webapp ..> IdentityDb
+WebappBackup ..> IdentityDb
+StamApi ..> IdentityDb
+StamApiBackup ..> IdentityDb
+
+[Browers] ...> Webapp 
+[Browers] ...> WebappBackup
+[Browers] ...> StamApiBackup
+[Browers] ...> StamApi
+
+@enduml

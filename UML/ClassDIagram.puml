@@ -147,6 +147,24 @@ Comment --> User
 
 }
 package Core.DomainServices{
+interface IIdentityRepository
+    {
++Task<IdentityUser> Register(IdentityUser user, string password);
++Task<JwtSecurityToken> Login(IdentityUser user, string password);
+
++Task<IdentityResult> Update(IdentityUser user, string password);
+
++Task<IdentityResult> Delete(IdentityUser user);
+
++Task<IdentityUser> GetCurrentUser(ClaimsPrincipal user);
+
++Task<JwtSecurityToken> GetTokenForTwoFactor(IdentityUser user);
+
++Task<IdentityUser> GetUserById(string id);
+
++Task<IdentityUser> GetUserByEmail(string email);
+    }
+    
 interface IRepository{
 + Get() : IEnumerable<T>
 + Get(int id) : Task<T>
@@ -178,37 +196,191 @@ interface IUserService
        + GetPatients(): IEnumerable<User>
        + GetStaff(): IEnumerable<User>
     }
+    
+    interface IAppointmentRepository extends IRepository
+    
+    class AuthHelper
+        {
++ readonly IConfiguration _configuration;
++ AuthHelper(IConfiguration configuration)
++ JwtSecurityToken GenerateToken(IdentityUser user, IList<string> roles)
+ }
 }
 package Infrastructure.API{
-class WebRepository{
-+Repository();
+
+interface IWebRepository<T>
+{
++Task<IEnumerable<T>> GetAsync();
 }
+ class WebRepository<T>
+    {
+- readonly HttpClient client;
++WebRepository(IHttpClientFactory clientFactory)
++IEnumerable<T> Get()
++async Task<IEnumerable<T>> GetAsync()
++async Task<T> Get(int id)
++T Get(int id, IEnumerable<string> includeProperties)
++IEnumerable<T> Get(Expression<Func<T, bool>> filter)
++IEnumerable<T> Get(IEnumerable<string> includeProperties)
++IEnumerable<T> Get(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
++IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties)
++IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties,
++    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
++Task<T> Add(T model)
++Task<T> Update(T model)
++Task<T> Update(int id, T entity)
++Task Delete(int id)
++Task Delete(T model)
++Task Save()
++void Detach(IEnumerable<T> entities)
++void Detach(T entity)
+    }
+IRepository <|-- IWebRepository
+WebRepository <|... IWebRepository
 }
 package Infrastructure.DB{
-class DatabaseRepository{
-- _context: DbContext;
-- _dbSet: DbSet<T>;
-+Repository(DbContext context);
-
+class ApplicationDbContext
+    {
++ApplicationDbContext()
++ApplicationDbContext(DbContextOptions<ApplicationDbContext> contextOptions)
++    : base(contextOptions)
++DbSet<Comment> Comments { get; set; }
++DbSet<Staff> Staff { get; set; }
++DbSet<Doctor> Doctors { get; set; }
++DbSet<Patient> Patients { get; set; }
++DbSet<Dossier> Dossiers { get; set; }
++DbSet<Student> Students { get; set; }
++DbSet<Appointment> Appointments { get; set; }
++DbSet<Treatment> Treatments { get; set; }
+# override void OnModelCreating(ModelBuilder builder)
 }
-
+class SecurityDbContext
+{
++SecurityDbContext(DbContextOptions<SecurityDbContext> contextOptions) : base(contextOptions)
+}
+class StamDbContext
+    {
++StamDbContext()
++StamDbContext(DbContextOptions<StamDbContext> contextOptions)
++    : base(contextOptions)
++DbSet<DiagnoseCode> DiagnoseCodes { get; set; }
++DbSet<TreatmentCode> TreatmentsCodes { get; set; }
+# override void OnModelCreating(ModelBuilder builder)
+}
+class ApplicationContextFactory
+    {
++ApplicationDbContext CreateDbContext(string[] args)
+    }
+class StamDbContextFactory
+{
++StamDbContext CreateDbContext(string[] args)
+}
+class SecurityDbContextFactory {
++ SecurityDbContext CreateDbContext(string[] args)
+}
+class DatabaseRepository<T> 
+    {
+        ~ readonly DbContext _context;
+        ~ readonly DbSet<T> _dbSet;
++DatabaseRepository(DbContext context)
++IEnumerable<T> Get()
++async Task<IEnumerable<T>> GetAsync()
++async Task<T> Get(int id)
++T Get(int id, IEnumerable<string> includeProperties)
++IEnumerable<T> Get(Expression<Func<T, bool>> filter)
++IEnumerable<T> Get(IEnumerable<string> includeProperties)
++IEnumerable<T> Get(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
++IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties)
++IEnumerable<T> Get(
+            Expression<Func<T, bool>> filter,
+            IEnumerable<string> includeProperties,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
++async Task<T> Add(T entity)
++async Task<T> Update(T entity)
++async Task<T> Update(int id, T entity)
++async Task Delete(int id)
++async Task Delete(T entity)
++async Task Save()
++void Detach(IEnumerable<T> entities)
++void Detach(T entity)
+    }
+    class AppointmentRepository
+        {
+    +AppointmentRepository(DbContext context) : base(context)
+    + IEnumerable<Appointment> Get()
+    +  async Task<IEnumerable<Appointment>> GetAsync()
+    + async Task<Appointment> Get(int id)
+    + Appointment Get(int id, IEnumerable<string> includeProperties)
+    + IEnumerable<Appointment> Get(Expression<Func<Appointment, bool>> filter)
+    + IEnumerable<Appointment> Get(IEnumerable<string> includeProperties)
+    + IEnumerable<Appointment> Get(Func<IQueryable<Appointment>, IOrderedQueryable<Appointment>> orderBy)            
+    + IEnumerable<Appointment> Get(Expression<Func<Appointment, bool>> filter, IEnumerable<string> includeProperties)
+    + IEnumerable<Appointment> Get(
+                Expression<Func<Appointment, bool>> filter,
+                IEnumerable<string> includeProperties,
+                Func<IQueryable<Appointment>, IOrderedQueryable<Appointment>> orderBy)
+    
+    DatabaseRepository ...|> IRepository
+    IAppointmentRepository <|... AppointmentRepository
+    AppointmentRepository implements repository
+}
 }
 package Microsoft.AspNetCore.Identity.EntityFrameworkCore {
 class IdentityUser{
 }
 }
 
-package WebApi{
+package StamApi{
 abstract class Controller{
-- IService<T> : _service;
-+ Get(): Task<ActionResult<List<DTO>>>
-+ Get(int id): Task<ActionResult<DTO>>
-}
-abstract class DTO{
-- int: Id {get; set;}
-- int: Code {get; set;}
+- readonly IIdentityRepository _identityRepository;
+- readonly IRepository<T> _repository;
+- readonly IMapper _mapper;
+
+- Controller(IRepository<T> repository, IIdentityRepository identityRepository,
+                        IMapper mapper)
+- ActionResult<IEnumerable<D>> Get()
+- async Task<ActionResult<T>> Get(int id)
+- async Task<ActionResult<T>> Post([FromBody] D Dto)
+- async Task<IActionResult> Put(int id, [FromBody] D dto)
+- async Task<IActionResult> Delete(int id)
 }
 
+class AuthController
+    {
+- readonly IIdentityRepository _identityRepository;
+- readonly UserManager<IdentityUser> _userManager;
+- readonly IAuthHelper _authHelper;
+- readonly SignInManager<IdentityUser> _signInManager;
++ AuthController(IIdentityRepository identityRepository, UserManager<IdentityUser> userManager,
+            IAuthHelper authHelper, SignInManager<IdentityUser> signInManager)
++ async Task<IActionResult> Login([FromBody] LoginDto login)
+    }
+class DiagnoseCodesController
+        {
+    + DiagnoseCodesController(IRepository<DiagnoseCode> repository, IIdentityRepository identityRepository, IMapper mapper) : base(repository, identityRepository, mapper)
+
+        }
+         
+class TreatmentCodesController
+          {
+      + TreatmentCodesController(IRepository<TreatmentCode> repository, IIdentityRepository identityRepository, IMapper mapper) : base(repository, identityRepository, mapper)
+          }  
+class ApiDto
+    {
++ int Id { get; set; }
+    }
+class DiagnoseCodeDto
+    {
++ string Code { get; set; }
++ string LocationBody { get; set; }
++ string Pathology { get; set; }
+    }
+class TreatmentCodeDto
+    {
++ string Code { get; set; }
++ string Description { get; set; }
++ bool ExplanationRequired { get; set; }
+    }
 class DiagnoseCodeDto{
 - string: LocationBody {get; set;}
 - string: pathology {get; set;}
@@ -219,35 +391,196 @@ string: Description {get; set;}
 boolean: ExplanationRequired {get; set;}
 }
 
-class DiagnoseCodeController{
+ class DiagnoseCodeQuery {      
++ IEnumerable<DiagnoseCode> diagnoseCodes([Service]IRepository<DiagnoseCode> diagnosisTypeApplicationService) 
++ async Task<DiagnoseCode> diagnoseCode(int id, [Service]IRepository<DiagnoseCode> diagnosisTypeApplicationService)
+}
+class Query
+{
++ string _()
 }
 
-class TreatmentCodeController{
+class MappingProfile
+{
++ MappingProfile()
 }
+
+class LoginDto
+{
+  + string Email { get; set; }
+  + string Password { get; set; }
+}
+class Program
+{
++ static void Main(string[] args)
++ static IHostBuilder CreateHostBuilder(string[] args) 
+}
+
+class Startup
+    {
++ Startup(IConfiguration configuration)
++ IConfiguration Configuration { get; }
++ void ConfigureServices(IServiceCollection services)
++ void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    }
 
 Controller <|--- DiagnoseCodeController
 Controller <|--- TreatmentCodeController
-DTO <|--- DiagnoseCodeDto
-DTO <|--- TreatmentCodeDto
-DTO --- Controller
+ApiDto <|--- TreatmentCodeDto
+ApiDto <|--- DiagnoseCodeDto
+ApiDto --- Controller
+
 }
 
 package WebApp{
-abstract class WebController{
-- IService<T> : _service;
-+ Index(): Task<ActionResult<>>
-}
-class DossierController{}
-class PatientController{}
-class TreatmentController{}
-class CommentController{}
-class CommentController{}
+class DossierController{
+- readonly IWebRepository<TreatmentCode> _treatmentCodeRepository;
+- readonly IRepository<Doctor> _doctorRepository;
+- readonly IRepository<Student> _studentRepository;
+- readonly IUserService _userRepository;
+- readonly IRepository<Patient> _patientRepository;
+- readonly IWebRepository<DiagnoseCode> _diagnoseRepository;
+- readonly IService<Dossier> _dossierService;
+- readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
 
-abstract class WebDto{
--int: Id {get; get:}
--DateTime CreatedAt {get; get:}
--DateTime UpdatedAtAt {get; get:}
++ DossierController(IWebRepository<TreatmentCode> treatmentCodeRepository, IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository, IUserService userRepository, IRepository<Patient> patientRepository, IWebRepository<DiagnoseCode> diagnoseRepository, IService<Dossier> dossierService, IRepository<TreatmentPlan> treatmentPlanRepository)
++ ActionResult Index()
++ async Task<ActionResult> Create()
++ async Task<ActionResult> Create(CreateDossierDto dossier)
++ ActionResult Doctors()
++ ActionResult Students()
++ ActionResult Patients()
+- async Task<CreateDossierDto> fillDto(CreateDossierDto viewModel)
++ async Task<ActionResult> Edit([FromRoute] int Id)
++ async Task<ActionResult> Edit(CreateDossierDto dossier)
++ async Task<ActionResult> Detail([FromRoute] int id)
++ ActionResult Details([FromQuery] string email)
+
 }
+ class AccountController
+    {
+- readonly UserManager<IdentityUser> _userManager;
+- readonly RoleManager<IdentityRole> _roleManager;
+- readonly SignInManager<IdentityUser> _signInManager;
+- readonly IRepository<Doctor> _doctorRepository;
+- readonly IRepository<Student> _studentRepository;
+- readonly IService<Patient> _patientService;
+- readonly IUserService _userService;
+- readonly IAuthHelper _authHelper;
+
++ AccountController(UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager,
+            IRepository<Doctor> doctorRepository, IRepository<Student> studentRepository,
+            IService<Patient> patientService, IUserService userService, IAuthHelper authHelper)
++ async Task<IActionResult> Edit()
++ IActionResult Index()
++ IActionResult Login()
++ IActionResult Register()
++ async Task<IActionResult> Logout()
++ async Task<IActionResult> PostRegisterDoctor(DoctorRegisterDto registerDto)
++ async Task<IActionResult> PostRegisterStudent(StudentRegisterDto registerDto)
++ async Task<IActionResult> PostRegisterPatientSelf(PatientRegisterDto registerDto, IFormFile picture)
++ async Task<IActionResult> PostRegisterPatient(RegisterDto registerDto)
++ async Task<IActionResult> PostLogin(LoginDto loginViewModel)
++ ActionResult Student()
++ ActionResult Doctor()
++ ActionResult PatientSelf()
++ async Task<IActionResult> EditDoctor(DoctorRegisterDto registerDto)
++ async Task<IActionResult> EditStudent(StudentRegisterDto registerDto)
+    }
+    
+    class AppointmentController 
+{
+- readonly IUserService _userService;
+- readonly IService<Dossier> _dossierService;
+- readonly IService<Appointment> _appointmentService;
+- readonly IService<Treatment> _treatmentService;
++ AppointmentController(IUserService userService, IService<Dossier> dossierService,
++ IActionResult Index(  DateTime day)
++ async Task<ActionResult> Create( int dossierId)
++ async Task<ActionResult> Create(CreateAppointmentDto treatmentDto)
++ async Task<ActionResult> Edit( int appointmentId)
++ async Task<ActionResult> Edit(CreateAppointmentDto treatmentDto)
++ ActionResult Appointments(int id , string time)
+}
+class CommentController{
+- readonly IService<Dossier> _dossierService;
+- readonly IService<Comment> _commentService;
+- readonly IUserService _userService;
++ CommentController(IService<Dossier> dossiervice, IService<Comment> commentService,
+            IUserService userService)
++ ActionResult Create([FromRoute] int dossierId)
++ async Task<ActionResult> Create(CreateCommentDto createCommentDto)
+}
+class PatientController{
+- readonly IWebHostEnvironment _webHostEnvironment;
+- readonly IService<Patient> _patientService;
+- readonly UserManager<IdentityUser> _userManager;
+- readonly SignInManager<IdentityUser> _signInManager;
+
++ PatientController(IWebHostEnvironment webHostEnvironment, IService<Patient> patientService,
++ ActionResult Index()
++ ActionResult Create()
++ ActionResult CreatePartial()
++ async Task<ActionResult> Create(PatientDto registerDto, IFormFile picture)
++ async Task<ActionResult> Edit(int id)
++ async Task<ActionResult> Edit(int id, PatientDto patientDto, IFormFile picture)
+}
+class TreatmentController
+{
+- readonly IWebRepository<TreatmentCode> _treatmentCodeRepository;
+- readonly IRepository<TreatmentPlan> _treatmentPlanService;
+- readonly IService<Treatment> _treatmentService;
+- readonly IService<Appointment> _appointmentService;
+- readonly IService<Dossier> _dossierService;
+- readonly IUserService _userRepository;
+
++ TreatmentController(IWebRepository<TreatmentCode> treatmentCodeRepository, IRepository<TreatmentPlan> treatmentPlanService, IService<Treatment> treatmentService, IService<Appointment> appointmentService, IService<Dossier> dossierService, IUserService userRepository)
++ async Task<ActionResult> Create([FromRoute] int dossierId)
++ async Task<ActionResult> CreateFromAppointment([FromRoute] int AppointmentId)
++ async Task<ActionResult> Create(CreateTreatmentDto treatmentDto)
++ async Task<ActionResult> Edit([FromRoute] int treatmentId)
++ async Task<ActionResult> Edit(CreateTreatmentDto treatmentDto)
++ async Task<ActionResult> Delete(int id)
+    }
+
+class TreatmentPlanController
+{
+- readonly IWebRepository<TreatmentCode> _treatmentCodeRepository;
+- readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
+- readonly IService<Dossier> _dossierService;
++ TreatmentPlanController(IWebRepository<TreatmentCode> treatmentCodeRepository,
++ ActionResult Create()
++ async Task<ActionResult> Create(CreateTreatmentPlanDto treatmentPlanDto)
+}
+
+class AppointmentDto{
++ DateTime: TreatmentDate { get; set; } 
++ int: PracticionerId { get; set; }
++ RoomType: Room { get; set; }
++ int: DossierId { get; set; }
++ int: Id { get; set; }
+}
+class AppointmentIndexDto
+{
++ IEnumerable<AppointmentViewDto>: AppointmentViewDtos { get; set; }
++ IEnumerable<TreatmentViewDto>: treatmentViewDtos { get; set; }
+}
+
+class AppointmentViewDto 
+{
++Staff: Practicioner { get; set; }
++Core.Domain.Models.Patient: Patient { get; set; }
++DateTime: TreatmentEndDate { get; set; }
+}
+class CreateAppointmentDto 
+{
++List<SelectListItem> Staff: { get; set; }
++ Core.Domain.Models.Dossier: Dossier { get; set; }
++ Core.Domain.Models.TreatmentPlan: TreatmentPlan { get; set; }
+}
+
+
 class DoctorDto{
 - string: BigNumber {get; set;}
 - string: EmployeeNumber {get; set;}
@@ -288,6 +621,81 @@ class DossierDto {
 - Treatment[]: Treatments {get; set;}
 }
 
+class RegisterDto
+{
++ string FirstName { get; set; }
++ string LastName { get; set; }
++ string? Preposition { get; set; }
++ string Email { get; set; }
++ string Password { get; set; }
+}
+
+class StaffDto 
+{
++ TimeSpan start { get; set; }
++ TimeSpan end { get; set; }
+}
+class DoctorRegisterDto
+{
++ string BigNumber { get; set; }
++ string EmployeeNumber { get; set; }
++ string PhoneNumber { get; set; }
+}
+
+abstract class EditDto
+{
++ string FirstName { get; set; }
++ string LastName { get; set; }
++ string? Preposition { get; set; }
++ string Email { get; set; }
+}
+class StaffEditDto
+{
++ TimeSpan start { get; set; }
++ TimeSpan end { get; set; }
+}
+
+class PatientRegisterDto
+{
++ string PatientNumber { get; set; }
++ string IdNumber { get; set; }
++ string Picture { get; set; }
++ string PhoneNumber { get; set; }
++ DateTime BirthDay { get; set; }
++ Gender Gender { get; set; }
++ string Street { get; set; }
++ string City { get; set; }
++ string PostalCode { get; set; }
++ string HouseNumber { get; set; }
+}
+class StudentRegisterDto 
+{
++ string StudentNumber { get; set; }
+}
+
+class CreateDossierDto {
++  List<SelectListItem>: Staff { get; set; }
++ List<SelectListItem>: Patients { get; set; }
++ List<SelectListItem>: Diagnoses { get; set; }
++ List<SelectListItem>: TreatmentItems { get; set; }
+}
+
+class ViewDossierDto {
++ TreatmentPlanDto? : TreatmentPlan { get; set; }
++ IEnumerable<ViewCommentDto>? : Comments { get; set; }
++ IEnumerable<TreatmentViewDto>? : Treatments { get; set; }
++ IEnumerable<AppointmentViewDto>? : Appointments { get; set; }
+}
+class LoginDto
+{
++ string: Email { get; set; }
++ string: Password { get; set; }
+}
+
+class EditStudentDto
+{
++ string: StudentNumber { get; set; }      
+}
 class TreatmentPlanDto{
 - int: TreatmentsPerWeek {get; set;}
 - float: TimePerSession {get; set;}
@@ -302,6 +710,22 @@ class TreatmentDto{
 - Room: Room {get; set;}
 - User: ExcecutedBy {get; set;}
 - DateTime: ExecutedOn {get; set;}
+}
+class CreateTreatmentDto
+{
++ List<SelectListItem> Treatments { get; set; }
++ List<SelectListItem> Staff { get; set; }
++ Core.Domain.Models.Dossier Dossier { get; set; }
++ int DossierId { get; set; }
+}
+class TreatmentViewDto 
+{
++ int Id { get; set; }
++ User Practicioner { get; set; }
++ Core.Domain.Models.Patient Patient { get; set; }
++ int DossierId { get; set; }
++ DateTime createdAt { get; set; }
++ DateTime TreatmentEndDate { get; set; }
 }
 class RoomDto{
 - string: roomNumber {get; set;}
@@ -326,17 +750,93 @@ UserDto: CreatedBy {get; set;}
 boolean: VisibleForPatient {get; set;}
 }
 
-    WebDto --|> TreatmentDto
-    WebDto --|> DossierDto
-    WebDto --|> RoomDto
-    WebDto --|> TreatmentPlanDto
-    WebDto --|> CommentDto
+class EditDoctorDto 
+{
++ string: BigNumber { get; set; }
++ string: EmployeeNumber { get; set; }
++ string: PhoneNumber { get; set; }
+}
+class CommentDto
+{
++ string CommentBody { get; set; }
++ int CreatedById { get; set; }
++ User CreatedBy { get; set; }
+}
+
+class CreateCommentDto 
+{
++ int: DossierId { get; set; }
++ bool: IsVisiblePatient { get; set; }
+}
+
+class ViewCommentDto{
++ bool IsVisiblePatient { get; set; }
+}
+class TreatmentPlanDto
+{
++ int TreatmentsPerWeek;
++ int TimePerSessionInMinutes;
+}
+
+class CreateTreatmentPlanDto {
++ int DossierId { get; set; }
+}
+
+class AjaxForm 
+{
++ string replaceId { get; set; }
++ string onAjaxBegin { get; set; }
++ string onAjaxComplete { get; set; }
++ string onAjaxFailure { get; set; }
++ string id { get; set; }
++ Process(TagHelperContext context, TagHelperOutput output)
+}
+
+class ImageHelper
+{
++ static string ProcessUploadedFile(IFormFile picture)
+}
+class TempDataExtensions
+    {
++ static void Put<T>(this ITempDataDictionary tempData, string key, T value) where T extends class
++ static T Get<T>(this ITempDataDictionary tempData, string key) where T extends class
+    }
+    
+class CounterComponenet{
+- readonly IAppointmentRepository _repository;
+- readonly IRepository<Treatment> _Trepository;   
++ CounterComponenet(IAppointmentRepository repository, IRepository<Treatment> trepository)
++ Task<IViewComponentResult> InvokeAsync()
+}
+
+class Program
+{
++ static void Main(string[] args)
++ static IHostBuilder CreateHostBuilder(string[] args) 
+}
     UserDto --|> DoctorDto
     UserDto --|> StudentDto
     UserDto --|> PatientDto
+    
+    
+    CreateDossierDto --|> DossierDto
+    ViewDossierDto --|> DossierDto
+    
+    EditStudentDto --|> StaffEditDto
+    EditDoctorDto --|> StaffEditDto
+    StudentRegisterDto --|> StaffDto
+    DoctorRegisterDto --|> StaffDto
+    StaffDto --|> RegisterDto
+    PatientRegisterDto --|> RegisterDto
+    
+    StaffEditDto --|> EditDto
+    
+    treatmentViewDto --|> TreatmentDto
+    CreateTreatmentDto --|> TreatmentDto
+    
     DossierDto --> TreatmentDto
     DossierDto --> TreatmentPlanDto
-    DossierDTo --> UserDto
+    DossierDto --> UserDto
     PatientDto --> Gender
     TreatmentDto --> TreatmentCode
     TreatmentDto --> UserDto
@@ -344,43 +844,111 @@ boolean: VisibleForPatient {get; set;}
     RoomDto --> RoomType
     CommentDto --> UserDto
     
+    CreateAppointmentDto --|> AppointmentDto
+    AppointmentViewDto --|> AppointmentDto
+    
+    CreateCommentDto --|> CommentDto
+    ViewCommentDto --|> CommentDto
+    
     WebController --|> DossierController
     WebController --|> TreatmentController
     WebController --|> PatientController
     WebController --|> CommentController
+    
+    CreateTreatmentPlanDto --|> TreatmentPlanDto
 
 }
 
 package ApplicationServices{
-abstract class Service{
-- _repository : IRepository<T>;
-
+class DatetimeHelper implements IDatetimeHelper
+    {
+     + DateTime Now()
+    }
+interface IDatetimeHelper
+        {
+         DateTime Now();
+        }
+interface IAuthHelper
+    {
+     + Task<string> GenerateToken(string Email);
+    }
+    
+class AppointmentService implements Service
+    {
+- readonly IService<Dossier> _dossierService;
+- readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
+- readonly IDatetimeHelper _datetimeHelper;
+        
++ AppointmentService(IAppointmentRepository repository, IService<Dossier> dossierService, IRepository<TreatmentPlan> treatmentPlanRepository, IDatetimeHelper datetimeHelper) : base(repository)
++ new async Task<Appointment> Add(Appointment model)
++ new async Task<Appointment> Update(Appointment model)
++ new Task Delete(Appointment model)
++ new Task Delete(int model)
++ new async Task<Appointment> Update(int id, Appointment model)
+- bool AreFallingInSameWeek(DateTime date1, DateTime date2)
+    }
+    abstract class Service implements IService
+        {
+~ readonly IRepository<T> _repository;
+# Service(IRepository<T> repository)
+- IEnumerable<T> Get()
+- Task<T> Get(int id)
+- T Get(int id, IEnumerable<string> includeProperties)
+- IEnumerable<T> Get(Expression<Func<T, bool>> filter)
+- IEnumerable<T> Get(IEnumerable<string> includeProperties)
+- IEnumerable<T> Get(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+- IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties)
+- IEnumerable<T> Get(Expression<Func<T, bool>> filter, IEnumerable<string> includeProperties, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+- async Task<T> Add(T model)
+- async Task<T> Update(T model)
+- async Task<T> Update(int id, T model)
+- Task Delete(int id)
+- Task Delete(T model)
+}
+class CommentService extends Service{
+ + CommentService(IRepository<Comment> repository)
 }
 
-class DossierService{
+class DossierService extends Service
+    {
+- readonly IRepository<Student> _studentRepository;
+- readonly IRepository<Doctor> _doctorRepository;
++ DossierService(IRepository<Dossier> repository, IRepository<Student> studentRepository, IRepository<Doctor> doctorRepository) : base(repository)
++ DossierService(IRepository<Dossier> repository) : base(repository)
+- int CalculateAgeCorrect(DateTime birthDate, DateTime now)
+- bool IsStudent(int id)
+    }
+    
+class PatientService extends Service
+{
++ PatientService(IRepository<Patient> repository) : base(repository)
++ async Task<Patient> Add(Patient model)
++ async Task<Patient> Update(int id,Patient model)
++ async Task<Patient> Update(Patient model)
 }
-class PatientService{
+class TreatmentService extends Service
+    {
++ TreatmentService(IRepository<Treatment> repository) : base(repository)
++ async Task<Treatment> Add(Treatment model)
++ async Task<Treatment> Update(Treatment model)
++ async Task Delete(int id)
++ Task Delete(Treatment model)
 }
-class TreatmentService{
-}
-class CommentService{
-}
-class DiagnoseCodeService{}
-class TreatmentCodeService{}
 
-Service --|> DossierService
-Service --|> PatientService
-Service --|> TreatmentService
-Service --|> CommentService
-Service --|> DiagnoseCodeService
-Service --|> TreatmentCodeService
+class UserService extends Service
+    {
++ UserService(IRepository<User> repository) : base(repository)
++ IEnumerable<User> GetDoctors()
++ IEnumerable<User> GetStudents()
++ IEnumerable<User> GetPatients()
++ IEnumerable<User> GetStaff()
+    }
 }
 
 IdentityUser --|> User
 IRepository <|... DatabaseRepository
 IRepository <|... WebRepository
 IService --- Controller
-IService <|.. Service
 IRepository --- Service
 
 

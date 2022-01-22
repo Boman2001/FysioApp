@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="615px" preserveAspectRatio="none" style="width:670px;height:615px;background:#FFFFFF;" version="1.1" viewBox="0 0 670 615" width="670px" zoomAndPan="magnify"><defs><filter height="300%" id="f17zy9o4mht3hn" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[b7b14e8444e3c5d78ccf181a2614e889]
+cluster pc--><polygon fill="#FFFFFF" filter="url(#f17zy9o4mht3hn)" points="192,16,202,6,351,6,351,117,341,127,192,127,192,16" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="341" x2="351" y1="16" y2="6"/><line style="stroke:#000000;stroke-width:1.5;" x1="192" x2="341" y1="16" y2="16"/><line style="stroke:#000000;stroke-width:1.5;" x1="341" x2="341" y1="16" y2="127"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="259" y="33.5332">pc</text><!--MD5=[ee5e8230e68e644357958932f455d434]
+cluster Azure--><polygon fill="#FFFFFF" filter="url(#f17zy9o4mht3hn)" points="16,265,26,255,653,255,653,366,643,376,16,376,16,265" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="643" x2="653" y1="265" y2="255"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="643" y1="265" y2="265"/><line style="stroke:#000000;stroke-width:1.5;" x1="643" x2="643" y1="265" y2="376"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="40" x="310.5" y="282.5332">Azure</text><!--MD5=[0661291e39b9254078e8d2a9184ca025]
+cluster DatabaseServer--><polygon fill="#FFFFFF" filter="url(#f17zy9o4mht3hn)" points="61,497,71,487,519,487,519,598,509,608,61,608,61,497" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="509" x2="519" y1="497" y2="487"/><line style="stroke:#000000;stroke-width:1.5;" x1="61" x2="509" y1="497" y2="497"/><line style="stroke:#000000;stroke-width:1.5;" x1="509" x2="509" y1="497" y2="608"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="113" x="229.5" y="514.5332">DatabaseServer</text><!--MD5=[a2f55fdd0fb3f11a0d4a711ab2e172f2]
+entity Browers--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="91" x="235.5" y="55"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="306.5" y="60"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="304.5" y="62"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="304.5" y="66"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="51" x="250.5" y="89.5332">Browers</text><!--MD5=[748fe8734f81c225b68b3323baccca5d]
+entity Webapp--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="93" x="234.5" y="304"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="307.5" y="309"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="305.5" y="311"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="305.5" y="315"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="53" x="249.5" y="338.5332">Webapp</text><!--MD5=[69f9ec105e218683d87d897102b3742d]
+entity WebappBackup--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="140" x="59" y="304"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="179" y="309"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="177" y="311"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="177" y="315"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="74" y="338.5332">WebappBackup</text><!--MD5=[7183b2140f4bcaf4aa5118f31dd5eddb]
+entity StamApi--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="92" x="537" y="304"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="609" y="309"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="607" y="311"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="607" y="315"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="552" y="338.5332">StamApi</text><!--MD5=[49ce90ebe731483a5185bc10e164bfcf]
+entity StamApiBackup--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="139" x="362.5" y="304"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="481.5" y="309"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="479.5" y="311"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="479.5" y="315"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="99" x="377.5" y="338.5332">StamApiBackup</text><!--MD5=[57e699a3efa9e38f08219ad0fc1d9ac8]
+entity StamDb--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="90" x="405" y="536"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="475" y="541"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="473" y="543"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="473" y="547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="420" y="570.5332">StamDb</text><!--MD5=[83790f32d034f88d97ae38177c3f9d01]
+entity IdentityDb--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="103" x="266.5" y="536"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="349.5" y="541"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="347.5" y="543"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="347.5" y="547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63" x="281.5" y="570.5332">IdentityDb</text><!--MD5=[b7b5e0b99cbe903b00f80dc8fb69eea5]
+entity ApplicationDb--><rect fill="#FEFECE" filter="url(#f17zy9o4mht3hn)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="127" x="104.5" y="536"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="211.5" y="541"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="209.5" y="543"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="209.5" y="547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="119.5" y="570.5332">ApplicationDb</text><!--MD5=[da23dba8b58d8d0561e58ceb7ad7f3a7]
+link pc to Azure--><path d="M191.7554,85.6372 C191.6338,85.7225 191.511,85.8088 191.387,85.896 C190.3951,86.5934 189.327,87.3497 188.1877,88.1632 C185.9089,89.7902 183.3453,91.6459 180.5369,93.7175 C169.3031,102.0038 154.1525,113.7425 137.6525,128.1 C104.6525,156.815 66.255,196.005 43,239 C40.695,243.2613 38.6697,247.7809 36.8901,252.434 C36.6677,253.0156 36.4491,253.5993 36.2342,254.1849 C36.1805,254.3313 36.1271,254.4778 36.0738,254.6244 " fill="none" id="pc-Azure" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="41" x="84" y="196.4951">TCP/IP</text><!--MD5=[735bafb7c1f5fe797b354d26ea2b5641]
+link Azure to DatabaseServer--><path d="M33.2643,376.3628 C33.3347,376.7227 33.4054,377.084 33.4764,377.4466 C33.6183,378.1719 33.7613,378.9025 33.9052,379.6383 C34.1932,381.11 34.4852,382.6024 34.781,384.114 C35.9641,390.1602 37.2071,396.5128 38.4901,403.0695 C41.0561,416.183 43.7819,430.1131 46.5075,444.0425 C49.2331,457.9719 51.9586,471.9005 54.5239,485.0108 C55.8066,491.566 57.0493,497.9166 58.2319,503.9605 C58.8232,506.9824 59.3995,509.9277 59.9583,512.7835 C60.2377,514.2114 60.5127,515.6169 60.7831,516.9985 C60.8506,517.3439 60.9179,517.6877 60.9849,518.0301 " fill="none" id="Azure-DatabaseServer" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[50cf06685332ba02dd288adefbc16fb5]
+link Webapp to ApplicationDb--><path d="M269.54,352.32 C248.55,395.05 204.01,485.7 181.55,531.41 " fill="none" id="Webapp-to-ApplicationDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="179.32,535.96,186.8744,529.6409,181.5217,531.4708,179.6917,526.1182,179.32,535.96" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[ade5f857168f4a8938c26e9cfb714609]
+link WebappBackup to ApplicationDb--><path d="M129.49,352.43 C130.39,379.32 132.91,424.67 140,463 C144.27,486.09 151.85,511.59 158.04,530.5 " fill="none" id="WebappBackup-to-ApplicationDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="159.75,535.65,160.7164,525.8487,158.1774,530.9037,153.1224,528.3648,159.75,535.65" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[413004e2771c75546248a8c0a4761cef]
+link StamApi to StamDb--><path d="M580.51,352.22 C576.7,380.12 567.58,427.6 547,463 C531.26,490.08 505.91,514.79 485.08,532.36 " fill="none" id="StamApi-to-StamDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="480.97,535.77,490.4457,533.0847,484.8123,532.5705,485.3265,526.937,480.97,535.77" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f377e8f7bdca59ea87269d34d4dc56a4]
+link StamApiBackup to StamDb--><path d="M433.82,352.32 C437.16,394.88 444.21,484.97 447.8,530.86 " fill="none" id="StamApiBackup-to-StamDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="448.2,535.96,451.4939,526.6783,447.8143,530.9749,443.5177,527.2953,448.2,535.96" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[9bddaab2e94357aed366cee7f01e10da]
+link Webapp to IdentityDb--><path d="M284.75,352.32 C291.6,394.88 306.09,484.97 313.47,530.86 " fill="none" id="Webapp-to-IdentityDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="314.29,535.96,316.8275,526.4436,313.5051,531.022,308.9267,527.6996,314.29,535.96" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[94361ca0cbe92bed8c97d136148190fc]
+link WebappBackup to IdentityDb--><path d="M149.23,352.4 C173.3,380.36 214.56,428.7 249,471 C265.27,490.99 283.22,513.91 296.73,531.35 " fill="none" id="WebappBackup-to-IdentityDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="300.07,535.66,297.7164,526.0965,297.0062,531.7086,291.3941,530.9985,300.07,535.66" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[96fa0200dfb025549e4256eb90008035]
+link StamApi to IdentityDb--><path d="M561.97,352.22 C550.01,364.75 534.4,380.05 519,392 C465.29,433.69 439.08,426.13 388,471 C367.85,488.7 349.17,512.74 336.19,531.22 " fill="none" id="StamApi-to-IdentityDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="333.01,535.79,341.4254,530.6732,335.859,531.6811,334.8511,526.1148,333.01,535.79" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[5bb77d13d0733de58b3af9178273e6f0]
+link StamApiBackup to IdentityDb--><path d="M420.44,352.32 C399.26,395.05 354.33,485.7 331.67,531.41 " fill="none" id="StamApiBackup-to-IdentityDb" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="329.42,535.96,337.0066,529.6796,331.6447,531.4822,329.8421,526.1202,329.42,535.96" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1400a56b456f8d4c961b3e3df4e0abab]
+link Browers to Webapp--><path d="M257.04,103.24 C237.67,148.75 237.01,249.49 255.07,298.75 " fill="none" id="Browers-to-Webapp" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="256.99,303.64,257.424,293.8007,255.1626,298.9859,249.9774,296.7245,256.99,303.64" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1400a56b456f8d4c961b3e3df4e0abab]
+link Browers to Webapp--><path d="M273.17,103.24 C266.85,148.66 266.62,249.08 272.49,298.46 " fill="none" id="Browers-to-Webapp-1" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="273.15,303.64,275.9593,294.2003,272.507,298.6815,268.0258,295.2292,273.15,303.64" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1400a56b456f8d4c961b3e3df4e0abab]
+link Browers to Webapp--><path d="M289.29,103.24 C295.99,148.66 296.23,249.08 290.01,298.46 " fill="none" id="Browers-to-Webapp-2" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="289.31,303.64,294.5055,295.273,289.9951,298.6872,286.5809,294.1768,289.31,303.64" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1400a56b456f8d4c961b3e3df4e0abab]
+link Browers to Webapp--><path d="M305.42,103.24 C325.17,148.75 325.84,249.49 307.43,298.75 " fill="none" id="Browers-to-Webapp-3" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="305.47,303.64,312.5519,296.7956,307.3442,299.0046,305.1352,293.7968,305.47,303.64" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[a0850be2c4b3cf50eebe44dd5f9bffd9]
+@startuml
+'https://plantuml.com/deployment-diagram
+
+node pc{
+[Browers]
+}
+pc -down- - Azure : TCP/IP
+node Azure{
+component Webapp
+component WebappBackup
+component StamApi
+component StamApiBackup
+
+
+}
+Azure -down- - DatabaseServer 
+node DatabaseServer{
+component StamDb
+component IdentityDb
+component ApplicationDb
+}
+Webapp ..> ApplicationDb
+WebappBackup ..> ApplicationDb
+StamApi ..> StamDb
+StamApiBackup ..> StamDb
+Webapp ..> IdentityDb
+WebappBackup ..> IdentityDb
+StamApi ..> IdentityDb
+StamApiBackup ..> IdentityDb
+
+[Browers] ...> Webapp 
+[Browers] ...> Webapp 
+[Browers] ...> Webapp 
+[Browers] ...> Webapp 
+
+@enduml
+
+@startuml
+
+node pc{
+[Browers]
+}
+pc -down- - Azure : TCP/IP
+node Azure{
+component Webapp
+component WebappBackup
+component StamApi
+component StamApiBackup
+
+
+}
+Azure -down- - DatabaseServer 
+node DatabaseServer{
+component StamDb
+component IdentityDb
+component ApplicationDb
+}
+Webapp ..> ApplicationDb
+WebappBackup ..> ApplicationDb
+StamApi ..> StamDb
+StamApiBackup ..> StamDb
+Webapp ..> IdentityDb
+WebappBackup ..> IdentityDb
+StamApi ..> IdentityDb
+StamApiBackup ..> IdentityDb
+
+[Browers] ...> Webapp 
+[Browers] ...> Webapp 
+[Browers] ...> Webapp 
+[Browers] ...> Webapp 
+
+@enduml
+
+PlantUML version 1.2021.11(Sat Oct 02 15:26:11 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: Dynamic Code Evolution 64-Bit Server VM
+Default Encoding: Cp1252
+Language: nl
+Country: NL
+--></g></svg>

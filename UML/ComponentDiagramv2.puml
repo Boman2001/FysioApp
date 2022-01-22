@@ -5,16 +5,19 @@
 
   [WebApp]..>  [Core.Domain]
   [DomainServices]..> [Core.Domain]
-  [DomainServices]--() IService 
-  [DomainServices]--() IRepository
+  [ApplicationServices]--() IService 
+  [Infrastructure.DB]--() IRepository
+  [Infrastructure.API]--() IWebRepository
   [DomainServices]--() IUserService
   
   [ApplicationServices] ..> [Core.Domain]
+  [ApplicationServicesTests] ..> [Core.Domain]
   [ApplicationServicesTests] ..> [ApplicationServices]
 
   IService )-- [WebApp] 
   IRepository )-- [WebApp] 
   IUserService )-- [WebApp] 
+  IWebRepository )-- [WebApp] 
   IRepository )-- [StamApi]
   [StamApi]..> [Core.Domain]
   

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="512px" preserveAspectRatio="none" style="width:879px;height:512px;background:#FFFFFF;" version="1.1" viewBox="0 0 879 512" width="879px" zoomAndPan="magnify"><defs><filter height="300%" id="f12fst625q6u5w" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[ed05b4b62fc63017e649bfedb1046e43]
+entity WebApp--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="94" x="408.83" y="343"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="482.83" y="348"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="480.83" y="350"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="480.83" y="354"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="54" x="423.83" y="377.5332">WebApp</text><!--MD5=[7215ac6563b5cbd742ab2479c8ef6ebb]
+entity Core.Domain--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="123" x="288.33" y="451"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="391.33" y="456"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="389.33" y="458"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="389.33" y="462"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83" x="303.33" y="485.5332">Core.Domain</text><!--MD5=[99c667a8d611df62d74b2b39b40a1f0d]
+entity DomainServices--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="142" x="524.83" y="115"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="646.83" y="120"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="644.83" y="122"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="644.83" y="126"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102" x="539.83" y="149.5332">DomainServices</text><!--MD5=[b22058256349e0efaaecaa0ec08dd969]
+entity ApplicationServices--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="163" x="702.33" y="115"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="845.33" y="120"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="843.33" y="122"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="843.33" y="126"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="717.33" y="149.5332">ApplicationServices</text><!--MD5=[6b3035cb4ba8d474fa99dfd80243dbb0]
+entity IService--><ellipse cx="781.83" cy="253" fill="#FEFECE" filter="url(#f12fst625q6u5w)" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="756.83" y="284.5332">IService</text><!--MD5=[cf5a6260f70d77834195262a75eed7e4]
+entity Infrastructure.DB--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="147" x="141.33" y="115"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="268.33" y="120"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="266.33" y="122"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="266.33" y="126"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107" x="156.33" y="149.5332">Infrastructure.DB</text><!--MD5=[d8299e5e0613ae77ab0168f886fab789]
+entity IRepository--><ellipse cx="248.83" cy="253" fill="#FEFECE" filter="url(#f12fst625q6u5w)" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="213.33" y="284.5332">IRepository</text><!--MD5=[5f2a64042d2c8452abd6b473ded9b1cf]
+entity Infrastructure.API--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="149" x="334.33" y="115"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="463.33" y="120"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="461.33" y="122"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="461.33" y="126"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="109" x="349.33" y="149.5332">Infrastructure.API</text><!--MD5=[961eae816c320aa937a90822b16beb4c]
+entity IWebRepository--><ellipse cx="455.83" cy="253" fill="#FEFECE" filter="url(#f12fst625q6u5w)" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="405.83" y="284.5332">IWebRepository</text><!--MD5=[9c0071f190f97007a34ea29ec163682a]
+entity IUserService--><ellipse cx="595.83" cy="253" fill="#FEFECE" filter="url(#f12fst625q6u5w)" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="556.33" y="284.5332">IUserService</text><!--MD5=[7bec93f3335f8900e4180acf7c33cc2e]
+entity ApplicationServicesTests--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="198" x="332.83" y="7"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="510.83" y="12"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="508.83" y="14"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="508.83" y="18"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="158" x="347.83" y="41.5332">ApplicationServicesTests</text><!--MD5=[7183b2140f4bcaf4aa5118f31dd5eddb]
+entity StamApi--><rect fill="#FEFECE" filter="url(#f12fst625q6u5w)" height="47.6094" style="stroke:#A80036;stroke-width:1.5;" width="92" x="204.83" y="343"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="276.83" y="348"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="274.83" y="350"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="274.83" y="354"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="219.83" y="377.5332">StamApi</text><!--MD5=[2afbf4cd6e6acf79fe7551774b1534c4]
+link WebApp to Core.Domain--><path d="M432.83,391 C416.41,407.42 394.27,429.56 376.98,446.84 " fill="none" id="WebApp-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="373.15,450.68,382.3424,447.1445,376.6855,447.1445,376.6855,441.4876,373.15,450.68" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[55930807a9a15d5fd2ec6cdeefbe62fc]
+link DomainServices to Core.Domain--><path d="M620.93,163.13 C635.65,178.48 652.89,199.99 660.83,223 C669.52,248.21 672.59,259.07 660.83,283 C613.51,379.26 492.78,431.73 416.42,456.24 " fill="none" id="DomainServices-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="411.45,457.81,421.2383,458.9001,416.2158,456.2975,418.8184,451.2749,411.45,457.81" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1ff28c7827e461089a1fd5acdc9b862f]
+link ApplicationServices to IService--><path d="M783.41,163.21 C782.96,188.32 782.27,227.03 781.97,243.79 " fill="none" id="ApplicationServices-IService" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[b6a428ee5cba46e4d63f63a65ff6ec34]
+link Infrastructure.DB to IRepository--><path d="M221.87,163.21 C229.5,188.32 241.25,227.03 246.34,243.79 " fill="none" id="Infrastructure.DB-IRepository" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1e4e56b07ac37598fdd1b67480e22dda]
+link Infrastructure.API to IWebRepository--><path d="M418.57,163.21 C429.11,188.32 445.35,227.03 452.38,243.79 " fill="none" id="Infrastructure.API-IWebRepository" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[e68e53f935bf703938dc03241e2ebad4]
+link DomainServices to IUserService--><path d="M595.83,163.21 C595.83,188.32 595.83,227.03 595.83,243.79 " fill="none" id="DomainServices-IUserService" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[44631d468a0dc5e5959706df88aa3ce8]
+link ApplicationServices to Core.Domain--><path d="M803.49,163.18 C825.97,192.68 856.77,244.42 832.83,283 C743.9,426.3 527.1,462.16 416.74,471.08 " fill="none" id="ApplicationServices-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="411.57,471.49,420.8517,474.7839,416.5551,471.1043,420.2347,466.8077,411.57,471.49" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[453c28cee27ff2ae9231eff9f633bafa]
+link ApplicationServicesTests to Core.Domain--><path d="M332.51,45.55 C252.53,58.75 149.34,81.7 123.83,115 C79.75,172.53 6,189.44 162.83,391 C192.17,428.71 242.32,449.71 283.3,461.15 " fill="none" id="ApplicationServicesTests-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="288.25,462.49,280.6165,456.2667,283.4255,461.1768,278.5154,463.9859,288.25,462.49" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[677581d6fde5f712d44ac84d8fdc89bb]
+link ApplicationServicesTests to ApplicationServices--><path d="M508.21,55 C565.54,72.26 643.89,95.86 702.41,113.48 " fill="none" id="ApplicationServicesTests-to-ApplicationServices" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="707.29,114.95,699.8277,108.5223,702.5028,113.5067,697.5185,116.1818,707.29,114.95" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[2350f6a8df25ae756ff112b774df16c3]
+reverse link IService to WebApp--><path d="M763.3,260.37 C713.56,277.45 575.94,324.74 502.85,349.85 " fill="none" id="IService-backto-WebApp" style="stroke:#A80036;stroke-width:1.0;"/><path d="M767.1056,250.1161 A9,9 0 0 0 772.6136 266.1086" style="stroke:#A80036;stroke-width:1.5;fill:none;"/><!--MD5=[f54f123e9546ebee67e173ad28c1d130]
+reverse link IRepository to WebApp--><path d="M266.8,263.73 C299.21,281.26 368.23,318.6 413.29,342.99 " fill="none" id="IRepository-backto-WebApp" style="stroke:#A80036;stroke-width:1.0;"/><path d="M256.67,267.8627 A9,9 0 0 0 264.7237 252.9886" style="stroke:#A80036;stroke-width:1.5;fill:none;"/><!--MD5=[7156625a314561fef4a7bbcc371d461e]
+reverse link IUserService to WebApp--><path d="M578.65,267.74 C555.23,286.48 512.93,320.32 484.61,342.97 " fill="none" id="IUserService-backto-WebApp" style="stroke:#A80036;stroke-width:1.0;"/><path d="M578.9563,256.6638 A9,9 0 0 0 589.5138 269.8788" style="stroke:#A80036;stroke-width:1.5;fill:none;"/><!--MD5=[c3687ba635e1ef612ce8f4c5cebe467b]
+reverse link IWebRepository to WebApp--><path d="M455.83,272.15 C455.83,291.35 455.83,321.7 455.83,342.67 " fill="none" id="IWebRepository-backto-WebApp" style="stroke:#A80036;stroke-width:1.0;"/><path d="M447.3728,265.1282 A9,9 0 0 0 464.2872 265.1282" style="stroke:#A80036;stroke-width:1.5;fill:none;"/><!--MD5=[ac1ff679a84db7f72f2beeebfc466359]
+reverse link IRepository to StamApi--><path d="M249.15,272.15 C249.49,291.35 250.04,321.7 250.41,342.67 " fill="none" id="IRepository-backto-StamApi" style="stroke:#A80036;stroke-width:1.0;"/><path d="M240.5714,265.2847 A9,9 0 0 0 257.4829 264.9706" style="stroke:#A80036;stroke-width:1.5;fill:none;"/><!--MD5=[a07dbc140697d5e2707fd90e1e8f3878]
+link StamApi to Core.Domain--><path d="M272.31,391 C287.64,407.42 308.32,429.56 324.46,446.84 " fill="none" id="StamApi-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="328.05,450.68,324.8321,441.3717,324.6379,447.0252,318.9844,446.831,328.05,450.68" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[c97e274b8b5f9de285f3a3277fe4c819]
+link Infrastructure.DB to Core.Domain--><path d="M203.37,163.18 C181.98,210.08 142.03,317.92 186.83,391 C207.79,425.19 247.73,445.85 282.84,458 " fill="none" id="Infrastructure.DB-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="287.98,459.73,280.7308,453.063,283.2423,458.1317,278.1736,460.6433,287.98,459.73" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[0684b7be420d7f4c0290e0522ba70cab]
+link Infrastructure.API to Core.Domain--><path d="M399.19,163.21 C392.75,179.64 384.61,202.33 379.83,223 C361.43,302.46 353.93,398.82 351.21,445.68 " fill="none" id="Infrastructure.API-to-Core.Domain" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="350.91,450.87,355.4184,442.1136,351.1961,445.8782,347.4315,441.6559,350.91,450.87" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[e27f93b2f22d92a7def600fa53d434f0]
+@startuml
+'https://plantuml.com/component-diagram
+
+
+
+  [WebApp]..>  [Core.Domain]
+  [DomainServices]..> [Core.Domain]
+  [ApplicationServices]- -() IService 
+  [Infrastructure.DB]- -() IRepository
+  [Infrastructure.API]- -() IWebRepository
+  [DomainServices]- -() IUserService
+  
+  [ApplicationServices] ..> [Core.Domain]
+  [ApplicationServicesTests] ..> [Core.Domain]
+  [ApplicationServicesTests] ..> [ApplicationServices]
+
+  IService )- - [WebApp] 
+  IRepository )- - [WebApp] 
+  IUserService )- - [WebApp] 
+  IWebRepository )- - [WebApp] 
+  IRepository )- - [StamApi]
+  [StamApi]..> [Core.Domain]
+  
+    
+
+  
+  [Infrastructure.DB] ..> [Core.Domain]
+  [Infrastructure.API] ..> [Core.Domain]
+
+
+@enduml
+
+@startuml
+
+
+
+  [WebApp]..>  [Core.Domain]
+  [DomainServices]..> [Core.Domain]
+  [ApplicationServices]- -() IService 
+  [Infrastructure.DB]- -() IRepository
+  [Infrastructure.API]- -() IWebRepository
+  [DomainServices]- -() IUserService
+  
+  [ApplicationServices] ..> [Core.Domain]
+  [ApplicationServicesTests] ..> [Core.Domain]
+  [ApplicationServicesTests] ..> [ApplicationServices]
+
+  IService )- - [WebApp] 
+  IRepository )- - [WebApp] 
+  IUserService )- - [WebApp] 
+  IWebRepository )- - [WebApp] 
+  IRepository )- - [StamApi]
+  [StamApi]..> [Core.Domain]
+  
+    
+
+  
+  [Infrastructure.DB] ..> [Core.Domain]
+  [Infrastructure.API] ..> [Core.Domain]
+
+
+@enduml
+
+PlantUML version 1.2021.11(Sat Oct 02 15:26:11 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: Dynamic Code Evolution 64-Bit Server VM
+Default Encoding: Cp1252
+Language: nl
+Country: NL
+--></g></svg>
