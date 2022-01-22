@@ -22,6 +22,8 @@ else
     <input type="hidden" asp-for="Id" value="@Model.Id">
 
 }
+@if (User.IsInRole("Staff"))
+{
 
 <div class="form-group">
     <label asp-for="PracticionerId" class="control-label"></label>
@@ -29,6 +31,15 @@ else
     </select>
     <span asp-validation-for="PracticionerId" class="text-danger"></span>
 </div>
+}
+else {
+<div class="form-group">
+    <label asp-for="PracticionerId" class="control-label"></label>
+    <select class="form-control" asp-for="PracticionerId" asp-items="Model.Staff" id="PracticionerId" disabled>
+    </select>
+    <span asp-validation-for="PracticionerId" class="text-danger"></span>
+</div>
+}
 <div class="form-group">
     <label asp-for="Room" class="control-label"></label>
     <select disabled class="form-control" asp-for="Room">

@@ -221,7 +221,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                users.Add(dossier.HeadPractitioner);
+                users.Add(appointment.ExcecutedBy);
             }
 
             List<SelectListItem> StaffList = new List<SelectListItem>();
@@ -231,7 +231,7 @@ namespace WebApp.Controllers
                 users.ForEach(u =>
                 {
                     StaffList.Add(new SelectListItem(u.GetFormattedName(), u.Id.ToString(),
-                        u.Id == dossier.HeadPractitioner.Id));
+                        u.Id == appointment.ExcecutedBy.Id));
                 });
             }
 
