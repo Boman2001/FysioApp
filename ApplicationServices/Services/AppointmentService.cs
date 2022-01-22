@@ -15,7 +15,7 @@ namespace ApplicationServices.Services
         private readonly IRepository<TreatmentPlan> _treatmentPlanRepository;
         private readonly IDatetimeHelper _datetimeHelper;
         
-        public AppointmentService(IRepository<Appointment> repository, IService<Dossier> dossierService, IRepository<TreatmentPlan> treatmentPlanRepository, IDatetimeHelper datetimeHelper) : base(repository)
+        public AppointmentService(IAppointmentRepository repository, IService<Dossier> dossierService, IRepository<TreatmentPlan> treatmentPlanRepository, IDatetimeHelper datetimeHelper) : base(repository)
         {
             _dossierService = dossierService;
             _treatmentPlanRepository = treatmentPlanRepository;
