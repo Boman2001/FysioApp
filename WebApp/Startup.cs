@@ -131,6 +131,7 @@ namespace WebApp
             services.AddScoped(typeof(IService<Appointment>), typeof(AppointmentService));
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddScoped(typeof(IAuthHelper), typeof(AuthHelper));
+            services.AddScoped(typeof(IDatetimeHelper), typeof(DatetimeHelper));
             
         }
 
