@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using ApplicationServices.ExtensionMethods;
 using ApplicationServices.Helpers;
@@ -30,7 +31,7 @@ namespace ApplicationServicesTests.Services
             Mock<Staff> staffMock = new Mock<Staff>();
             _datetimeHelper =  new Mock<IDatetimeHelper>();
             _datetimeHelper.Setup(fake => fake.Now())
-                .Returns(DateTime.Parse("20-01-2025 9:00"));
+                .Returns(new DateTime(2025,01,20,9,0,0));
             repository.Setup(c => c.Add(It.IsAny<Appointment>())).ReturnsAsync(() =>
             {
                 return new Appointment()
@@ -38,10 +39,10 @@ namespace ApplicationServicesTests.Services
                     Id = 0,
                     Dossier = dossierMock.Object,
                     Room = RoomType.None,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     ExcecutedBy = staffMock.Object,
-                    TreatmentDate = DateTime.Parse("20-01-2025 9:00"),
-                    TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1)
+                    TreatmentDate = new DateTime(2025,01,20,9,0,0),
+                    TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1)
                 };
             });
             
@@ -52,10 +53,10 @@ namespace ApplicationServicesTests.Services
                     Id = 0,
                     Dossier = dossierMock.Object,
                     Room = RoomType.None,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     ExcecutedBy = staffMock.Object,
-                    TreatmentDate = DateTime.Parse("20-01-2025 9:00"),
-                    TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1)
+                    TreatmentDate = new DateTime(2025,01,20,9,0,0),
+                    TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1)
                 };
             });
             repository.Setup(c => c.Update(It.IsAny<Appointment>())).ReturnsAsync(() =>
@@ -65,10 +66,10 @@ namespace ApplicationServicesTests.Services
                     Id = 0,
                     Dossier = dossierMock.Object,
                     Room = RoomType.None,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     ExcecutedBy = staffMock.Object,
-                    TreatmentDate = DateTime.Parse("20-01-2025 9:00"),
-                    TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1)
+                    TreatmentDate = new DateTime(2025,01,20,9,0,0),
+                    TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1)
                 };
             });
 
@@ -83,7 +84,7 @@ namespace ApplicationServicesTests.Services
                     Patient = new Patient(),
                     Id = 0,
                     Treatments = new List<Treatment>(),
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     DiagnoseCode = new DiagnoseCode(),
                     HeadPractitioner = new Staff(),
                     IntakeBy = new Staff(),
@@ -105,7 +106,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -115,7 +116,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -128,7 +129,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 0,
                     TimePerSessionInMinutes = 50
                 };
@@ -139,10 +140,10 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = dossierMock.Object,
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
 
             // Act
@@ -164,7 +165,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -174,7 +175,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(0, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -187,7 +188,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -198,10 +199,10 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = dossierMock.Object,
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
             // Act
             Func<Task> act = () => sut.Add(treatment);
@@ -222,7 +223,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -232,7 +233,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -245,7 +246,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -259,10 +260,10 @@ namespace ApplicationServicesTests.Services
                         Id = 0,
                         Dossier = dossierMock.Object,
                         Room = RoomType.None,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         ExcecutedBy = staff,
-                        TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                        TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(2),
+                        TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                        TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(2),
                     }
                 };
             });
@@ -273,10 +274,10 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = dossierMock.Object,
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(10),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(10),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             Func<Task> act = () => sut.Add(treatment);
@@ -297,7 +298,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -308,7 +309,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -321,7 +322,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -333,22 +334,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             Func<Task> act = () => sut.Add(treatment);
@@ -370,7 +371,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -383,7 +384,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -396,7 +397,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -408,22 +409,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             Func<Task> act = () => sut.Delete(treatment);
@@ -446,7 +447,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -456,7 +457,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -469,7 +470,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -480,22 +481,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
             // Act
             var result = await sut.Add(treatment);
@@ -515,7 +516,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -525,7 +526,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -538,7 +539,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 5,
                     TimePerSessionInMinutes = 50
                 };
@@ -549,22 +550,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
 
             // Act
@@ -584,7 +585,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -594,7 +595,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -607,7 +608,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -618,22 +619,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
             // Act
             var result = await sut.Add(treatment);
@@ -652,7 +653,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -662,7 +663,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -675,7 +676,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -693,22 +694,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             var result = await sut.Add(treatment);
@@ -729,7 +730,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -740,7 +741,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -753,7 +754,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -765,22 +766,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             var result = await sut.Add(treatment);
@@ -799,7 +800,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -810,7 +811,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -823,7 +824,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -835,22 +836,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddHours(25),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(26),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddHours(25),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(26),
             };
             // Act
             await sut.Delete(treatment);
@@ -869,7 +870,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -879,7 +880,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -892,7 +893,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 0,
                     TimePerSessionInMinutes = 50
                 };
@@ -903,10 +904,10 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = dossierMock.Object,
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
 
             // Act
@@ -928,7 +929,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -938,7 +939,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(0, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -951,7 +952,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -962,10 +963,10 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = dossierMock.Object,
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
             // Act
             Func<Task> act = () => sut.Update(treatment);
@@ -986,7 +987,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -996,7 +997,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1009,7 +1010,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -1023,10 +1024,10 @@ namespace ApplicationServicesTests.Services
                         Id = 0,
                         Dossier = dossierMock.Object,
                         Room = RoomType.None,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         ExcecutedBy = staff,
-                        TreatmentDate = DateTime.Parse("20-01-2025 9:00"),
-                        TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(2),
+                        TreatmentDate = new DateTime(2025,01,20,9,0,0),
+                        TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(2),
                     }
                 };
             });
@@ -1037,10 +1038,10 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = dossierMock.Object,
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             Func<Task> act = () => sut.Update(treatment);
@@ -1061,7 +1062,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -1072,7 +1073,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1085,7 +1086,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -1097,22 +1098,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             Func<Task> act = () => sut.Update(treatment);
@@ -1134,7 +1135,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -1144,7 +1145,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1157,7 +1158,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -1168,22 +1169,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
             // Act
             var result = await sut.Update(treatment);
@@ -1203,7 +1204,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -1213,7 +1214,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1226,7 +1227,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 5,
                     TimePerSessionInMinutes = 50
                 };
@@ -1237,22 +1238,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
 
             // Act
@@ -1272,7 +1273,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -1282,7 +1283,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1295,7 +1296,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -1306,22 +1307,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddDays(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddDays(1),
             };
             // Act
             var result = await sut.Update(treatment);
@@ -1340,7 +1341,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -1350,7 +1351,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1363,7 +1364,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -1381,22 +1382,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             var result = await sut.Update(treatment);
@@ -1417,7 +1418,7 @@ namespace ApplicationServicesTests.Services
             dossierMock.Setup(d => d.TreatmentPlan).Returns(new TreatmentPlan()
             {
                 Id = 1,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 TreatmentsPerWeek = 5,
                 TimePerSessionInMinutes = 50
             });
@@ -1428,7 +1429,7 @@ namespace ApplicationServicesTests.Services
                 end = new TimeSpan(24, 0, 0),
                 Id = 0,
                 Email = "email",
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 FirstName = "",
                 CommentsCreated = new List<Comment>(),
                 IntakesDone = new List<Dossier>(),
@@ -1441,7 +1442,7 @@ namespace ApplicationServicesTests.Services
                 return new TreatmentPlan()
                 {
                     Id = 0,
-                    CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                    CreatedAt = new DateTime(2025,01,20,9,0,0),
                     TreatmentsPerWeek = 1,
                     TimePerSessionInMinutes = 50
                 };
@@ -1453,22 +1454,22 @@ namespace ApplicationServicesTests.Services
                 Id = 0,
                 Dossier = new Dossier()
                 {
-                    RegistrationDate = DateTime.Parse("20-01-2025 9:00").AddDays(-2),
-                    DismissionDate = DateTime.Parse("20-01-2025 9:00").AddDays(3),
+                    RegistrationDate = new DateTime(2025,01,20,9,0,0).AddDays(-2),
+                    DismissionDate = new DateTime(2025,01,20,9,0,0).AddDays(3),
                     HeadPractitioner = staff,
                     TreatmentPlan = new TreatmentPlan()
                     {
                         Id = 1,
-                        CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                        CreatedAt = new DateTime(2025,01,20,9,0,0),
                         TreatmentsPerWeek = 5,
                         TimePerSessionInMinutes = 50
                     },
                 },
                 Room = RoomType.None,
-                CreatedAt = DateTime.Parse("20-01-2025 9:00"),
+                CreatedAt = new DateTime(2025,01,20,9,0,0),
                 ExcecutedBy = staff,
-                TreatmentDate = DateTime.Parse("20-01-2025 9:00").AddMinutes(5),
-                TreatmentEndDate = DateTime.Parse("20-01-2025 9:00").AddHours(1),
+                TreatmentDate = new DateTime(2025,01,20,9,0,0).AddMinutes(5),
+                TreatmentEndDate = new DateTime(2025,01,20,9,0,0).AddHours(1),
             };
             // Act
             var result = await sut.Update(treatment);
