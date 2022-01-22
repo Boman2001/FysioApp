@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace WebApp.Dtos.Auth
 {
-    public abstract class RegisterDto
+    public class RegisterDto
     {
         [NotNull] [Required] public string FirstName { get; set; }
         [NotNull] [Required] public string LastName { get; set; }
