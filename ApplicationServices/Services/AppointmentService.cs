@@ -28,8 +28,9 @@ namespace ApplicationServices.Services
             var treatmentPlan = await _treatmentPlanRepository.Get(model.Dossier.TreatmentPlan.Id);
             model.TreatmentEndDate =
                 model.TreatmentDate.AddMinutes(model.Dossier.TreatmentPlan.TimePerSessionInMinutes);
-            if (treatmentPlan.TreatmentsPerWeek <= dossier.Appointments
-                .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count)
+            if (treatmentPlan.TreatmentsPerWeek < dossier.Appointments
+                .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count + dossier.Treatments
+                .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count + 1 )
             {
                 throw new ValidationException("Het maximum aantal afspraken zijn al aangemaakt voor deze week");
             }
@@ -73,8 +74,9 @@ namespace ApplicationServices.Services
                 var old = await _repository.Get(model.Id);
                 model.ExcecutedBy = old.ExcecutedBy;
             }
-            if (treatmentPlan.TreatmentsPerWeek <= dossier.Treatments
-                .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)).ToList().Count)
+            if (treatmentPlan.TreatmentsPerWeek < dossier.Appointments
+                .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate) && t.Id != model.Id).ToList().Count + dossier.Treatments
+                .Where(t => AreFallingInSameWeek(t.TreatmentDate, model.TreatmentDate)&& t.Id != model.Id).ToList().Count + 1 )
             {
                 throw new ValidationException("Het maximum aantal afspraken zijn al aangemaakt voor deze week");
             }
