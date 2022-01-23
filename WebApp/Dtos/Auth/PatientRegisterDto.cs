@@ -16,6 +16,7 @@ namespace WebApp.Dtos.Auth
         public string Picture { get; set; }
         [Required]
         [Phone]
+        [StringLength(10)]
         public string PhoneNumber { get; set; }
         [Required]
         public DateTime BirthDay { get; set; }

@@ -336,7 +336,8 @@ namespace WebApp.Controllers
                         TreatmentDate = t.TreatmentDate,
                         PracticionerId = t.ExcecutedBy.Id,
                         TreatmentCodeId = t.TreatmentCodeId,
-                        Id = t.Id
+                        Id = t.Id,
+                        DossierId = id
                     });
                 });
 
@@ -350,7 +351,8 @@ namespace WebApp.Controllers
                         PracticionerId = t.ExcecutedBy.Id,
                         TreatmentEndDate = t.TreatmentDate.AddMinutes(t.Dossier.TreatmentPlan.TimePerSessionInMinutes),
                         Id = t.Id,
-                        Patient = patient
+                        Patient = patient,
+                        DossierId = id
                     });
                 });
                 ViewDossierDto dossierDto = new ViewDossierDto()
