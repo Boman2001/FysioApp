@@ -46,11 +46,12 @@ namespace WebApp.Controllers
             return View(dtos);
         }
 
-        // // GET: Patient/Details/5
-        // public ActionResult Details(int id)
-        // {
-        //     return View();
-        // }
+        // GET: Patient/Details/5
+        public async Task<ActionResult> Details(int id)
+        {
+            Patient patient = await _patientService.Get(id);
+            return View("_Details", this.ToDto(patient));
+        }
 
         // GET: Patient/Create
 
@@ -83,11 +84,15 @@ namespace WebApp.Controllers
                     TempData["ErrorMessage"] = "Email al in gebruik";
                     return RedirectToAction("Create", "Dossier");
                 }
+                
 
                 string patientNumber = Guid.NewGuid().ToString();
-                string pictureUrl = ImageHelper.ProcessUploadedFile(picture);
+              
+
+              
                 try
                 {
+                    string pictureUrl = ImageHelper.ProcessUploadedFile(picture);
                     await _patientService.Add(new Patient()
                     {
                         Email = registerDto.Email,

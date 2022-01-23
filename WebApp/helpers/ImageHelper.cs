@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Core.Domain.Exceptions;
 using ImageMagick;
 using Microsoft.AspNetCore.Http;
 
@@ -8,6 +9,10 @@ namespace WebApp.helpers
     {
         public static string ProcessUploadedFile(IFormFile picture)
         {
+            if (picture == null)
+            {
+                throw new ValidationException("A picture is required");
+            }
             string uniqueFileName = "data:image/jpeg;base64,";
 
             using (var ms = new MemoryStream())

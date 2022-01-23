@@ -1,2 +1,74 @@
 ﻿@model WebApp.Dtos.Patient.PatientDto
+@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<form asp-action="Edit" asp-controller="Patient" method="Post" enctype="multipart/form-data" id="editPatientForm" ajax replace-id="partialViewWrapper">
 
+    <img src="@Model.Picture" alt="picture" height="200px">
+    <div id="partialViewWrapper">
+        <input type="hidden" asp-for="Picture" class="form-control" value="@Model.Picture"/>
+            <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" disabled/>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Preposition" class="control-label"></label>
+        <input asp-for="Preposition" class="form-control" disabled/>
+        <span asp-validation-for="Preposition" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" disabled/>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" disabled/>
+        <span type="email" asp-validation-for="Email" class="text-danger"></span>
+    </div>
+        <div class="form-group">
+            <label asp-for="IdNumber" class="control-label"></label>
+            <input class="form-control" asp-for="IdNumber" disabled>
+            <span asp-validation-for="IdNumber" class="text-danger"></span>
+        </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label"></label>
+        <input class="form-control" asp-for="PhoneNumber" disabled>
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BirthDay" class="control-label"></label>
+        <input type="date" class="form-control" asp-for="BirthDay" disabled>
+        <span asp-validation-for="BirthDay" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="Gender" class="control-label"></label>
+    <select class="form-control" asp-for="Gender" disabled>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+    <span asp-validation-for="Gender" class="text-danger"></span>
+</div>
+        <div class="form-group">
+    <label asp-for="Street" class="control-label"></label>
+    <input class="form-control" asp-for="Street" disabled>
+    <span asp-validation-for="Street" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="City" class="control-label"></label>
+    <input class="form-control" asp-for="City" disabled>
+    <span asp-validation-for="City" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PostalCode" class="control-label"></label>
+    <input class="form-control" asp-for="PostalCode" disabled>
+    <span asp-validation-for="PostalCode" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="HouseNumber" class="control-label"></label>
+    <input class="form-control" asp-for="HouseNumber" disabled>
+    <span asp-validation-for="HouseNumber" class="text-danger"></span>
+</div>
+    </div>
+</form>
