@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Staff")]
         public async Task<ActionResult> Create()
         {
-            CreateDossierDto viewModel = await this.fillDto(new CreateDossierDto());
+            CreateDossierDto viewModel = await this.FillDto(new CreateDossierDto());
 
 
             return View(viewModel);
@@ -118,7 +118,7 @@ namespace WebApp.Controllers
                 }
             }
 
-            CreateDossierDto viewModel = await this.fillDto(dossier);
+            CreateDossierDto viewModel = await this.FillDto(dossier);
             return View(viewModel);
         }
 
@@ -160,7 +160,7 @@ namespace WebApp.Controllers
             return PartialView("_EmployeeDropdown", doctors);
         }
 
-        private async Task<CreateDossierDto> fillDto(CreateDossierDto viewModel)
+        private async Task<CreateDossierDto> FillDto(CreateDossierDto viewModel)
         {
             try
             {
@@ -196,17 +196,20 @@ namespace WebApp.Controllers
                         new SelectListItem(patient.LastName + " , " + patient.FirstName, patient.Id.ToString()));
                 });
 
-
-                diagnoseCodes.ForEach(dc =>
+                if (diagnoseCodes != null)
                 {
-                    viewModel.Diagnoses.Add(
-                        new SelectListItem(dc.Code + " , " + dc.Pathology + " " + dc.LocationBody, dc.Id.ToString()));
-                });
+                    diagnoseCodes.ForEach(dc =>
+                    {
+                        viewModel.Diagnoses.Add(
+                            new SelectListItem(dc.Code + " , " + dc.Pathology + " " + dc.LocationBody, dc.Id.ToString()));
+                    });
+                }
+
                 return viewModel;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                TempData["ErrorMessage"] = e.Message;
                 throw;
             }
         }
@@ -238,7 +241,7 @@ namespace WebApp.Controllers
                 TreatmentsPerWeek = dossier.TreatmentPlan.TreatmentsPerWeek,
                 TimePerSessionInMinutes = dossier.TreatmentPlan.TimePerSessionInMinutes
             };
-            return View("Edit" ,await this.fillDto(createDossierDto));
+            return View("Edit" ,await this.FillDto(createDossierDto));
         }
 
         [HttpPost]
@@ -295,7 +298,7 @@ namespace WebApp.Controllers
                 }
             }
 
-            CreateDossierDto viewModel = await this.fillDto(dossier);
+            CreateDossierDto viewModel = await this.FillDto(dossier);
             return View(viewModel);
         }
 
